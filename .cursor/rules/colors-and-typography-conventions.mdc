@@ -1,0 +1,19 @@
+---
+description: Цвета через переменные и типографика через Tailwind
+globs: local/**/*.{astro,css,scss,sass}
+alwaysApply: false
+---
+
+# Colors and Typography Conventions
+
+При работе с файлами в `local/` соблюдай следующие правила:
+
+- Для цветов используй только CSS-переменные из `local/src/styles/common/_variabels.scss`.
+- Не используй хардкод цветов в стилях (`#...`, `rgb(...)`, `hsl(...)` и т.д.).
+- Для размера шрифта и жирности используй Tailwind-классы в разметке.
+- Не задавай `font-size` и `font-weight` в SCSS/CSS, если это можно выразить Tailwind-классами.
+
+Пример:
+
+- `color: var(--color-main);`
+- В шаблоне: `class="text-base font-bold"`

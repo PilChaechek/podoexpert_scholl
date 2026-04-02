@@ -1,0 +1,180 @@
+---
+import { Image } from 'astro:assets';
+import faqImage from '../../assets/images/landing/reviews/1.webp';
+
+const faqItems = [
+    {
+        question: 'Чем это лучше уроков на YouTube?',
+        paragraphs: [
+            'На Ютубе никто не придет на помощь в трудную минуту и не подскажет, что делать, если тесто слишком густое. На курсе рядом с вами, плечом к плечу, прямо когда вы готовите десерт, будет куратор. Он поможет, направит, поддержит и успокоит.',
+            'Вам не придется выбирать из миллиона вариантов — мы подобрали для вас самые популярные рецепты, проверили их на собственном опыте и отработали до результата.',
+        ],
+    },
+    {
+        question: 'Чем это лучше живых мастер-классов?',
+        paragraphs: [
+            'Обучаясь онлайн, вы готовите на своей привычной кухне, со своим инвентарем и из продуктов, которые выбрали вы по нужному вам качеству и цене.',
+            'Вы рассмотрите все нюансы приготовления из первого ряда, а если что-то не поняли или забыли, можете пересматривать видео сколько угодно раз еще в течение 6 месяцев.',
+            'У вас есть кураторы, которые ответят на все вопросы тогда, когда они у вас возникнут, а не только во время урока.',
+            'Вы экономите много времени и сил, потому что не надо никуда ехать — все происходит у вас дома и в удобное вам время.',
+        ],
+    },
+    {
+        question: 'Какой инвентарь мне понадобится для курса?',
+        paragraphs: [
+            'Вам понадобится совсем немного:',
+            'Не переживайте, если сейчас что-то не понятно — перед началом занятий вы получите видеоурок, где я все покажу и подробно объясню. Расскажу, без чего можно обойтись, а что нужно обязательно.',
+            'У кого нет инвентаря, не беспокойтесь: я уже подготовила для вас Pauline Box — набор всего необходимого. Его можно купить у нашего партнера, специализированного интернет-магазина. Также для учениц действует скидка 5%.',
+        ],
+        list: [
+            'Духовка и противень',
+            'Нож длинный с зубцами или просто большой',
+            'Глубокая чаша для взбивания',
+            'Миксер электрический мощностью от 500 Вт',
+            'Силиконовые венчик и лопатка',
+            'Круглое кольцо для выпечки бисквита диаметром 16-18 см',
+            'Кондитерские мешок и насадка',
+        ],
+    },
+    {
+        question: 'Я хочу пойти на курс, но не успеваю на ближайший поток',
+        paragraphs: [
+            'Вы можете забронировать место на курс сейчас — по самой выгодной цене со всеми скидками, а учиться позже. Вместе подберем самый удобный для вас старт потока.',
+            'Если до начала обучения планы изменятся, вернем предоплату без лишних вопросов. Поэтому вы ничего не теряете.',
+        ],
+    },
+    {
+        question: 'А если я из маленького города, где нет больших продуктовых магазинов?',
+        paragraphs: [
+            'Не волнуйтесь об этом. Многие ученицы учатся из небольших городов.',
+            'Если вдруг чего-то необходимого нет под рукой, все можно заказать в интернете, и мы подскажем где. Подберем дату старта так, чтобы все нужное было уже с вами.',
+        ],
+    },
+    {
+        question: 'Я не уверена, нужно ли мне пробовать себя в кондитерском деле, я же бухгалтер?',
+        paragraphs: [
+            'Конечно нужно. Как минимум — это новое увлекательное хобби и ваш островок творчества, где вы можете переключиться от повседневных забот и делать то, что вам по душе.',
+            'Вы откроете в себе новые способности, о которых раньше не догадывались. И кто знает, может быть ваше увлечение перерастет в доходное и любимое дело.',
+        ],
+    },
+    {
+        question: 'Я боюсь, что у меня ничего не получится и муж будет ворчать, что я перевожу продукты впустую',
+        paragraphs: [
+            'Проверено на практике нашими ученицами: муж будет носить вас на руках, когда попробует ваши кулинарные творения, и просить новых шедевров.',
+            'Вся рецептура отработана до идеала, материал изложен очень просто, а кураторы всегда придут на помощь при любом сомнении — у вас просто не может не получиться.',
+        ],
+    },
+    {
+        question: 'Я ни разу не проходила курсы онлайн, не знаю как это работает',
+        paragraphs: [
+            'Перед началом курса вы получите видеоурок, где наглядно показано, как пользоваться интернет-платформой, на которой будут проходить занятия.',
+            'Все очень просто, вы разберетесь за 5 минут.',
+        ],
+    },
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="mx-auto max-w-5xl">
+            <h2 class="mb-8 text-center text-3xl font-bold text-zinc-900 md:text-5xl">Ответы на частые вопросы</h2>
+
+            <div class="space-y-3" data-faq-root>
+                {faqItems.map((item, index) => (
+                    <article class="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
+                        <button
+                            type="button"
+                            class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7"
+                            data-faq-trigger
+                            aria-expanded="false"
+                        >
+                            <span class="text-xl font-semibold text-zinc-900">{item.question}</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="10"
+                                viewBox="0 0 16 10"
+                                fill="none"
+                                class="transition-transform"
+                                data-faq-icon
+                                aria-hidden="true"
+                            >
+                                <path
+                                    d="M2 2l6 6 6-6"
+                                    stroke="var(--purple)"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </svg>
+                        </button>
+
+                        <div class="hidden px-5 pb-6 md:px-7 md:pb-7" data-faq-content>
+                            <div class="grid grid-cols-1 gap-5 pt-1 md:grid-cols-[180px_1fr] md:gap-7">
+                                <Image
+                                    src={faqImage}
+                                    alt="Иллюстрация к ответу"
+                                    class="h-44 w-full rounded-lg object-cover md:h-52"
+                                    loading="lazy"
+                                />
+
+                                <div class="space-y-4 text-lg leading-relaxed text-zinc-700">
+                                    {item.paragraphs.map((paragraph, paragraphIndex) => (
+                                        <>
+                                            <p>{paragraph}</p>
+                                            {paragraphIndex === 0 && item.list && (
+                                                <ul class="list-disc space-y-1 pl-5">
+                                                    {item.list.map((listItem) => (
+                                                        <li>{listItem}</li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>
+
+<script is:inline>
+    const roots = document.querySelectorAll('[data-faq-root]');
+
+    roots.forEach((root) => {
+        const items = [...root.querySelectorAll('article')];
+
+        items.forEach((item) => {
+            const trigger = item.querySelector('[data-faq-trigger]');
+            const content = item.querySelector('[data-faq-content]');
+            const icon = item.querySelector('[data-faq-icon]');
+
+            if (!trigger || !content || !icon) return;
+
+            trigger.addEventListener('click', () => {
+                const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+                items.forEach((currentItem) => {
+                    const currentTrigger = currentItem.querySelector('[data-faq-trigger]');
+                    const currentContent = currentItem.querySelector('[data-faq-content]');
+                    const currentIcon = currentItem.querySelector('[data-faq-icon]');
+
+                    if (!currentTrigger || !currentContent || !currentIcon) return;
+
+                    currentTrigger.setAttribute('aria-expanded', 'false');
+                    currentContent.classList.add('hidden');
+                    currentIcon.classList.remove('rotate-180');
+                });
+
+                if (!isOpen) {
+                    trigger.setAttribute('aria-expanded', 'true');
+                    content.classList.remove('hidden');
+                    icon.classList.add('rotate-180');
+                }
+            });
+        });
+    });
+</script>

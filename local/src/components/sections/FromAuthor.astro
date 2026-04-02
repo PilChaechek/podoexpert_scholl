@@ -1,0 +1,44 @@
+---
+const authorStats = [
+    { title: 'Основатель клиники', value: '«АэК-МЕД» и учебного центра AEK-School' },
+    { title: 'Приглашенный инструктор', value: 'для проведения тренингов в Европе, 2008-2023 гг.' },
+    { title: 'Спикер международных мероприятий', value: 'конференций, семинаров и форумов, 2009-2025 гг.' },
+    { title: 'Почетный член жюри', value: 'международных конкурсов и чемпионатов, 2012-2025 гг.' },
+];
+import img1 from "../../assets/images/about/director.webp";
+import {Image} from "astro:assets";
+---
+<section class="section from-author">
+    <div class="container">
+        <div class="from-author__content grid grid-cols-1 gap-4 md:grid-cols-[47%_1fr] md:gap-4">
+            <div class="from-author__image-wrap flex justify-center">
+                <Image
+                        class="img rounded-md from-author__img"
+                        src={img1}
+                        alt="Практическое обучение подологии"
+                />
+            </div>
+
+            <div class="from-author__card">
+                <h2 class="h2 mb-4">Ваш инструктор - «бриллиант подологии» Юлия Бурова</h2>
+                <p class="from-author__subtitle text-xl">За 23 года помогла 30 000+ клиентам со сложными случаями вросших и деформированных ногтей</p>
+
+                <div class="from-author__text mb-4">
+                    <p>Юлия Владимировна обучалась лично у Адриана Аркада и каждый год подтверждает у него право преподавания - поэтому знания всегда актуальны.</p>
+                    <p>Первой привезла в Россию методику коррекции и косметику Arkada - и до сих пор ежедневно применяет их на практике при приеме пациентов.</p>
+                </div>
+
+                <a class="from-author__cta btn btn--v2" href="#">Хочу обучаться у Юлии Буровой</a>
+            </div>
+        </div>
+
+        <ul class="from-author__stats grid grid-cols-1 gap-3 md:grid-cols-4 md:gap-[14px]">
+            {authorStats.map((item) => (
+                <li class="from-author__stat-item">
+                    <h3 class="mb-2 text-xl font-semibold text-zinc-800">{item.title}</h3>
+                    <p>{item.value}</p>
+                </li>
+            ))}
+        </ul>
+    </div>
+</section>

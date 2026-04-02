@@ -1,0 +1,38 @@
+:root {
+  --font-family: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, oxygen, ubuntu, cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  //--base-font-size: clamp(14px, 4vw, 24px);
+  --base-font-size:  clamp(1rem, 1rem + 0.5vw, 1.5rem);
+
+
+  --color-dark-red: #9c232e;
+  --color-gray: #ededed;
+  --color-dark-gray: #d8d8d8;
+  --color-black: #0c0c0c;
+
+
+  --color-second: #faf5ef;
+  --color-accent: #2a3646;
+
+  --color-4: #374151;
+
+  --main-background: #fff;
+  --main-color-text: #333;
+
+  --color-link: #005bf7;
+  --color-border: #d4d9de;
+
+  --color-error: #be2528; // Цвет error
+  --background-error: #ffe6e6; // BG error
+
+  --font-small: 0.875rem;
+  --font-extra-small: 0.74rem;
+  --font-big: 1.275rem;
+
+
+  // Берем всё отсюда, всё что выше удаляем
+  --font-color-text: #333;
+  --color-main: #105a8a;
+  --color-2: #f3f4f6;
+  --color-3: #97b9db;
+  --swiper-pagination-color: #105a8a;
+}

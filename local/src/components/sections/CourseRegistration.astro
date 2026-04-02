@@ -1,0 +1,103 @@
+---
+const mainTitle =
+    'Регистрируйтесь на очное обучение ARKADA прямо сейчас — скидки в день курса и подарки для уверенного старта в практике';
+
+const modules = [
+    {
+        title: 'Модуль № 1 — Теория и база ARKADA',
+        text: 'Вводная программа: показания, протоколы, работа с инструментами и профессиональной косметикой AArkada. Готовитесь к практике на базе действующей клиники.',
+        muted:
+            'Мини-группы по 2 человека; выдаём раздаточные материалы, рабочую тетрадь и презентации; поддержка куратора в период сопровождения; именной сертификат европейского образца с номером в базе ARKADA.',
+    },
+    {
+        title: 'Модуль № 2 — Практика на пациентах',
+        text: 'Закрепляете навыки на реальных приёмах: установка систем под руководством инструктора, разбор сложных случаев и типовых ошибок.',
+        muted:
+            'В ходе занятий вы также проходите процедуру как пациент — понимаете ощущения клиента и учитесь снимать возражения на собственном опыте.',
+    },
+    {
+        title: 'Модуль № 3 — Старт в работе',
+        text: 'Как аргументированно повысить средний чек, окупаемость обучения за 3–14 дней и выстроить поток записей после сертификации.',
+        muted: null,
+        cta: true,
+        seatsLeft: '8',
+    },
+];
+
+const bonusEyebrow = 'Бесплатные бонусы';
+
+const bonusTitle =
+    'Внимание: при записи на курс до 23:59 сегодняшнего дня вы дополнительно и абсолютно бесплатно получаете от нас супербонусы';
+
+const bonuses = [
+    {
+        title: 'Бонус №1',
+        text: 'Ваучер на покупку оборудования и оригинальной косметики AArkada',
+        muted: 'Скидка 50% в нашем магазине — для выпускников курса, чтобы снизить себестоимость процедур и быстрее выйти в плюс.',
+        priceLine: 'Выгода в магазине → бесплатно при записи сегодня!',
+    },
+    {
+        title: 'Бонус №2',
+        text: 'Спецусловия на последующее обучение',
+        muted: 'Льготные условия на следующие программы и обновления методики — продолжаете расти без переплаты.',
+        priceLine: 'Резерв по льготной цене → без доплаты при ранней записи!',
+    },
+    {
+        title: 'Бонус №3',
+        text: 'Подарочный набор от марки Адриана Аркада',
+        muted: 'Инструменты и профессиональные косметические средства для старта работы с пациентами сразу после курса.',
+        priceLine: 'Стоимость набора более 16 000 ₽ → бесплатно!',
+    },
+    {
+        title: 'Бонус №4 — важный для карьеры',
+        text: 'Приоритет на профессиональные события',
+        muted: 'Первыми получаете приглашения на мероприятия и конференции по подологии — оставайтесь в профессиональном контексте.',
+        priceLine: 'Закрытый список участников → включены бесплатно!',
+    },
+];
+---
+
+<section class="section soft course-registration">
+    <div class="container">
+        <div class="course-registration__shell">
+            <header class="course-registration__head">
+                <h2 class="course-registration__title">{mainTitle}</h2>
+            </header>
+
+            <div class="course-registration__modules">
+                {modules.map((m) => (
+                    <article class="course-registration__module-card">
+                        <h3 class="course-registration__module-title">{m.title}</h3>
+                        <p class="course-registration__module-text">{m.text}</p>
+                        {m.muted && <p class="course-registration__module-muted">{m.muted}</p>}
+                        {m.cta && (
+                            <>
+                                <a href="#zapis" class="course-registration__module-cta">
+                                    Записаться на курс
+                                </a>
+                                <p class="course-registration__module-seats">Осталось {m.seatsLeft} мест</p>
+                            </>
+                        )}
+                    </article>
+                ))}
+            </div>
+
+            <header class="course-registration__bonus-head">
+                <p class="course-registration__eyebrow">{bonusEyebrow}</p>
+                <h2 class="course-registration__bonus-title">{bonusTitle}</h2>
+            </header>
+
+            <div class="course-registration__bonus-grid">
+                {bonuses.map((b) => (
+                    <article class="course-registration__bonus-card">
+                        <div class="course-registration__bonus-ph" aria-hidden="true">Фото</div>
+                        <h3 class="course-registration__bonus-card-title">{b.title}</h3>
+                        <p class="course-registration__bonus-card-text">{b.text}</p>
+                        {b.muted && <p class="course-registration__bonus-card-muted">{b.muted}</p>}
+                        <p class="course-registration__bonus-price">{b.priceLine}</p>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,355 @@
+---
+import { Image } from 'astro:assets';
+import reviewImage1 from '../../assets/images/landing/reviews/1.webp';
+import reviewImage2 from '../../assets/images/landing/reviews/2.webp';
+import reviewImage3 from '../../assets/images/landing/reviews/3.webp';
+import reviewImage4 from '../../assets/images/landing/reviews/4.webp';
+
+const reviews = [
+    {
+        image: reviewImage1,
+        category: 'Отзыв мастера',
+        name: 'Анна Ершова',
+        city: 'г. Гатчина',
+        quote:
+            '«Всё прошло на одном дыхании… Очень интересно получить знания не только по теме, но и обо всём, что касается препаратов»',
+        fullText:
+            'Всё прошло на одном дыхании: насыщенная программа, но без ощущения сухой «теории ради теории». Очень интересно было получить знания не только по самой теме курса, но и обо всём, что касается препаратов — состава, сочетаемости, нюансов применения. Ушла с ощущением, что картина сложилась цельно и можно сразу переносить это в работу.',
+        linkKind: 'read' as const,
+        videoEmbedUrl: '',
+    },
+    {
+        image: reviewImage2,
+        category: 'Отзыв мастера',
+        name: 'Ирина Мельникова',
+        city: 'г. Нефтеюганск',
+        quote: '«Обучение мне окупится буквально за 2 недели»',
+        fullText:
+            'Я сознательно шла на курс с расчётом на практику: хотелось не «галочку», а то, что сразу отразится на качестве услуг и доходе. Уже в первые дни после обучения внедрила несколько приёмов — и отклик клиентов был заметный. Уверенно могу сказать: обучение мне окупится буквально за пару недель активной работы. Рекомендую всем, кто хочет расти без долгой отдачи в «отложенный результат».',
+        linkKind: 'watch' as const,
+        videoEmbedUrl: '',
+    },
+    {
+        image: reviewImage3,
+        category: 'Отзыв мастера',
+        name: 'Александра Андреева',
+        city: 'г. Санкт-Петербург',
+        quote:
+            '«И вновь повышение… Теперь я могу всё! И даже с самыми сложными случаями я справлюсь»',
+        fullText:
+            'Это уже не первое повышение квалификации у Юлии Владимировны — и снова уровень поднялся заметно. Материал структурирован так, что сложное становится понятным шаг за шагом. Теперь я спокойно берусь и за типовые задачи, и за действительно непростые случаи: есть алгоритм, есть понимание «почему так», а не только «как по инструкции». Большое спасибо за честный, глубокий разбор темы.',
+        linkKind: 'read' as const,
+        videoEmbedUrl: '',
+    },
+    {
+        image: reviewImage4,
+        category: 'Отзыв мастера',
+        name: 'Наталья Ольховская',
+        city: 'г. Санкт-Петербург',
+        quote: '«Каждый год я получаю совершенно новые знания»',
+        fullText:
+            'Я регулярно возвращаюсь на обновления — и каждый год ухожу с пакетом совершенно новых знаний. Нет ощущения «пережёванного старого»: акценты меняются вместе с практикой и стандартами. Это то редкое обучение, где уважают время слушателя и не тянут воду. После курса всегда есть конкретные идеи, что поменять в работе уже завтра.',
+        linkKind: 'watch' as const,
+        videoEmbedUrl: '',
+    },
+    {
+        image: reviewImage1,
+        category: 'Отзыв мастера',
+        name: 'Валерий Куприянов',
+        city: 'г. Санкт-Петербург',
+        quote:
+            '«После обучения у Юлии\nБуровой всегда чувствуешь себя\nна 2 ступени выше: в знаниях\nи в эмоциях»',
+        fullText:
+            'После обучения у Юлии Буровой всегда чувствуешь себя минимум на две ступени выше: и в знаниях, и в эмоциях. Подача одновременно строгая и человечная — видно уважение к профессии и к людям в зале. Материал «ложится» так, что хочется сразу идти в кабинет и пробовать. Для меня это эталон того, каким должно быть продолжающее обучение мастера.',
+        linkKind: 'watch' as const,
+        videoEmbedUrl: '',
+    },
+    {
+        image: reviewImage2,
+        category: 'Отзыв мастера',
+        name: 'Надежда Смирнова',
+        city: 'г. Ржев',
+        quote:
+            '«Четыре года мне потребовалось, чтобы понять, что мои методы не универсальны… и расстояние в 700 км оказалось не преградой»',
+        fullText:
+            'Четыре года ушло на то, чтобы честно признать: мои привычные методы работают далеко не везде и не для всех случаев. Страшно было менять подход, но без этого рост остановился бы. Решилась на обучение, хотя до центра — около семисот километров: оказалось, что расстояние не преграда, когда формат и содержание того стоят. Вернулась с ясным планом и спокойствием, что двигаюсь в правильную сторону.',
+        linkKind: 'read' as const,
+        videoEmbedUrl: '',
+    },
+];
+---
+
+<section class="section landing-reviews" aria-label="Отзывы">
+    <div class="container">
+        <h2 class="h2 mb-6 font-bold text-zinc-900 md:mb-8">Отзывы</h2>
+    </div>
+    <div class="container--fullwidth">
+        <div class="landing-reviews__swiper ">
+            <div class="swiper js-landing-reviews-swiper">
+                <div class="swiper-wrapper landing-reviews__wrapper">
+                    {reviews.map((item) => (
+                        <div class="swiper-slide landing-reviews__slide">
+                            <article
+                                class="landing-review-card"
+                                data-video-embed={item.videoEmbedUrl}
+                            >
+                                <div
+                                    class="landing-review-card__media"
+                                    role="button"
+                                    tabindex="0"
+                                    aria-label={`Открыть полный отзыв: ${item.name}`}
+                                    data-micromodal-trigger="landing-review-modal"
+                                >
+                                    <Image
+                                        class="landing-review-card__photo"
+                                        src={item.image}
+                                        alt={`Фото: ${item.name}`}
+                                        loading="lazy"
+                                    />
+                                    {item.linkKind === 'watch' && (
+                                        <span class="landing-review-card__play" aria-hidden="true">
+                                            <svg
+                                                class="landing-review-card__play-icon"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="22"
+                                                height="26"
+                                                viewBox="0 0 22 26"
+                                                fill="none"
+                                                aria-hidden="true"
+                                            >
+                                                <path d="M22 13L0.25 25.1244V0.875644L22 13Z" fill="currentColor" />
+                                            </svg>
+                                        </span>
+                                    )}
+                                </div>
+                                <div class="landing-review-card__body">
+                                    <p class="landing-review-card__category">{item.category}</p>
+                                    <p class="landing-review-card__author">{item.name}</p>
+                                    <p class="landing-review-card__city">{item.city}</p>
+                                    <p class="landing-review-card__quote">{item.quote}</p>
+                                    <button
+                                        type="button"
+                                        class="landing-review-card__link"
+                                        data-micromodal-trigger="landing-review-modal"
+                                    >
+                                        {item.linkKind === 'watch' ? 'Смотреть отзыв' : 'Читать отзыв'}
+                                    </button>
+                                </div>
+                                <div class="landing-review-card__fulltext" hidden>
+                                    {item.fullText}
+                                </div>
+                            </article>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <button
+                class="landing-reviews__nav landing-reviews__nav--prev"
+                type="button"
+                aria-label="Предыдущий отзыв"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" viewBox="0 0 9 14" fill="none">
+                    <path d="M1 13L7 7L1 0.999999" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </button>
+            <button
+                class="landing-reviews__nav landing-reviews__nav--next"
+                type="button"
+                aria-label="Следующий отзыв"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="14" viewBox="0 0 9 14" fill="none">
+                    <path d="M1 13L7 7L1 0.999999" stroke="currentColor" stroke-width="2" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="review-modal-mm" id="landing-review-modal" aria-hidden="true">
+        <div class="review-modal-mm__overlay" tabindex="-1" data-micromodal-close>
+            <div
+                class="review-modal-mm__container"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="landing-review-modal-title"
+            >
+                <button
+                    type="button"
+                    class="review-modal-mm__close"
+                    data-micromodal-close
+                    aria-label="Закрыть"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M3 3L17 17M17 3L3 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </button>
+                <div class="review-modal-mm__grid">
+                    <div class="review-modal-mm__media-col">
+                        <img class="review-modal-mm__img" alt="" width="640" height="640" decoding="async" />
+                        <div class="review-modal-mm__video" data-review-modal-video-wrap hidden>
+                            <iframe
+                                class="review-modal-mm__iframe"
+                                title="Видеоотзыв"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowfullscreen
+                                loading="lazy"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="review-modal-mm__body">
+                        <h2 id="landing-review-modal-title" class="review-modal-mm__name"></h2>
+                        <p class="review-modal-mm__city"></p>
+                        <div class="review-modal-mm__text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    type MicroModalInit = (opts: Record<string, unknown>) => void;
+
+    const initReviewsSwiper = () => {
+        const SwiperConstructor = (window as { Swiper?: new (el: Element, options: unknown) => unknown }).Swiper;
+        if (!SwiperConstructor) {
+            return;
+        }
+        document.querySelectorAll('.js-landing-reviews-swiper').forEach((slider) => {
+            const el = slider as HTMLElement;
+            if (el.dataset.initialized === 'true') {
+                return;
+            }
+            const root = el.closest('.landing-reviews__swiper');
+            if (!root) {
+                return;
+            }
+            const swiper = new SwiperConstructor(slider, {
+                slidesPerView: 1.12,
+                slidesOffsetBefore: 12,
+                slidesOffsetAfter: 12,
+                spaceBetween: 12,
+                speed: 600,
+                navigation: {
+                    nextEl: root.querySelector('.landing-reviews__nav--next'),
+                    prevEl: root.querySelector('.landing-reviews__nav--prev'),
+                },
+                breakpoints: {
+                    576: { slidesPerView: 2, spaceBetween: 16 },
+                    992: {
+                        slidesPerView: 3,
+                        spaceBetween: 20,
+                        slidesOffsetBefore: 0,
+                        slidesOffsetAfter: 0,
+                    },
+                    1280: { slidesPerView: 4, spaceBetween: 16 },
+                },
+            });
+            if (swiper) {
+                el.dataset.initialized = 'true';
+            }
+        });
+    };
+
+    const initReviewsMicroModal = () => {
+        const MM = (window as Window & { MicroModal?: { init: MicroModalInit } }).MicroModal;
+        const section = document.querySelector('.landing-reviews');
+        const modal = document.getElementById('landing-review-modal');
+        if (!MM || !section || !modal || section.getAttribute('data-mm-reviews') === '1') {
+            return;
+        }
+
+        const videoWrap = modal.querySelector('[data-review-modal-video-wrap]') as HTMLElement | null;
+        const iframe = modal.querySelector('.review-modal-mm__iframe') as HTMLIFrameElement | null;
+        const img = modal.querySelector('.review-modal-mm__img') as HTMLImageElement | null;
+        const titleEl = modal.querySelector('.review-modal-mm__name');
+        const cityEl = modal.querySelector('.review-modal-mm__city');
+        const textEl = modal.querySelector('.review-modal-mm__text');
+        if (!titleEl || !cityEl || !textEl || !img) {
+            return;
+        }
+
+        const fillFromCard = (card: Element) => {
+            const fullEl = card.querySelector('.landing-review-card__fulltext');
+            const name = card.querySelector('.landing-review-card__author')?.textContent?.trim() ?? '';
+            const city = card.querySelector('.landing-review-card__city')?.textContent?.trim() ?? '';
+            const photo = card.querySelector('.landing-review-card__photo') as HTMLImageElement | null;
+            const videoUrl = card.getAttribute('data-video-embed')?.trim() ?? '';
+
+            titleEl.textContent = name;
+            cityEl.textContent = city;
+            textEl.textContent = fullEl?.textContent?.trim() ?? '';
+
+            if (photo) {
+                img.src = photo.currentSrc || photo.src;
+                img.alt = photo.alt || `Фото: ${name}`;
+                img.hidden = false;
+            } else {
+                img.hidden = true;
+            }
+
+            if (videoUrl && iframe && videoWrap) {
+                videoWrap.hidden = false;
+                iframe.src = videoUrl;
+            } else {
+                iframe?.removeAttribute('src');
+                if (videoWrap) {
+                    videoWrap.hidden = true;
+                }
+            }
+        };
+
+        MM.init({
+            openTrigger: 'data-micromodal-trigger',
+            closeTrigger: 'data-micromodal-close',
+            openClass: 'is-open',
+            disableScroll: true,
+            disableFocus: false,
+            awaitOpenAnimation: false,
+            awaitCloseAnimation: false,
+            debugMode: false,
+            onShow: (modalEl: HTMLElement, _active: unknown, ev?: Event) => {
+                const t = (ev as MouseEvent | undefined)?.currentTarget as HTMLElement | undefined;
+                const card = t?.closest('.landing-review-card');
+                if (card) {
+                    fillFromCard(card);
+                }
+            },
+            onClose: () => {
+                iframe?.removeAttribute('src');
+                if (videoWrap) {
+                    videoWrap.hidden = true;
+                }
+            },
+        });
+
+        section.addEventListener('keydown', (e) => {
+            const ke = e as KeyboardEvent;
+            if (ke.key !== 'Enter' && ke.key !== ' ') {
+                return;
+            }
+            const t = ke.target as HTMLElement | null;
+            if (!t?.classList.contains('landing-review-card__media')) {
+                return;
+            }
+            ke.preventDefault();
+            t.click();
+        });
+
+        section.setAttribute('data-mm-reviews', '1');
+    };
+
+    const bootReviews = () => {
+        initReviewsSwiper();
+        initReviewsMicroModal();
+        if (!(window as Window & { MicroModal?: unknown }).MicroModal) {
+            window.addEventListener('load', () => initReviewsMicroModal(), { once: true });
+        }
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootReviews, { once: true });
+    } else {
+        bootReviews();
+    }
+</script>

@@ -1,0 +1,14 @@
+---
+import Logo from '../../assets/logo.svg?raw';
+
+interface Props {
+    class?: string;
+    href?: string;
+}
+
+const { class: className, href = '/' } = Astro.props;
+---
+<a href={href} class:list={['logo-company', className]}>
+    <span class="logo-company__img" set:html={Logo}></span>
+    <span class="logo-company__text font-semibold">Podoexpert.ru</span>
+</a>

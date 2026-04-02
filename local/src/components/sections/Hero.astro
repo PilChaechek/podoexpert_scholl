@@ -1,0 +1,60 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../../assets/images/landing/hero.png';
+
+const heroBenefits = [
+    {
+        number: '01',
+        title: 'Минимум затрат времени',
+        description: 'Всего 2-3 часа в неделю на отработку навыков в удобное для вас время.',
+    },
+    {
+        number: '02',
+        title: 'Доступные материалы',
+        description: 'Для старта достаточно базового набора инструментов без крупных вложений.',
+    },
+    {
+        number: '03',
+        title: 'Результат с первых занятий',
+        description: 'Пошаговая практика и поддержка куратора помогают уверенно применять методику.',
+    },
+    {
+        number: '04',
+        title: 'Понятный путь к доходу',
+        description: 'Осваиваете востребованную услугу и быстрее выходите на стабильный поток клиентов.',
+    },
+];
+---
+<section class="section hero-grid">
+    <div class="hero-blur"></div>
+    <div class="container">
+        <div class="hero-grid__inner grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-6">
+
+            <div class="hero-grid__left md:col-span-1">
+                <Image
+                    class="img rounded-md hero-grid__img"
+                    src={heroImage}
+                    alt="Практическое обучение подологии"
+                />
+            </div>
+            <div class="hero-grid__right md:col-span-1">
+                <div class="rounded-md bg-white/75 p-6 md:p-8 h-full">
+                    <h1 class="h1">Обучение экспертом-подологом методике коррекции сложных ногтей ARKADA</h1>
+                    <p class="my-6 text-xl">Увеличьте доход с авторской методикой коррекции сложных ногтей ARKADA.</p>
+
+                    <a href="#" class="btn btn--v2">Записаться на курс</a>
+                </div>
+            </div>
+
+        </div>
+        <ul class="hero-grid__benefits grid grid-cols-1 sm:grid-cols-4 gap-4 my-6">
+            {heroBenefits.map((benefit) => (
+                    <li class="hero-grid__benefit rounded-xl bg-white/75 border border-zinc-200/90 px-5 py-4">
+                        <span class="hero-grid__benefit-number block text-sm font-semibold tracking-wide text-zinc-400">{benefit.number}</span>
+                        <h3 class="hero-grid__benefit-title mt-3 text-xl font-semibold text-zinc-800">{benefit.title}</h3>
+                        <p class="hero-grid__benefit-description mt-3 text-lg leading-relaxed text-zinc-600">{benefit.description}</p>
+                    </li>
+            ))}
+        </ul>
+    </div>
+</section>

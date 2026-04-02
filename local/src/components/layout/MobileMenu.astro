@@ -1,0 +1,69 @@
+---
+interface MenuItem {
+    href: string;
+    text: string;
+}
+
+interface Props {
+    topNavItems: MenuItem[];
+    catalogMenuItems: MenuItem[];
+    mainNavItems: MenuItem[];
+}
+
+const { topNavItems, catalogMenuItems, mainNavItems } = Astro.props;
+---
+<div class="mobile-menu" id="mobile-menu">
+    <div class="mobile-menu__inner p-4">
+        <button
+            type="button"
+            class="btn-reset mobile-menu__close"
+            onclick="document.body.classList.remove('show-mobile-nav')"
+        >
+            <svg class="icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="x-close">
+                    <path id="Icon" d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </svg>
+        </button>
+        <nav class="mobile-menu__nav mobile-nav">
+            <ul class="mobile-nav__menu list font-medium flex flex-col gap-2">
+                {topNavItems.map((item, index) => (
+                    <li class={`mobile-nav__item ${index === 0 ? 'first' : ''} ${index === topNavItems.length - 1 ? 'last' : ''}`.trim()}>
+                        <a href={item.href} class="mobile-nav__link link uppercase">{item.text}</a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+        <nav class="mobile-menu__nav mobile-nav mb-6">
+            <ul class="mobile-nav__menu list font-medium flex flex-col gap-2">
+                <li class="mobile-nav__item mobile-nav__item--catalog">
+                    <details class="mobile-nav__catalog-accordion">
+                        <summary class="mobile-nav__catalog-summary link uppercase">
+                            <span>Каталог</span>
+                            <span class="mobile-nav__catalog-arrow" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </svg>
+                            </span>
+                        </summary>
+                        <ul class="mobile-nav__catalog-list list">
+                            {catalogMenuItems.map((item) => (
+                                <li class="mobile-nav__catalog-item">
+                                    <a href={item.href} class="mobile-nav__catalog-link link">{item.text}</a>
+                                </li>
+                            ))}
+                        </ul>
+                    </details>
+                </li>
+                {mainNavItems.map((item, index) => (
+                    <li class={`mobile-nav__item ${index === 0 ? 'first' : ''} ${index === mainNavItems.length - 1 ? 'last' : ''}`.trim()}>
+                        <a href={item.href} class="mobile-nav__link link uppercase">{item.text}</a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+
+    </div>
+</div>

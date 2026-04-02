@@ -1,0 +1,247 @@
+@use '../mixins/breakpoints' as *;
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  &:focus-within {
+    scroll-behavior: smooth;
+  }
+  @include respond(xxl){
+    font-size: 16px;
+  }
+}
+
+body {
+  height: 100%;
+  min-height: 100vh;
+  font-weight: inherit;
+  margin: 0;
+  padding: 0;
+  background-color: var(--main-background);
+
+  font-family: var(--font-family);
+  line-height: 1.35;
+  text-rendering: optimizeSpeed;
+  color: var(--main-color-text);
+}
+
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+h1 {
+  line-height: 1.15;
+}
+
+h2 {
+  //line-height: 1.25;
+}
+
+// Прижимаем footer
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header, .page-footer {
+  flex: 0 0 auto;
+}
+
+.page-content {
+  flex: 1 0 auto;
+}
+
+.img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.img--br {
+  border-radius: 12px;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  &--underline {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  &--color {
+    color: var(--color-link);
+  }
+  &--color-main {
+    color: var(--color-main);
+  }
+  &--hover {
+    &:hover {
+      color: var(--color-main);
+    }
+  }
+  &--hover-underline {
+    &:hover {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.m-1 {
+  margin: 1rem 0;
+}
+
+.section {
+  padding: 24px 0;
+  @include respond(lg)  {
+    padding: 64px 0;
+  }
+  &__title {
+    font-size: 1.4rem;
+    margin:0 0 1.5rem 0;
+    font-weight: 500;
+    line-height: 1.2;
+    @include respond(xs){
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+    @include respond(lg){
+      font-size: 2.4rem;
+    }
+  }
+  &__footer {
+    margin-top: 24px;
+  }
+  &__footer--center {
+    text-align: center;
+  }
+  &--p0 {
+    padding-top: 0;
+  }
+  &--mw {
+    max-width: 900px;
+  }
+  &--top-border {
+    border-top: 1px dotted var(--color-main);
+    @include respond(lg){
+      border: none;
+    }
+  }
+}
+
+
+.section--color {
+  background-color: var(--color-second);
+}
+
+.section--color-2 {
+  background-color: var(--color-black);
+  color: #ffffff;
+}
+
+.container {
+  width: 100%;
+  padding-inline: 12px;
+  margin-inline: auto;
+
+  @include respond(xxs)  {
+    padding-inline: 16px;
+  }
+  @include respond(xs)  { max-width: 480px;  }
+  @include respond(sm)  { max-width: 576px;  }
+  @include respond(md)  { max-width: 768px;  }
+  @include respond(lg)  { max-width: 992px;  }
+  @include respond(xl)  { max-width: 1200px; }
+  @include respond(xxl) { max-width: 1360px; } // 1360 + 16*2
+}
+
+.container--fullwidth {
+  @include respond(xl)  {
+    max-width: 1200px;
+    padding-inline: 16px;
+  }
+  @include respond(xxl) { max-width: 1360px; }
+}
+
+.container--xl {
+  @include respond(xl)  { max-width: 1660px; }
+}
+
+.container--fullwidth {
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+
+  // начиная с md — как обычный контейнер
+  @include respond(md) {
+    padding-inline: 16px;
+    margin-inline: auto;
+
+    max-width: 768px;
+  }
+
+  @include respond(lg)  { max-width: 992px;  }
+  @include respond(xl)  { max-width: 1200px; }
+  @include respond(xxl) { max-width: 1360px; }
+}
+
+.color-link {
+  color: var(--color-link);
+  text-decoration: underline;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.border-link {
+  border-bottom: 1px solid var(--color-link);
+  color: var(--color-link);
+  text-decoration: none;
+  &:hover {
+    border-bottom: 1px solid transparent;
+  }
+}
+
+.section--top {
+  padding-top: 0;
+}
+
+.section--bottom {
+  padding-bottom: 0;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.hidden {
+  display: none !important;
+}

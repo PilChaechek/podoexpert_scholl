@@ -1,0 +1,118 @@
+---
+import { Image } from 'astro:assets';
+import reviewImage1 from '../../assets/images/landing/reviews/1.webp';
+import reviewImage2 from '../../assets/images/landing/reviews/2.webp';
+
+const firstModule = {
+    title: 'Модуль № 1. Домашний кондитер',
+    description:
+        '1 вводный урок. Разберем и покажем, какие ингредиенты и инвентарь вам понадобятся и как не ошибиться с их выбором. Плюс 9 основных уроков в формате видеозаписей и PDF с рецептами: от простого к сложному, с кулинарными хитростями и профессиональными советами.',
+};
+
+const firstLessons = [
+    {
+        title: 'Урок №1. Капкейки: 3 вида',
+        description:
+            'Основы работы с тестом, идеальные шапочки, плотные крема, работа с насадками.',
+    },
+    {
+        title: 'Урок №2. Чизкейки: 3 вида',
+        description:
+            'Два вида чизкейков, работа с основами, выпечка до правильной текстуры, декор.',
+    },
+    {
+        title: 'Урок №3. Торты',
+        description:
+            'Секрет высокого бисквита, ровная нарезка, идеальное выравнивание, бюджетный декор.',
+    },
+];
+
+const quoteBlocks = [
+    {
+        image: reviewImage1,
+        title: 'Восхитите близких кондитерскими творениями уже на первых занятиях',
+        subtitle: 'Отзыв от жениха Айлины Гюллер',
+        text: '«Я в восторге от того, сколько разных тортиков и десертов Айлина научилась готовить. В разы вкуснее магазинных. А медовик в ее исполнении это что-то!»',
+    },
+    {
+        image: reviewImage2,
+        title: 'Балуйте родных свежими качественными десертами',
+        subtitle: 'Отзыв от Кристины Зайцевой',
+        text: '«Это непередаваемое ощущение: с одной стороны я делаю крутые десерты, которые с гордостью буду подавать на наши многочисленные семейные праздники. С другой — точно знаю состав: все натурально, безвредно моим детям и очень вкусно»',
+    },
+];
+
+const secondLessons = [
+    'Урок №4. Трайфлы и мини-пирожные',
+    'Урок №5. Зефир и мармелад',
+    'Урок №6. Торты: Цифра и Молочная девочка',
+    'Урок №7. Мини-десерты',
+    'Урок №8. Макарон',
+    'Урок №9. Двухъярусный торт',
+];
+---
+
+<section class="section">
+    <div class="container">
+        <div class="rounded-2xl border border-zinc-300 bg-white p-5 md:p-8">
+            <div class="space-y-2">
+                <h2 class="h2 font-bold leading-tight text-zinc-900 md:text-4xl">
+                    Программа курса отточена до совершенства <br> на более чем 60000 выпускниках
+                </h2>
+                <p class="text-base text-zinc-500 md:text-lg">Состоит из 3-х модулей</p>
+            </div>
+
+            <div class="mt-8 space-y-4">
+                <h3 class="text-2xl font-bold text-zinc-900">{firstModule.title}</h3>
+                <p class="text-base leading-relaxed text-zinc-600 md:text-lg">{firstModule.description}</p>
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {firstLessons.map((lesson) => (
+                    <article class="rounded-xl border border-zinc-300 bg-zinc-50 p-4 md:p-5">
+                        <div class="mb-4 flex h-40 items-center justify-center rounded-lg bg-zinc-200 text-sm font-semibold text-zinc-500">
+                            Фото
+                        </div>
+                        <h4 class="text-lg font-bold text-zinc-900">{lesson.title}</h4>
+                        <p class="mt-2 text-sm leading-relaxed text-zinc-600 md:text-base">{lesson.description}</p>
+                    </article>
+                ))}
+            </div>
+
+            <div class="mt-8 space-y-8">
+                {quoteBlocks.map((quote, index) => (
+                    <>
+                        <div class="grid grid-cols-1 gap-4 rounded-2xl border border-zinc-300 bg-zinc-50 p-4 md:grid-cols-[260px_1fr] md:p-6 items-center">
+                            <Image
+                                class="h-52 w-full rounded-xl object-cover"
+                                src={quote.image}
+                                alt={quote.subtitle}
+                                loading="lazy"
+                            />
+                            <div class="space-y-3">
+                                <h3 class="text-2xl font-bold leading-tight text-zinc-900 md:text-2xl mb-1">
+                                    {quote.title}
+                                </h3>
+                                <p class="text-sm text-zinc-500 md:text-base">{quote.subtitle}</p>
+                                <p class="text-base leading-relaxed text-zinc-700 md:text-lg">{quote.text}</p>
+                            </div>
+                        </div>
+
+                        {index === 0 && (
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                                {secondLessons.map((lessonTitle) => (
+                                    <article class="rounded-xl border border-zinc-300 bg-zinc-50 p-4 md:p-5">
+                                        <div class="mb-4 flex h-36 items-center justify-center rounded-lg bg-zinc-200 text-sm font-semibold text-zinc-500">
+                                            Фото
+                                        </div>
+                                        <h4 class="text-lg font-bold text-zinc-900">{lessonTitle}</h4>
+                                    </article>
+                                ))}
+                            </div>
+                        )}
+                    </>
+                ))}
+            </div>
+        </div>
+    </div>
+</section>

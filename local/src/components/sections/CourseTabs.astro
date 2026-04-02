@@ -1,0 +1,196 @@
+---
+import { Image } from 'astro:assets';
+import courseImage1 from '../../assets/images/landing/courses/1.webp';
+import courseImage2 from '../../assets/images/landing/courses/2.webp';
+import courseImage3 from '../../assets/images/landing/courses/3.webp';
+
+const courses = [
+    {
+        id: 'lc-0',
+        tabLabel: 'Brace-M / MiniBrace',
+        title: 'Метод Brace-M и MiniBrace — M',
+        subtitle: 'Изучите полный спектр действий по коррекции ногтевой пластины',
+        price: '45 000',
+        duration: '1 день + 30 дней сопровождения',
+        image: courseImage1,
+        imageAlt: 'Практика метода Brace-M и MiniBrace',
+        paragraphs: [
+            'Пошагово разберёте технику работы с пластиной и фиксацией, отработаете навыки на учебных клинических ситуациях.',
+            'Получите материалы и чек-листы для самостоятельной практики и сопровождение куратора в течение 30 дней после очного дня.',
+        ],
+        promo:
+            'Участники курса получают промокоды на скидки у проверенных поставщиков расходников для подологии.',
+        inventoryTitle: 'Вам понадобится',
+        inventoryNote: 'Если чего-то не хватает, подскажем, чем можно заменить.',
+        inventory: [
+            'Рабочее место с хорошим освещением и удобным креслом для клиента',
+            'Стерильный набор инструментов по перечню методики',
+            'Расходники для моделирования и фиксации по списку из программы',
+            'Средства обработки и хранения инструментов',
+            'Перчатки, одноразовые расходники',
+            'Доступ к закрытому чату с куратором на период сопровождения',
+        ],
+    },
+    {
+        id: 'lc-1',
+        tabLabel: 'Акриловые вкладки',
+        title: 'Акриловые вкладки',
+        subtitle: 'Профилактика врастания ногтевой пластины',
+        price: '45 000',
+        duration: '2 дня + 30 дней сопровождения',
+        image: courseImage2,
+        imageAlt: 'Работа с акриловыми вкладками',
+        paragraphs: [
+            'Освоите установку и коррекцию акриловых вкладок для разгрузки и защиты ногтевого ложа.',
+            'На втором дне углубитесь в сложные случаи и типовые ошибки; после курса — месяц поддержки по кейсам.',
+        ],
+        promo:
+            'Участники курса получают промокоды на большие скидки в крупных интернет-магазинах расходников для мастеров.',
+        inventoryTitle: 'Вам понадобится',
+        inventoryNote: 'Если чего-то не хватает, расскажем, чем можно заменить.',
+        inventory: [
+            'Фрезер или набор для обработки ногтевой пластины по методике',
+            'Материалы для вкладок (перечень выдаётся до старта)',
+            'Лампа и стерильные покрытия на рабочую зону',
+            'Инструменты для снятия и подготовки по протоколу курса',
+            'Средства дезинфекции и стерилизации',
+            'Расходники для демонстрации на модели',
+        ],
+    },
+    {
+        id: 'lc-2',
+        tabLabel: "Arkada's Cube",
+        title: "Метод Arkada's Cube",
+        subtitle: 'Решите проблему вросших ногтей без их удаления',
+        price: '105 000',
+        duration: 'Длительность и формат — при записи',
+        image: courseImage3,
+        imageAlt: "Метод Arkada's Cube — коррекция без удаления",
+        paragraphs: [
+            'Авторская методика коррекции сложных ногтей: работа с куб-системой без травмирующего удаления пластины.',
+            'Разберёте показания, этапы и контроль результата; получите доступ к обновлениям материалов и разбору кейсов.',
+        ],
+        promo:
+            'Участники интенсива получают выгодные условия на стартовые наборы и расходники у партнёров ARKADA.',
+        inventoryTitle: 'Вам понадобится',
+        inventoryNote: 'Полный список пришлём после записи; при нехватке позиции подскажем аналоги.',
+        inventory: [
+            'Набор инструментов ARKADA / эквивалент по согласованию с куратором',
+            'Расходники для куб-методики из рекомендованного перечня',
+            'Средства для подготовки и обработки зоны вросшего ногтя',
+            'Фотофиксация до/после (телефон или камера)',
+            'Рабочие перчатки, расходники для одноразового применения',
+            'Доступ к онлайн-материалам программы',
+        ],
+    },
+];
+---
+
+<section class="section soft course-tabs-section">
+    <div class="container course-tabs">
+        <div class="course-tabs__inputs" aria-hidden="true">
+            {courses.map((c, i) => (
+                <input
+                    class="course-tabs__input"
+                    type="radio"
+                    name="landing-course-tab"
+                    id={c.id}
+                    checked={i === 0}
+                />
+            ))}
+        </div>
+
+        <div class="course-tabs__tablist" role="tablist" aria-label="Курсы">
+            {courses.map((c) => (
+                <label class="course-tab" for={c.id} role="tab">
+                    <span class="course-tab__text">{c.tabLabel}</span>
+                </label>
+            ))}
+        </div>
+
+        <div class="course-tabs__surface course-detail-shell">
+            {courses.map((c, i) => (
+                <div class="course-panel" data-panel={String(i)} hidden={i !== 0}>
+                    <div class="course-panel__head section-head">
+                        <h2 class="title course-panel__title">{c.title}</h2>
+                        <p class="course-panel__subtitle">{c.subtitle}</p>
+                    </div>
+
+                    <div class="ingredient-layout course-detail-layout">
+                        <div class="ingredient-left-stack">
+                            <div class="ingredient-image-card course-image-card">
+                                <div class="course-image-card__media">
+                                    <Image
+                                        class="course-image-card__img"
+                                        src={c.image}
+                                        alt={c.imageAlt}
+                                        loading={i === 0 ? 'eager' : 'lazy'}
+                                        widths={[400, 640, 800]}
+                                        sizes="(max-width: 768px) 100vw, 42vw"
+                                    />
+                                </div>
+                                {c.paragraphs.map((p) => (
+                                    <p class="course-image-card__text">{p}</p>
+                                ))}
+                            </div>
+                            <div class="ingredient-promo-card course-promo-card">
+                                <div class="promo-line">
+                                    <div class="promo-icon" aria-hidden="true">%</div>
+                                    <p class="course-promo-card__text">{c.promo}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inventory-copy-block course-inventory">
+                            <p class="course-inventory__title">{c.inventoryTitle}</p>
+                            <ul class="inventory-list course-inventory__list">
+                                {c.inventory.map((item) => (
+                                    <li>{item}</li>
+                                ))}
+                            </ul>
+                            <p class="course-inventory__note">{c.inventoryNote}</p>
+                        </div>
+                    </div>
+
+                    <div class="course-panel__cta-row">
+                        <a href="#" class="btn btn--v2 course-tabs__cta">Мне это подходит, записываюсь!</a>
+                        <div class="course-panel__offer">
+                            <span class="course-panel__price-inline">
+                                <span class="course-panel__price-value">{c.price}</span>
+                                <span class="course-panel__price-currency">руб</span>
+                            </span>
+                            <span class="course-panel__duration">{c.duration}</span>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</section>
+
+<script>
+    function initCourseTabs() {
+        const root = document.querySelector('.course-tabs');
+        if (!root) return;
+        const inputs = root.querySelectorAll('.course-tabs__input');
+        const panels = root.querySelectorAll('.course-panel');
+
+        function sync() {
+            let active = 0;
+            inputs.forEach((inp, i) => {
+                if (inp instanceof HTMLInputElement && inp.checked) active = i;
+            });
+            panels.forEach((panel, i) => {
+                panel.toggleAttribute('hidden', i !== active);
+            });
+        }
+
+        inputs.forEach((inp) => inp.addEventListener('change', sync));
+        sync();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCourseTabs);
+    } else {
+        initCourseTabs();
+    }
+</script>

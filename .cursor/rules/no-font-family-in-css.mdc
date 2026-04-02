@@ -1,0 +1,13 @@
+---
+description: Запрет на font-family в CSS/SCSS
+globs: local/**/*.{css,scss,sass,less,astro}
+alwaysApply: false
+---
+
+# CSS Typography Rule
+
+Когда редактируешь стили в `local/`, никогда не используй свойство `font-family`.
+
+- Не добавляй новые объявления `font-family`.
+- Не предлагай `font-family` в примерах CSS/SCSS.
+- Используй существующие токены, классы или переменные проекта для типографики без прямого `font-family`.

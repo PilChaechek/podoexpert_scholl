@@ -1,0 +1,61 @@
+---
+import SocialLinks from "../layout/SocialLinks.astro";
+import { Image } from "astro:assets";
+import directorImage from "../../assets/images/about/director.webp";
+---
+<section class="section lead-form-section" id="zapis">
+    <div class="container">
+        <div class="lead-form-shell rounded-[24px] border border-zinc-200 bg-white p-5 md:p-8">
+            <div class="lead-form-grid grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.2fr] md:gap-8">
+                <div class="flex items-end">
+                    <Image
+                        src={directorImage}
+                        alt="Юлия Бурова"
+                        class="h-[320px] w-full rounded-xl object-cover object-top lead-form-grid__img"
+                        loading="lazy"
+                    />
+                </div>
+
+                <div class="lead-form-copy">
+                    <p class="lead-form-eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Форма записи</p>
+                    <h2 class="h2 text-slate-900 md:text-6xl">Запишитесь <br> на курс</h2>
+                    <p class="lead-form-text my-4 max-w-md text-lg leading-relaxed text-zinc-600">
+                        Отправьте заявку и наш менеджер свяжется с вами, запишет на курс и ответит на все вопросы про курсы, оплату, обучение.
+                    </p>
+                    <p class="mb-2">или напишите нам:</p>
+                    <SocialLinks />
+                </div>
+
+                <form class="lead-form-fields space-y-3" action="#" method="post">
+                    <input class="lead-input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600" type="text" placeholder="Ваше Имя" />
+                    <input class="lead-input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600" type="tel" placeholder="Номер телефона" />
+                    <select class="lead-select h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-500 outline-none transition focus:border-violet-600">
+                        <option>Какой курс интересует</option>
+                        <option>Arkada's Cube</option>
+                        <option>Arkada's Brace</option>
+                        <option>Акриловые вкладки</option>
+                        <option>Хочу узнать про все</option>
+                    </select>
+
+                    <div class="lead-submit-row flex flex-wrap items-center gap-4 pt-1">
+                        <button class="btn btn--v2" type="button">
+                            Записаться на обучение
+                        </button>
+                    </div>
+
+                    <div class="basket-order__item basket-order__agreement">
+                        <label class="form__checkbox">
+                            <input type="checkbox" name="no_consent" class="form__checkbox-input" id="order-agreement">
+                            <span class="form__checkbox-box"></span>
+                            <span class="form__checkbox-text">
+                Я даю <a href="/soglasie-na-obrabotku-pdn" class="color-link">согласие</a> на обработку персональных данных и принимаю
+                <a class="color-link" href="/politika-konfidentsialnosti" target="_blank">политику конфиденциальности</a>
+            </span>
+                        </label>
+                        <span class="form__error" data-error="no_consent"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

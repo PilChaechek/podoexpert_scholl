@@ -2,53 +2,61 @@
 import { Image } from 'astro:assets';
 import reviewImage1 from '../../assets/images/landing/reviews/1.webp';
 import reviewImage2 from '../../assets/images/landing/reviews/2.webp';
+import reviewImage2 from '../../assets/images/landing/reviews/3.webp';
+import authorImage1 from '../../assets/images/landing/authors/1.jpg';
+import courseImage1 from '../../assets/images/landing/courses/3.webp';
+import courseImage2 from '../../assets/images/landing/courses/2.webp';
+import courseImage3 from '../../assets/images/landing/courses/3.webp';
+
+
+const courseImages = [courseImage1, courseImage2, courseImage3];
 
 const firstModule = {
-    title: 'Модуль № 1. Домашний кондитер',
+    title: 'Методика, которая заменит все остальные',
     description:
-        '1 вводный урок. Разберем и покажем, какие ингредиенты и инвентарь вам понадобятся и как не ошибиться с их выбором. Плюс 9 основных уроков в формате видеозаписей и PDF с рецептами: от простого к сложному, с кулинарными хитростями и профессиональными советами.',
+        'А.Аркада разработал ряд безболезненных процедур, которые в комплексе могут вылечить даже самые сложные проблемы ногтей без хирургических операций. Большое внимание уделено комфорту пациента, что увеличивает лояльность и возвраты клиентов, при этом обеспечивая один из самых длительных коррекционных эффектов.',
 };
 
 const firstLessons = [
     {
-        title: 'Урок №1. Капкейки: 3 вида',
+        title: '2Brace-M и MiniBrace-M',
         description:
-            'Основы работы с тестом, идеальные шапочки, плотные крема, работа с насадками.',
+            'Первый и второй уровни учебной программы: крепление скобы на композиты и крепление на композиты + крючок.',
     },
     {
-        title: 'Урок №2. Чизкейки: 3 вида',
+        title: 'Акриловые вкладки',
         description:
-            'Два вида чизкейков, работа с основами, выпечка до правильной текстуры, декор.',
+            'Создание акриловых вкладок и применение при сложных случаях врастания и деформации ногтевой пластины.',
     },
     {
-        title: 'Урок №3. Торты',
+        title: 'Arkadas Cube',
         description:
-            'Секрет высокого бисквита, ровная нарезка, идеальное выравнивание, бюджетный декор.',
+            'Акриловые вкладки, освоение Arkadas Cube и подготовка ногтевой пластины для метода ARKADA.',
     },
 ];
 
 const quoteBlocks = [
     {
-        image: reviewImage1,
-        title: 'Восхитите близких кондитерскими творениями уже на первых занятиях',
-        subtitle: 'Отзыв от жениха Айлины Гюллер',
-        text: '«Я в восторге от того, сколько разных тортиков и десертов Айлина научилась готовить. В разы вкуснее магазинных. А медовик в ее исполнении это что-то!»',
+        image: authorImage1,
+        title: 'Подтверждение квалификации на обучение, 2025 год',
+        subtitle: 'Юлия Бурова и Адриан Аркада',
+        text: '«Я забочусь о том, чтобы мои ученики получали актуальные знания и использовали современную методику ARKADA, поэтому я нахожу способ подтвердить своё право на преподавание напрямую у А.Аркады каждый год.»',
     },
     {
-        image: reviewImage2,
-        title: 'Балуйте родных свежими качественными десертами',
-        subtitle: 'Отзыв от Кристины Зайцевой',
-        text: '«Это непередаваемое ощущение: с одной стороны я делаю крутые десерты, которые с гордостью буду подавать на наши многочисленные семейные праздники. С другой — точно знаю состав: все натурально, безвредно моим детям и очень вкусно»',
+        image: reviewImage1,
+        title: 'Теперь я могу всё!',
+        subtitle: 'Отзыв мастера Александры Андреевой, г. Санкт-Петербург',
+        text: '«И вновь повышение, новые знания, новая для меня, но очень желанная информация и именно по этой методике. Еще одна корректирующая система освоена, я влюблена! UniBrace — ВАН ЛАВ! Очень изящна, деликатно работает, справляется с любым, даже очень сложным случаем деформации ногтевых пластин. Да! Теперь я могу все! И даже с самыми сложными случаями я справлюсь, еще быстрее и конечно все так же БЕЗБОЛЕЗНЕННО.»',
     },
 ];
 
 const secondLessons = [
-    'Урок №4. Трайфлы и мини-пирожные',
-    'Урок №5. Зефир и мармелад',
-    'Урок №6. Торты: Цифра и Молочная девочка',
-    'Урок №7. Мини-десерты',
-    'Урок №8. Макарон',
-    'Урок №9. Двухъярусный торт',
+    'Дополнительный курс',
+    'Дополнительный курс',
+    'Дополнительный курс',
+    'Дополнительный курс',
+    'Дополнительный курс',
+    'Дополнительный курс',
 ];
 ---
 
@@ -57,9 +65,9 @@ const secondLessons = [
         <div class="rounded-2xl border border-zinc-300 bg-white p-5 md:p-8">
             <div class="space-y-2">
                 <h2 class="h2 font-bold leading-tight text-zinc-900 md:text-4xl">
-                    Программа курса отточена до совершенства <br> на более чем 60000 выпускниках
+                    Методика ARKADA разделена на 3 прикладных функциональных курса
                 </h2>
-                <p class="text-base text-zinc-500 md:text-lg">Состоит из 3-х модулей</p>
+                <p class="text-base text-zinc-500 md:text-lg">Каждый курс — готовый инструмент для практики и увеличения дохода</p>
             </div>
 
             <div class="mt-8 space-y-4">
@@ -68,15 +76,22 @@ const secondLessons = [
             </div>
 
             <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-                {firstLessons.map((lesson) => (
-                    <article class="rounded-xl border border-zinc-300 bg-zinc-50 p-4 md:p-5">
-                        <div class="mb-4 flex h-40 items-center justify-center rounded-lg bg-zinc-200 text-sm font-semibold text-zinc-500">
-                            Фото
-                        </div>
-                        <h4 class="text-lg font-bold text-zinc-900">{lesson.title}</h4>
-                        <p class="mt-2 text-sm leading-relaxed text-zinc-600 md:text-base">{lesson.description}</p>
-                    </article>
-                ))}
+            {firstLessons.map((lesson, index) => (
+                <article class="rounded-xl border border-zinc-300 bg-zinc-50 p-5 md:p-6">
+                <div class="mb-5 flex h-56 items-center justify-center overflow-hidden rounded-lg bg-zinc-200 p-4 md:h-64">
+                    <Image
+                    src={courseImages[index]}
+                    alt={lesson.title}
+                    class="h-96 w-auto object-contain"
+                    />
+                </div>
+
+                <h4 class="text-xl font-bold text-zinc-900 md:text-2xl">{lesson.title}</h4>
+                <p class="mt-3 text-base leading-relaxed text-zinc-600 md:text-lg">
+                    {lesson.description}
+                </p>
+                </article>
+            ))}
             </div>
 
             <div class="mt-8 space-y-8">

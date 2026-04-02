@@ -1,0 +1,10 @@
+---
+description: Enforce shared button and container classes
+alwaysApply: true
+---
+
+# Buttons And Container Conventions
+
+- For buttons, always use the `.btn` class.
+- Reuse existing button styles from `local/src/styles/common/_buttons.scss`.
+- For content width wrappers, use the `.container` class.

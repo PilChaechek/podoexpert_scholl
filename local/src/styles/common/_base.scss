@@ -90,6 +90,9 @@ h2 {
   }
   &--color {
     color: var(--color-link);
+    &:hover {
+      text-decoration: underline;
+    }
   }
   &--color-main {
     color: var(--color-main);

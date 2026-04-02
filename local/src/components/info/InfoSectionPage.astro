@@ -1,0 +1,139 @@
+---
+import Layout from '../../layouts/Landing.astro';
+
+type InfoPage = {
+  href: string;
+  title: string;
+  children?: InfoPage[];
+};
+
+const infoMenu: InfoPage[] = [
+  { href: '/info/', title: 'Основные сведения' },
+  { href: '/info/vacant-seats/', title: 'Вакантные места для приема (перевода)' },
+  { href: '/info/teaching_staff/', title: 'Руководство. Педагогический (научно-педагогический) состав' },
+  { href: '/info/schooling/', title: 'Образование' },
+  { href: '/info/scholarships/', title: 'Стипендии и иные виды материальной поддержки' },
+  { href: '/info/structure/', title: 'Структура' },
+  { href: '/info/paid-educational-services/', title: 'Платные образовательные услуги' },
+  { href: '/info/objects/', title: 'Материально-техническое обеспечение и оснащенность образовательного процесса' },
+  { href: '/info/megdunarodnoe-sotrudnichestvo/', title: 'Международное сотрудничество' },
+  { href: '/info/financial-and-economic-activity/', title: 'Финансово-хозяйственная деятельность' },
+  { href: '/info/dostupnaya-sreda/', title: 'Доступная среда' },
+  {
+    href: '/info/documents/',
+    title: 'Документы',
+    children: [
+      { href: '/info/documents/schedule/', title: 'Режим занятий обучающихся' },
+      { href: '/info/documents/regulations/', title: 'Правила внутреннего распорядка обучающихся' },
+      { href: '/info/documents/progress/', title: 'Формы, периодичность и порядок текущего контроля успеваемости и промежуточной аттестации обучающихся' },
+      { href: '/info/documents/prescriptions/', title: 'Предписания' },
+      { href: '/info/documents/labor_regulations/', title: 'Правила внутреннего трудового распорядка' },
+      { href: '/info/documents/expulsion_reinstatement/', title: 'Порядок и основания перевода, отчисления и восстановления обучающихся' },
+      { href: '/info/documents/deduction/', title: 'Порядок оформления возникновения, приостановления и прекращения отношений между образовательной организацией и обучающимися' },
+      { href: '/info/documents/agreement/', title: 'Коллективный договор' },
+      { href: '/info/documents/admitting/', title: 'Правила приема обучающихся' },
+    ],
+  },
+];
+
+const normalizePath = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+const currentPath = normalizePath(Astro.url.pathname);
+
+const flattenMenu = (items: InfoPage[]): InfoPage[] =>
+  items.flatMap((item) => (item.children ? [item, ...item.children] : [item]));
+
+const pages = flattenMenu(infoMenu);
+const currentPage = pages.find((item) => normalizePath(item.href) === currentPath);
+const currentParent = infoMenu.find((item) =>
+  item.children?.some((child) => normalizePath(child.href) === currentPath),
+);
+const isInfoRoot = currentPath === '/info/';
+const pageTitle = currentPage?.title ?? 'Основные сведения';
+
+const breadcrumbs = [
+  { title: 'Главная', href: '/' },
+  { title: 'Сведения об образовательной организации', href: '/info/' },
+  ...(currentParent && !isInfoRoot ? [{ title: currentParent.title, href: currentParent.href }] : []),
+  ...(!isInfoRoot && currentPage ? [{ title: currentPage.title }] : []),
+];
+---
+
+<Layout title={`${pageTitle} | Академия подологии Эксперт`}>
+  <section class="bg-zinc-50/60 py-8 md:py-10">
+    <div class="container">
+      <nav class="mb-5 flex flex-wrap items-center gap-2 text-sm text-zinc-500" aria-label="Хлебные крошки">
+        {breadcrumbs.map((crumb, index) => (
+          <>
+            {index > 0 && <span>/</span>}
+            {'href' in crumb ? (
+              <a href={crumb.href} class="transition-colors hover:text-zinc-700">
+                {crumb.title}
+              </a>
+            ) : (
+              <span class="text-zinc-600">{crumb.title}</span>
+            )}
+          </>
+        ))}
+      </nav>
+
+      <h1 class="mb-6 text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl">{pageTitle}</h1>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-[300px_1fr] md:gap-6">
+        <aside class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
+          <nav aria-label="Навигация по разделам сведений">
+            <ul>
+              {infoMenu.map((item) => {
+                const isActive = normalizePath(item.href) === currentPath;
+                const isParentActive = item.children?.some((child) => normalizePath(child.href) === currentPath);
+                const isOpen = Boolean(item.children && (isParentActive || isActive));
+
+                return (
+                  <li class="border-b border-zinc-200 last:border-b-0">
+                    <a
+                      href={item.href}
+                      class:list={[
+                        'block px-4 py-3 text-sm leading-5 transition-colors',
+                        isActive
+                          ? 'border-l-2 border-violet-500 bg-violet-50 font-semibold text-zinc-900'
+                          : 'text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900',
+                      ]}
+                    >
+                      {item.title}
+                    </a>
+
+                    {item.children && isOpen && (
+                      <ul class="border-t border-zinc-200 bg-zinc-50/70">
+                        {item.children.map((child) => {
+                          const isChildActive = normalizePath(child.href) === currentPath;
+                          return (
+                            <li class="border-b border-zinc-200 last:border-b-0">
+                              <a
+                                href={child.href}
+                                class:list={[
+                                  'block px-6 py-3 text-sm leading-5 transition-colors',
+                                  isChildActive
+                                    ? 'border-l-2 border-violet-400 bg-violet-50 font-semibold text-zinc-900'
+                                    : 'text-zinc-700 hover:bg-zinc-100/80 hover:text-zinc-900',
+                                ]}
+                              >
+                                {child.title}
+                              </a>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+        </aside>
+
+        <article class="min-h-[380px] rounded-2xl border border-zinc-200 bg-white px-4 py-6 shadow-sm md:px-8">
+          <slot />
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

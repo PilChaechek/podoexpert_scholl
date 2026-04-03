@@ -2,14 +2,11 @@
 import { Image } from 'astro:assets';
 import reviewImage1 from '../../assets/images/landing/reviews/1.webp';
 import reviewImage2 from '../../assets/images/landing/reviews/2.webp';
-import reviewImage2 from '../../assets/images/landing/reviews/3.webp';
+import reviewImage3 from '../../assets/images/landing/reviews/3.webp';
 import authorImage1 from '../../assets/images/landing/authors/1.jpg';
-import courseImage1 from '../../assets/images/landing/courses/3.png';
-import courseImage2 from '../../assets/images/landing/courses/2.png';
-import courseImage3 from '../../assets/images/landing/courses/3.png';
-
-
-const courseImages = [courseImage1, courseImage2, courseImage3];
+import braceImage from '../../assets/images/landing/courses/1.png';
+import acrylicImage from '../../assets/images/landing/courses/2.png';
+import cubeImage from '../../assets/images/landing/courses/3.png';
 
 const firstModule = {
     title: 'Методика, которая заменит все остальные',
@@ -19,19 +16,34 @@ const firstModule = {
 
 const firstLessons = [
     {
+        image: braceImage,
+        imageAlt: 'Brace-M и MiniBrace-M',
         title: 'Brace-M и MiniBrace-M',
         description:
             'Первый и второй уровни учебной программы: крепление скобы на композиты и крепление на композиты + крючок.',
+        gradient: 'justify-end from-violet-600/80 to-purple-800/80',
+        imageClass: 'max-w-40',
+        tabId: 'lc-0',
     },
     {
+        image: acrylicImage,
+        imageAlt: 'Акриловые вкладки',
         title: 'Акриловые вкладки',
         description:
             'Создание акриловых вкладок и применение при сложных случаях врастания и деформации ногтевой пластины.',
+        gradient: 'justify-center from-slate-500/80 to-violet-700/80',
+        imageClass: '',
+        tabId: 'lc-1',
     },
     {
+        image: cubeImage,
+        imageAlt: 'Arkadas Cube',
         title: 'Arkadas Cube',
         description:
             'Акриловые вкладки, освоение Arkadas Cube и подготовка ногтевой пластины для метода ARKADA.',
+        gradient: 'justify-center from-teal-600/80 to-sky-700/80',
+        imageClass: 'translate-x-5',
+        tabId: 'lc-2',
     },
 ];
 
@@ -75,23 +87,28 @@ const secondLessons = [
                 <p class="text-base leading-relaxed text-zinc-600 md:text-lg">{firstModule.description}</p>
             </div>
 
-            <div class="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {firstLessons.map((lesson, index) => (
-                <article class="rounded-xl border border-zinc-300 bg-zinc-50 p-4 md:p-5">
-                <div class="mb-4 flex h-48 items-center justify-center overflow-hidden rounded-lg bg-zinc-200 p-4">
-                    <Image
-                    src={courseImages[index]}
-                    alt={lesson.title}
-                    class="h-80 w-auto object-contain"
-                    />
-                </div>
-
-                <h4 class="text-lg font-bold text-zinc-900">{lesson.title}</h4>
-                <p class="mt-2 text-sm leading-relaxed text-zinc-600 md:text-base">
-                    {lesson.description}
-                </p>
-                </article>
-            ))}
+            <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                {firstLessons.map((lesson) => (
+                    <article
+                        class="relative flex flex-col overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+                        data-tab-id={lesson.tabId}
+                    >
+                        <div class={`flex h-36 w-full items-center justify-center overflow-hidden bg-gradient-to-br pt-4 pb-0 ${lesson.gradient}`}>
+                            <Image
+                                src={lesson.image}
+                                alt={lesson.imageAlt}
+                                class={`block h-full w-auto object-contain pt-3 ${lesson.imageClass}`}
+                                loading="lazy"
+                                widths={[192, 384]}
+                                sizes="192px"
+                            />
+                        </div>
+                        <div class="flex flex-1 flex-col gap-1.5 px-4 py-3.5 text-left">
+                            <p class="m-0 text-lg font-semibold leading-snug text-zinc-900">{lesson.title}</p>
+                            <p class="m-0 text-sm leading-snug text-zinc-500">{lesson.description}</p>
+                        </div>
+                    </article>
+                ))}
             </div>
 
             <div class="mt-8 space-y-8">
@@ -131,3 +148,22 @@ const secondLessons = [
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll<HTMLElement>('article[data-tab-id]').forEach((link) => {
+        link.addEventListener('click', () => {
+            const tabId = link.dataset.tabId;
+            if (tabId) {
+                const input = document.getElementById(tabId);
+                if (input instanceof HTMLInputElement) {
+                    input.checked = true;
+                    input.dispatchEvent(new Event('change'));
+                }
+            }
+            const target = document.getElementById('course-tabs');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>

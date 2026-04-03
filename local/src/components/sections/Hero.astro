@@ -13,6 +13,7 @@ const directions = [
         description: 'Коррекция любых случаев сложных ногтей с кубом ARKADA.',
         price: '7 500 ₽',
         gradient: 'from-teal-600/80 to-sky-700/80',
+        tabId: 'lc-2',
     },
     {
         image: braceImage,
@@ -21,6 +22,7 @@ const directions = [
         description: 'Коррекция сложных случаев вросших ногтей.',
         price: '7 500 ₽',
         gradient: 'from-violet-600/80 to-purple-800/80',
+        tabId: 'lc-0',
     },
     {
         image: acrylicImage,
@@ -29,6 +31,7 @@ const directions = [
         description: 'Профилактика <br> и восстановление ногтя.',
         price: '7 500 ₽',
         gradient: 'from-slate-500/80 to-violet-700/80',
+        tabId: 'lc-1',
     },
 ];
 
@@ -71,7 +74,7 @@ const heroBenefits = [
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-6xl mx-auto w-full">
                     {directions.map((dir) => (
-                        <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
+                        <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer" data-tab-id={dir.tabId}>
                             <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
                                 <p class="m-0 text-lg font-semibold text-zinc-900 leading-snug">{dir.title}</p>
                                 <p class="my-2 text-sm text-zinc-500 leading-snug" set:html={dir.description}></p>
@@ -109,3 +112,22 @@ const heroBenefits = [
         </div>
     </div>
 </section>
+
+<script>
+    document.querySelectorAll<HTMLElement>('div[data-tab-id]').forEach((card) => {
+        card.addEventListener('click', () => {
+            const tabId = card.dataset.tabId;
+            if (tabId) {
+                const input = document.getElementById(tabId);
+                if (input instanceof HTMLInputElement) {
+                    input.checked = true;
+                    input.dispatchEvent(new Event('change'));
+                }
+            }
+            const target = document.getElementById('course-tabs');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+</script>

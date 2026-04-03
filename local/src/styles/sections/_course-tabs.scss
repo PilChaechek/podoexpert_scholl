@@ -19,12 +19,20 @@
   color: #fff;
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
   box-shadow: 0 12px 32px rgba(92, 70, 192, 0.22);
+
+  .course-tab__price-hint {
+    color: rgba(255, 255, 255, 0.8);
+    background: none;
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.8);
+    background-clip: unset;
+  }
 }
 
 // Кнопка-таб
 .course-tab {
   cursor: pointer;
-  padding: 16px 28px;
+  padding: 14px 24px;
   min-height: 64px;
   border-radius: 16px;
   border: 1px solid var(--line);
@@ -32,6 +40,7 @@
   backdrop-filter: blur(8px);
   color: var(--text);
   line-height: 1.25;
+  gap: 3px;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -43,6 +52,7 @@
   &:hover {
     border-color: var(--line-strong);
     transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(24, 24, 27, 0.08);
   }
 
   &:focus-within {
@@ -52,13 +62,26 @@
 
   @media (max-width: 767px) {
     min-height: 52px;
-    padding: 12px 18px;
+    padding: 10px 16px;
     border-radius: 12px;
   }
 }
 
+// Подпись с ценой внутри таба (инактивный)
+.course-tab__price-hint {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
 // Панель-карточка
 .course-tabs__surface {
+  position: relative;
+  overflow: hidden;
   border-radius: var(--radius-xl);
   border: 1px solid var(--line);
   background: linear-gradient(165deg, #ffffff 0%, #fafafa 55%, #f4f4f5 100%);
@@ -66,11 +89,58 @@
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 20px 50px rgba(24, 24, 27, 0.07);
   padding: clamp(20px, 3.2vw, 38px);
+
+  // Градиентная полоска-акцент сверху
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--teal-dark) 0%, var(--purple) 100%);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  }
+}
+
+// Бэйдж курса (над заголовком)
+.course-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(20, 184, 174, 0.12) 0%, rgba(107, 34, 212, 0.09) 100%);
+  border: 1px solid rgba(20, 184, 174, 0.3);
+  color: var(--teal-dark);
 }
 
 // Адаптивный размер заголовка курса
 .course-panel__title {
   font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+  margin-top: 8px !important;
+}
+
+// Чип длительности курса
+.course-duration-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: right;
+  background: linear-gradient(135deg, rgba(20, 184, 174, 0.1) 0%, rgba(107, 34, 212, 0.08) 100%);
+  border: 1px solid rgba(107, 34, 212, 0.18);
+  color: var(--purple);
+
+  @media (max-width: 767px) {
+    text-align: left;
+  }
 }
 
 // Адаптивный размер цены + градиентный цвет
@@ -82,7 +152,7 @@
   background-clip: text;
 }
 
-// Градиентный текст для валюты и длительности
+// Градиентный текст для валюты
 .price-gradient {
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
   -webkit-background-clip: text;
@@ -96,21 +166,34 @@
 }
 
 .course-image-card__media {
+  position: relative;
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--line);
   aspect-ratio: 4 / 3;
   background: #e4e4e7;
   box-shadow: 0 8px 24px rgba(24, 24, 27, 0.08);
+
+  // Лёгкий градиентный оверлей снизу
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(24, 24, 27, 0.18) 0%, transparent 100%);
+    pointer-events: none;
+  }
 }
 
 // Промо-карточка
 .course-promo-card {
-  margin-top: 16px;
+  margin-top: 14px;
   border-radius: var(--radius-lg);
   border: 1px dashed rgba(20, 184, 174, 0.5);
   background: linear-gradient(120deg, rgba(31, 211, 200, 0.1) 0%, rgba(107, 34, 212, 0.07) 100%);
-  padding: 16px 18px;
+  padding: 14px 18px;
 }
 
 // Иконка промо (градиент нельзя через Tailwind)
@@ -119,25 +202,66 @@
   box-shadow: 0 6px 16px rgba(92, 70, 192, 0.25);
 }
 
-// Блок инвентаря — только декор, layout через Tailwind
-.course-inventory {
+// Карточка-обёртка для блока инвентаря
+.course-inventory-card {
 
 }
 
-// Маркер списка через ::before
-.course-inventory__list li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--teal-dark), var(--purple));
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+.course-inventory-card__title {
+  margin: 0 0 1rem 0;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+// Список инвентаря
+.course-inventory__list {
+}
+
+// Двухколоночная сетка для длинных списков
+.course-inventory__list--grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+
+  @media (min-width: 540px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 20px;
+  }
+}
+
+// Элемент списка
+.course-inventory__item {
+  position: relative;
+  padding-left: 1.25em;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: #3f3f46;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.52em;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal-dark), var(--purple));
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+  }
 }
 
 // CTA кнопка — растягивается на всю ширину блока
 .course-tabs__cta {
   align-self: stretch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .course-tab {
+    transition: none;
+    &:hover {
+      transform: none;
+    }
+  }
 }

@@ -142,68 +142,6 @@
   }
 }
 
-.from-author {
-
-  &__content {
-    align-items: stretch;
-  }
-
-  &__image-wrap {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-xl);
-    background: #b4ccfc;
-    padding: 18px;
-    position: relative;
-  }
-
-  &__img{
-    height: auto;
-    max-width: 300px;
-    position: absolute;
-    bottom: 0;
-  }
-
-  &__card {
-    border: 1px solid var(--line);
-    border-radius: var(--radius-xl);
-    background: #fff;
-    padding: clamp(20px, 2.8vw, 34px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  &__title {
-
-  }
-
-  &__subtitle {
-
-  }
-
-  &__text {
-   p {
-     margin-top: 12px;
-   }
-  }
-
-  &__stats {
-    margin-top: 14px;
-    align-items: stretch;
-  }
-
-  &__stat-item {
-    background-color: #fff;
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 18px 22px;
-    min-height: 128px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-}
 
 .landing-reviews {
   position: relative;

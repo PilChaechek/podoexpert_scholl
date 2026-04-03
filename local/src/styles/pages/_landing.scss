@@ -461,8 +461,12 @@
 }
 
 .lead-form-grid {
-  &__img {
-    margin-bottom: -32px;
+
+}
+
+.lead-form-section {
+  @media (max-width: 767px) {
+    padding-top: 84px;
   }
 }
 
@@ -584,8 +588,20 @@
   }
 
   .course-registration__bonus-title {
-    flex: 1;
+    flex: 0 0 100%;
     margin: 0;
+
+    @include respond(md) {
+      flex: 1;
+    }
+  }
+
+  .btn {
+    width: 100%;
+
+    @include respond(md) {
+      width: auto;
+    }
   }
 }
 

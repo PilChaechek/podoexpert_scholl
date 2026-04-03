@@ -114,15 +114,15 @@ const secondLessons = [
             <div class="mt-8 space-y-8">
                 {quoteBlocks.map((quote, index) => (
                     <>
-                        <div class="grid grid-cols-1 gap-4 rounded-2xl border border-zinc-300 bg-zinc-50 p-4 md:grid-cols-[260px_1fr] md:p-6 items-center">
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-[320px_1fr] items-center mt-12">
                             <Image
-                                class="h-52 w-full rounded-xl object-cover"
+                                class="h-72 w-full rounded-xl object-cover"
                                 src={quote.image}
                                 alt={quote.subtitle}
                                 loading="lazy"
                             />
                             <div class="space-y-3">
-                                <h3 class="text-2xl font-bold leading-tight text-zinc-900 md:text-2xl mb-1">
+                                <h3 class="text-2xl font-bold leading-tight text-zinc-900 mb-1">
                                     {quote.title}
                                 </h3>
                                 <p class="text-sm text-zinc-500 md:text-base">{quote.subtitle}</p>

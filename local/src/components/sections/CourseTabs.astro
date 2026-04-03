@@ -62,6 +62,9 @@ const courses = [
             'Средства дезинфекции и стерилизации',
             'Расходники для демонстрации на модели',
         ],
+        inventoryTitle2: null,
+        inventoryNote2: null,
+        inventory2: null,
     },
     {
         id: 'lc-2',
@@ -88,6 +91,9 @@ const courses = [
             'Рабочие перчатки, расходники для одноразового применения',
             'Доступ к онлайн-материалам программы',
         ],
+        inventoryTitle2: null,
+        inventoryNote2: null,
+        inventory2: null,
     },
 ];
 ---
@@ -106,28 +112,41 @@ const courses = [
             ))}
         </div>
 
-        <div class="course-tabs__tablist" role="tablist" aria-label="Курсы">
+        <div class="flex flex-wrap gap-3.5 mb-2.5" role="tablist" aria-label="Курсы">
             {courses.map((c) => (
-                <label class="course-tab" for={c.id} role="tab">
-                    <span class="course-tab__text">{c.tabLabel}</span>
+                <label class="course-tab inline-flex items-center justify-center font-semibold text-base md:text-lg" for={c.id} role="tab">
+                    {c.tabLabel}
                 </label>
             ))}
         </div>
 
-        <div class="course-tabs__surface course-detail-shell">
+        <div class="course-tabs__surface">
             {courses.map((c, i) => (
-                <div class="course-panel" data-panel={String(i)} hidden={i !== 0}>
-                    <div class="course-panel__head section-head">
-                        <h2 class="title course-panel__title">{c.title}</h2>
-                        <p class="course-panel__subtitle">{c.subtitle}</p>
+                <div class="course-panel flex flex-col" data-panel={String(i)} hidden={i !== 0}>
+
+                    <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-x-8">
+                        <div class="min-w-0">
+                            <h2 class="title course-panel__title m-0 font-bold text-zinc-900 leading-tight">{c.title}</h2>
+                            <p class="mt-2 text-[1.0625rem] leading-[1.45] text-zinc-500">{c.subtitle}</p>
+                            {c.paragraphs.map((p) => (
+                                <p class="mt-2 text-[1.0625rem] leading-[1.45] text-zinc-500">{p}</p>
+                            ))}
+                        </div>
+                        <div class="flex flex-row flex-wrap items-baseline gap-x-2 gap-y-0.5 shrink-0 pt-1 md:flex-col md:items-end md:gap-1.5 md:pt-0">
+                            <span class="inline-flex items-baseline gap-1.5 shrink-0">
+                                <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]">{c.price}</span>
+                                <span class="price-gradient text-sm font-semibold leading-none">рублей</span>
+                            </span>
+                            <span class="price-gradient text-sm font-semibold leading-[1.35] md:text-right">{c.duration}</span>
+                        </div>
                     </div>
 
-                    <div class="ingredient-layout course-detail-layout">
-                        <div class="ingredient-left-stack">
-                            <div class="ingredient-image-card course-image-card">
+                    <div class="grid gap-5 mt-5 md:grid-cols-[1fr_minmax(300px,0.92fr)] md:items-stretch md:gap-6">
+                        <div class="flex flex-col min-w-0">
+                            <div class="course-image-card">
                                 <div class="course-image-card__media">
                                     <Image
-                                        class="course-image-card__img"
+                                        class="block w-full h-full object-cover"
                                         src={c.image}
                                         alt={c.imageAlt}
                                         loading={i === 0 ? 'eager' : 'lazy'}
@@ -135,54 +154,44 @@ const courses = [
                                         sizes="(max-width: 768px) 100vw, 42vw"
                                     />
                                 </div>
-                                {c.paragraphs.map((p) => (
-                                    <p class="course-image-card__text">{p}</p>
-                                ))}
+
                             </div>
-                            <div class="ingredient-promo-card course-promo-card">
-                                <div class="promo-line">
-                                    <div class="promo-icon" aria-hidden="true">%</div>
-                                    <p class="course-promo-card__text">{c.promo}</p>
+                            <div class="course-promo-card">
+                                <div class="flex items-start gap-3.5">
+                                    <div class="promo-icon shrink-0 w-11 h-11 rounded-full flex items-center justify-center font-extrabold text-base text-white" aria-hidden="true">%</div>
+                                    <p class="m-0 text-[15px] leading-[1.5] font-bold text-zinc-900">{c.promo}</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="inventory-copy-block course-inventory">
-    <p class="course-inventory__title">{c.inventoryTitle}</p>
-    <ul class="inventory-list course-inventory__list">
-        {c.inventory.map((item) => (
-            <li>{item}</li>
-        ))}
-    </ul>
 
-    {c.inventoryNote && (
-        <p class="course-inventory__note">{c.inventoryNote}</p>
-    )}
+                        <div class="course-inventory flex flex-col gap-3.5 min-h-full">
+                            <p class="m-0 text-xl font-bold text-zinc-900">{c.inventoryTitle}</p>
+                            <ul class="course-inventory__list list-none m-0 p-0 flex flex-col gap-2.5">
+                                {c.inventory.map((item) => (
+                                    <li class="relative pl-[1.15em] text-zinc-700">{item}</li>
+                                ))}
+                            </ul>
 
-    {c.inventoryTitle2 && (
-        <>
-            <p class="course-inventory__title mt-6">{c.inventoryTitle2}</p>
-            <ul class="inventory-list course-inventory__list">
-                {c.inventory2?.map((item) => (
-                    <li>{item}</li>
-                ))}
-            </ul>
-        </>
-    )}
+                            {c.inventoryNote && (
+                                <p class="text-sm leading-[1.45] text-zinc-500">{c.inventoryNote}</p>
+                            )}
 
-    {c.inventoryNote2 && (
-        <p class="course-inventory__note">{c.inventoryNote2}</p>
-    )}
-</div>
-                    </div>
+                            {c.inventoryTitle2 && (
+                                <>
+                                    <p class="m-0 mt-6 text-xl font-bold text-zinc-900">{c.inventoryTitle2}</p>
+                                    <ul class="course-inventory__list list-none m-0 p-0 flex flex-col gap-2.5">
+                                        {c.inventory2?.map((item) => (
+                                            <li class="relative pl-[1.15em] text-zinc-700">{item}</li>
+                                        ))}
+                                    </ul>
+                                </>
+                            )}
 
-                    <div class="course-panel__cta-row">
-                        <a href="#" class="btn btn--v2 course-tabs__cta">Мне это подходит, записываюсь!</a>
-                        <div class="course-panel__offer">
-                            <span class="course-panel__price-inline">
-                                <span class="course-panel__price-value">{c.price}</span>
-                                <span class="course-panel__price-currency">руб</span>
-                            </span>
-                            <span class="course-panel__duration">{c.duration}</span>
+                            {c.inventoryNote2 && (
+                                <p class="text-sm leading-[1.45] text-zinc-500">{c.inventoryNote2}</p>
+                            )}
+
+                            <a href="#" class="btn btn--v2 course-tabs__cta mt-5 w-full font-semibold">Мне это подходит, записываюсь</a>
                         </div>
                     </div>
                 </div>

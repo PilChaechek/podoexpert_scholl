@@ -1,0 +1,143 @@
+// Скрываем radio-инпуты — управление состоянием через :has()
+.course-tabs__inputs {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Активный таб
+.course-tabs:has(#lc-0:checked) label[for='lc-0'],
+.course-tabs:has(#lc-1:checked) label[for='lc-1'],
+.course-tabs:has(#lc-2:checked) label[for='lc-2'] {
+  border-color: transparent;
+  color: #fff;
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+  box-shadow: 0 12px 32px rgba(92, 70, 192, 0.22);
+}
+
+// Кнопка-таб
+.course-tab {
+  cursor: pointer;
+  padding: 16px 28px;
+  min-height: 64px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  line-height: 1.25;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease,
+    color 0.2s ease,
+    background 0.2s ease;
+  box-shadow: 0 2px 10px rgba(24, 24, 27, 0.04);
+
+  &:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-1px);
+  }
+
+  &:focus-within {
+    outline: 2px solid var(--purple);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 767px) {
+    min-height: 52px;
+    padding: 12px 18px;
+    border-radius: 12px;
+  }
+}
+
+// Панель-карточка
+.course-tabs__surface {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, #ffffff 0%, #fafafa 55%, #f4f4f5 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 20px 50px rgba(24, 24, 27, 0.07);
+  padding: clamp(20px, 3.2vw, 38px);
+}
+
+// Адаптивный размер заголовка курса
+.course-panel__title {
+  font-size: clamp(1.4rem, 2.6vw, 1.85rem);
+}
+
+// Адаптивный размер цены + градиентный цвет
+.course-panel__price-value {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Градиентный текст для валюты и длительности
+.price-gradient {
+  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Карточка с фото
+.course-image-card {
+  border-radius: var(--radius-lg);
+}
+
+.course-image-card__media {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 4 / 3;
+  background: #e4e4e7;
+  box-shadow: 0 8px 24px rgba(24, 24, 27, 0.08);
+}
+
+// Промо-карточка
+.course-promo-card {
+  margin-top: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px dashed rgba(20, 184, 174, 0.5);
+  background: linear-gradient(120deg, rgba(31, 211, 200, 0.1) 0%, rgba(107, 34, 212, 0.07) 100%);
+  padding: 16px 18px;
+}
+
+// Иконка промо (градиент нельзя через Tailwind)
+.promo-icon {
+  background: linear-gradient(145deg, var(--teal-dark) 0%, var(--purple) 100%);
+  box-shadow: 0 6px 16px rgba(92, 70, 192, 0.25);
+}
+
+// Блок инвентаря — только декор, layout через Tailwind
+.course-inventory {
+
+}
+
+// Маркер списка через ::before
+.course-inventory__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal-dark), var(--purple));
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+// CTA кнопка — растягивается на всю ширину блока
+.course-tabs__cta {
+  align-self: stretch;
+}

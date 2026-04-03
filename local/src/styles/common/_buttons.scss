@@ -61,6 +61,11 @@
     background: rgba(107, 34, 212, 0.14);
     color: var(--purple, #6b22d4);
   }
+  @media (max-width: 767px) {
+    &__text {
+      display: none;
+    }
+  }
 }
 
 .social-links {

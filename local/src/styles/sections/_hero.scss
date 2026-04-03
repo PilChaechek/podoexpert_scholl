@@ -1,0 +1,36 @@
+.hero-blur {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 540px;
+  pointer-events: none;
+  filter: blur(90px);
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    border-radius: 999px;
+    opacity: 0.22;
+  }
+
+  &:before {
+    left: 2%;
+    top: 42px;
+    width: 180px;
+    height: 180px;
+    background: var(--teal);
+  }
+
+  &:after {
+    right: 4%;
+    top: 0;
+    width: 210px;
+    height: 210px;
+    background: var(--purple);
+  }
+}
+
+.hero-grid {
+  position: relative;
+  padding-top: 40px;
+}

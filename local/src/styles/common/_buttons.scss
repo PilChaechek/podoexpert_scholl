@@ -40,6 +40,29 @@
   }
 }
 
+.btn--info {
+  background: rgba(107, 34, 212, 0.08);
+  border: none;
+  border-radius: 10px;
+  color: var(--text, #18181b);
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 8px 14px;
+  box-shadow: none;
+  min-width: 0;
+  gap: 8px;
+  transition: background 0.2s ease, color 0.2s ease, padding 0.25s ease, font-size 0.25s ease, gap 0.25s ease;
+  svg {
+    color: var(--purple, #6b22d4);
+    flex-shrink: 0;
+    transition: width 0.25s ease, height 0.25s ease;
+  }
+  &:hover {
+    background: rgba(107, 34, 212, 0.14);
+    color: var(--purple, #6b22d4);
+  }
+}
+
 .social-links {
 
   &__items {

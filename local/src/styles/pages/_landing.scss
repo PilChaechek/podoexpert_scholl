@@ -23,23 +23,54 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(255, 255, 255, .96);
-  border-bottom: 1px solid var(--line);
-  &__link-info {
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    svg {
-      color: var(--purple);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background 0.25s ease, border-color 0.25s ease;
+
+  &__inner {
+    transition: padding 0.25s ease;
+  }
+
+  &.is-scrolled {
+    background: rgba(255, 255, 255, .96);
+    border-bottom-color: var(--line);
+    backdrop-filter: blur(8px);
+
+    .site-header__inner {
+      padding-top: 8px;
+      padding-bottom: 8px;
     }
-    &:hover {
-      color: var(--purple);
-      border: 1px solid var(--purple);
+
+    .b-logo-company {
+      gap: 8px;
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    .b-logo-company__title {
+      font-size: 0.875rem;
+    }
+
+    .b-logo-company__sub-title {
+      //display: none;
+      font-size: 0.675rem;
+    }
+
+    .site-header__link-info {
+      padding: 7px 12px;
+      font-size: 0.8125rem;
+      gap: 7px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
     }
   }
+
 }
 
 .site-wrapper {
@@ -62,58 +93,24 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  transition: gap 0.25s ease;
   svg {
     width: 40px;
     height: 40px;
+    transition: width 0.25s ease, height 0.25s ease;
   }
   &__title {
     font-weight: 700;
     font-size: 1.1rem;
+    transition: font-size 0.25s ease;
   }
   &__sub-title {
     display: block;
     font-size: .875rem;
+    transition: opacity 0.25s ease;
   }
 }
 
-.hero-grid {
-  padding-top: 32px;
-  position: relative;
-
-  &__img {
-    width: 100%;
-  }
-}
-
-.hero-blur {
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 540px;
-  pointer-events: none;
-  filter: blur(90px);
-  &:before, &:after {
-    content: "";
-    position: absolute;
-    border-radius: 999px;
-    opacity: .22;
-  }
-  &:before {
-    content: '';
-    left: 2%;
-    top: 42px;
-    width: 180px;
-    height: 180px;
-    background: var(--teal);
-  }
-  &:after {
-    content: '';
-    right: 4%;
-    top: 0;
-    width: 210px;
-    height: 210px;
-    background: var(--purple);
-  }
-}
 
 .h1 {
   font-size: clamp(44px, 5.4vw, 52px);

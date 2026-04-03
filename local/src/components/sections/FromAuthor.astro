@@ -5,30 +5,43 @@ const authorStats = [
     { title: 'Спикер международных мероприятий', value: 'конференций, семинаров и форумов, 2009-2025 гг.' },
     { title: 'Почетный член жюри', value: 'международных конкурсов и чемпионатов, 2012-2025 гг.' },
 ];
-import img1 from "../../assets/images/about/director.webp";
-import {Image} from "astro:assets";
+
+import img1 from '../../assets/images/landing/hero.png';
+import { Image } from "astro:assets";
 ---
+
 <section class="section from-author">
     <div class="container">
-        <div class="from-author__content grid grid-cols-1 gap-4 md:grid-cols-[47%_1fr] md:gap-4">
-            <div class="from-author__image-wrap flex justify-center">
+        <div class="from-author__content grid grid-cols-1 gap-4 md:grid-cols-[42%_1fr] md:gap-4">
+            <div class="from-author__image-wrap">
                 <Image
-                        class="img rounded-md from-author__img"
-                        src={img1}
-                        alt="Практическое обучение подологии"
+                    class="from-author__img rounded-md"
+                    src={img1}
+                    alt="Юлия Бурова"
                 />
             </div>
 
             <div class="from-author__card">
-                <h2 class="h2 mb-4">Ваш инструктор - «бриллиант подологии» Юлия Бурова</h2>
-                <p class="from-author__subtitle text-xl">За 23 года помогла 30 000+ клиентам со сложными случаями вросших и деформированных ногтей</p>
+                <h2 class="h2 mb-4 from-author__title">
+                    Ваш инструктор - «бриллиант подологии» Юлия Бурова
+                </h2>
+
+                <p class="from-author__subtitle text-xl">
+                    За 23 года помогла 30 000+ клиентам со сложными случаями вросших и деформированных ногтей
+                </p>
 
                 <div class="from-author__text mb-4">
-                    <p>Юлия Владимировна обучалась лично у Адриана Аркада и каждый год подтверждает у него право преподавания - поэтому знания всегда актуальны.</p>
-                    <p>Первой привезла в Россию методику коррекции и косметику Arkada - и до сих пор ежедневно применяет их на практике при приеме пациентов.</p>
+                    <p>
+                        Юлия Владимировна обучалась лично у Адриана Аркада и каждый год подтверждает у него право преподавания - поэтому знания всегда актуальны.
+                    </p>
+                    <p>
+                        Первой привезла в Россию методику коррекции и косметику Arkada - и до сих пор ежедневно применяет их на практике при приеме пациентов.
+                    </p>
                 </div>
 
-                <a class="from-author__cta btn btn--v2" href="#">Хочу обучаться у Юлии Буровой</a>
+                <a class="from-author__cta btn btn--v2" href="#">
+                    Хочу обучаться у Юлии Буровой
+                </a>
             </div>
         </div>
 
@@ -42,3 +55,73 @@ import {Image} from "astro:assets";
         </ul>
     </div>
 </section>
+
+<style>
+    .from-author__image-wrap {
+        display: flex;
+        justify-content: flex-start;
+        align-items: stretch;
+    }
+
+    .from-author__img {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        object-fit: contain;
+        object-position: left center;
+        transform: translateX(60px);
+    }
+
+    .from-author__card {
+        position: relative;
+        overflow: visible;
+        padding: 22px 24px 22px;
+        border-radius: 16px;
+        background: #f8f8f8;
+    }
+
+    .from-author__title {
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+        max-width: none;
+    }
+
+    .from-author__subtitle {
+        max-width: none;
+    }
+
+    @media (max-width: 1024px) {
+        .from-author__content {
+            grid-template-columns: 1fr;
+        }
+
+        .from-author__image-wrap {
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .from-author__img {
+            max-width: 360px;
+            transform: none;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .from-author__image-wrap {
+            justify-content: center;
+            align-items: flex-start;
+            overflow: hidden;
+            min-height: 320px;
+        }
+
+        .from-author__img {
+            max-width: 100%;
+            width: 100%;
+            height: 320px;
+            transform: none;
+            margin: 0 auto;
+            object-fit: cover;
+            object-position: center top;
+        }
+    }
+</style>

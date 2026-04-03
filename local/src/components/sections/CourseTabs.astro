@@ -20,15 +20,21 @@ const courses = [
         ],
         promo:
             'Участники курса получают промокоды на скидки у проверенных поставщиков расходников для подологии.',
-        inventoryTitle: 'Вам понадобится',
-        inventoryNote: 'Если чего-то не хватает, подскажем, чем можно заменить.',
+        inventoryTitle: 'Вы научитесь',
+        inventoryNote: null,
         inventory: [
-            'Рабочее место с хорошим освещением и удобным креслом для клиента',
-            'Стерильный набор инструментов по перечню методики',
-            'Расходники для моделирования и фиксации по списку из программы',
-            'Средства обработки и хранения инструментов',
-            'Перчатки, одноразовые расходники',
-            'Доступ к закрытому чату с куратором на период сопровождения',
+            'Использовать инструмент BRACE-М и miniBRACE-М',
+            'Выбирать проволоки нужного диаметра для изготовления скобы BRACE-М и miniBRACE-М',
+            'Подготавливать ногтевую пластину для установки скобы BRACE-М и miniBRACE-М',
+            'Изготавливать скобы BRACE-М и miniBRACE-М разной конфигурации и подбирать место ее фиксации на ногтевой пластине',
+            'Применять и устанавливать скобы BRACE-М и miniBRACE-М на ногтевые пластины с любой этиологией проблем врастания и деформации',
+            'Работать специальными инструментами для проведения манипуляций с ногтевой пластиной',
+            'Применять на практике по рекомендациям в домашнюю терапию средства торговой марки ARKADA',
+        ],
+        inventoryTitle2: 'Инструменты',
+        inventoryNote2: null,
+        inventory2: [
+            'Arkadas Brace-M https://podoexpert.ru/brace',
         ],
     },
     {
@@ -141,14 +147,32 @@ const courses = [
                             </div>
                         </div>
                         <div class="inventory-copy-block course-inventory">
-                            <p class="course-inventory__title">{c.inventoryTitle}</p>
-                            <ul class="inventory-list course-inventory__list">
-                                {c.inventory.map((item) => (
-                                    <li>{item}</li>
-                                ))}
-                            </ul>
-                            <p class="course-inventory__note">{c.inventoryNote}</p>
-                        </div>
+    <p class="course-inventory__title">{c.inventoryTitle}</p>
+    <ul class="inventory-list course-inventory__list">
+        {c.inventory.map((item) => (
+            <li>{item}</li>
+        ))}
+    </ul>
+
+    {c.inventoryNote && (
+        <p class="course-inventory__note">{c.inventoryNote}</p>
+    )}
+
+    {c.inventoryTitle2 && (
+        <>
+            <p class="course-inventory__title mt-6">{c.inventoryTitle2}</p>
+            <ul class="inventory-list course-inventory__list">
+                {c.inventory2?.map((item) => (
+                    <li>{item}</li>
+                ))}
+            </ul>
+        </>
+    )}
+
+    {c.inventoryNote2 && (
+        <p class="course-inventory__note">{c.inventoryNote2}</p>
+    )}
+</div>
                     </div>
 
                     <div class="course-panel__cta-row">

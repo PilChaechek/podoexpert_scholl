@@ -101,12 +101,12 @@
   }
   &__title {
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     transition: font-size 0.25s ease;
   }
   &__sub-title {
     display: block;
-    font-size: .875rem;
+    font-size: .75rem;
     transition: opacity 0.25s ease;
   }
 }
@@ -175,19 +175,23 @@
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     display: none;
-    @include respond(xs) {
+    @include respond(md) {
       display: inline-flex;
     }
 
     &--prev {
-      left: -44px;
+      @include respond(md) {
+        left: -44px;
+      }
       svg {
         transform: rotate(180deg);
       }
     }
 
     &--next {
-      right: -44px;
+      @include respond(md) {
+        right: -44px;
+      }
     }
   }
 }
@@ -461,7 +465,12 @@
 }
 
 .lead-form-grid {
+  &__img {
 
+    @include respond(xs){
+      margin-bottom: -32px;
+    }
+  }
 }
 
 .lead-form-section {

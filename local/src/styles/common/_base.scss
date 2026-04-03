@@ -89,7 +89,11 @@ h2 {
     }
   }
   &--color {
-    color: var(--color-link);
+    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     &:hover {
       text-decoration: underline;
     }

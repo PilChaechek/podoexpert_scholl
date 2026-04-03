@@ -622,15 +622,22 @@
 .course-registration__bonus-card {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   min-height: 100%;
-  padding: clamp(16px, 2vw, 20px);
   border-radius: var(--radius-lg);
   border: 1px dashed rgba(161, 161, 170, 0.85);
   background:
     linear-gradient(145deg, rgba(31, 211, 200, 0.06) 0%, transparent 55%),
     linear-gradient(210deg, rgba(107, 34, 212, 0.05) 0%, transparent 50%),
     #fafafa;
+  overflow: hidden;
+}
+
+.course-registration__bonus-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  padding: clamp(14px, 2vw, 20px);
 }
 
 .course-registration__bonus-ph {

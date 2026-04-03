@@ -90,10 +90,12 @@ const bonuses = [
                 {bonuses.map((b) => (
                     <article class="course-registration__bonus-card">
                         <div class="course-registration__bonus-ph" aria-hidden="true">Фото</div>
-                        <h3 class="course-registration__bonus-card-title">{b.title}</h3>
-                        <p class="course-registration__bonus-card-text">{b.text}</p>
-                        {b.muted && <p class="course-registration__bonus-card-muted">{b.muted}</p>}
-                        <p style="margin-bottom: 40px" class="course-registration__bonus-price">{b.priceLine} </p>
+                        <div class="course-registration__bonus-body">
+                            <h3 class="course-registration__bonus-card-title">{b.title}</h3>
+                            <p class="course-registration__bonus-card-text">{b.text}</p>
+                            {b.muted && <p class="course-registration__bonus-card-muted">{b.muted}</p>}
+                            <p class="course-registration__bonus-price">{b.priceLine}</p>
+                        </div>
                     </article>
                 ))}
             </div>

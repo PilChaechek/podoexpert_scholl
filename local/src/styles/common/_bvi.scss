@@ -1,0 +1,367 @@
+// ─── Версия для слабовидящих ─────────────────────────────────────────────────
+// Стили для BVI-панели и переопределения в режиме слабовидящих.
+// Наши кнопки в хедере защищены классом .bvi-no-styles — BVI их не трогает.
+
+// ── Панель настроек ───────────────────────────────────────────────────────────
+html body .bvi-panel {
+  font-family: Arial, sans-serif !important;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+  padding: 6px 12px !important;
+
+  .bvi-blocks {
+    gap: 4px;
+    align-items: flex-end;
+  }
+
+  .bvi-block {
+    padding: 8px 12px !important;
+  }
+
+  .bvi-block-title {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: #555 !important;
+    margin-bottom: 6px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  a.bvi-link {
+    border-radius: 6px !important;
+    padding: 5px 10px !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    border-color: #d0d0d0 !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+
+    &:hover {
+      background-color: #9e9e9e !important;
+      color: #fff !important;
+    }
+
+    &.active {
+      background-color: #757575 !important;
+      color: #fff !important;
+    }
+  }
+}
+
+// Плавающая кнопка «показать панель»
+html body .bvi-link-fixed-top {
+  border-radius: 50% !important;
+  width: 44px !important;
+  height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: background 0.2s ease !important;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+}
+
+// ── Иконки хедера — отключаем заливку BVI ────────────────────────────────────
+// BVI: body .bvi-body[data-bvi-theme=white] :not(.bvi-no-styles) → специфичность (0,3,1)
+// Наш: body .bvi-body[data-bvi-theme] .site-header__X svg         → специфичность (0,3,2) ✓
+body .bvi-body[data-bvi-theme] {
+  .site-header__link-info svg,
+  .site-header__link-info svg * {
+    fill: none !important;
+  }
+
+  .site-header__btn-bvi svg,
+  .site-header__btn-bvi svg * {
+    fill: none !important;
+  }
+
+  .btn.btn--v2 {
+    color: #fff !important;
+  }
+}
+
+// ── Hero-секция ───────────────────────────────────────────────────────────────
+
+// Декоративный блюр — убираем во всех темах
+body.bvi-active {
+  .hero-blur {
+    display: none !important;
+  }
+}
+
+// Белая тема: принудительно тёмный текст (иначе градиент-clip-text невидим)
+body .bvi-body[data-bvi-theme=white] {
+  .hero-grid h1 {
+    color: #000 !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: #000 !important;
+  }
+
+  .hero-grid > .container p {
+    color: #333 !important;
+  }
+
+  .hero-grid [data-tab-id] {
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+
+    > div:last-child {
+      background: #e8e8e8 !important;
+    }
+
+    p:first-child {
+      color: #000 !important;
+    }
+
+    p:nth-child(2) {
+      color: #333 !important;
+    }
+
+    p:last-child {
+      color: #000 !important;
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      -webkit-text-fill-color: #000 !important;
+    }
+  }
+
+  .hero-grid ul li {
+    > span:first-child {
+      color: #555 !important;
+    }
+
+    span.font-bold {
+      color: #000 !important;
+    }
+
+    span:not(.font-bold) {
+      color: #333 !important;
+    }
+  }
+}
+
+// Тёмные темы (чёрная, синяя, коричневая, зелёная):
+// только сбрасываем gradient clip-text → текст наследует цвет темы
+body .bvi-body[data-bvi-theme=black],
+body .bvi-body[data-bvi-theme=blue],
+body .bvi-body[data-bvi-theme=brown],
+body .bvi-body[data-bvi-theme=green] {
+  .hero-grid h1 {
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+    -webkit-text-fill-color: currentColor !important;
+  }
+
+  .hero-grid [data-tab-id] {
+    box-shadow: none !important;
+
+    p:last-child {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      -webkit-text-fill-color: currentColor !important;
+    }
+  }
+}
+
+// ── Табы курсов ───────────────────────────────────────────────────────────────
+body.bvi-active {
+  .course-tabs:has(#lc-0:checked) label[for='lc-0'],
+  .course-tabs:has(#lc-1:checked) label[for='lc-1'],
+  .course-tabs:has(#lc-2:checked) label[for='lc-2'] {
+    .course-tab__price-hint,
+    .course-tab__name {
+      background: none !important;
+      -webkit-background-clip: unset !important;
+      background-clip: unset !important;
+      -webkit-text-fill-color: currentColor !important;
+    }
+  }
+}
+
+// ── FAQ ───────────────────────────────────────────────────────────────────────
+// Кнопка аккордеона защищена .bvi-no-styles — BVI не заливает её чёрным.
+//
+// span внутри имеет Tailwind text-zinc-900 с явным color — явное значение
+// всегда бьёт унаследованное, даже если у родителя стоит !important.
+// Поэтому используем body.bvi-active (гарантированно совпадает) + color: inherit,
+// чтобы span взял вычисленный цвет кнопки-родителя, который BVI уже красит.
+body.bvi-active {
+  [data-faq-trigger] span {
+    color: inherit !important;
+  }
+}
+
+// Задаём явный вид кнопки под каждую тему.
+body .bvi-body[data-bvi-theme=white] {
+  [data-faq-trigger] {
+    background: #fff !important;
+    color: #000 !important;
+    border-bottom: 1px solid #ccc !important;
+
+    svg path {
+      stroke: #000 !important;
+    }
+  }
+}
+
+body .bvi-body[data-bvi-theme=black] {
+  [data-faq-trigger] {
+    background: #000 !important;
+    color: #fff !important;
+    border-bottom: 1px solid #555 !important;
+
+    svg path {
+      stroke: #fff !important;
+    }
+  }
+}
+
+body .bvi-body[data-bvi-theme=blue] {
+  [data-faq-trigger] {
+    background: #9dd1ff !important;
+    color: #063462 !important;
+    border-bottom: 1px solid #5ba3d9 !important;
+
+    svg path {
+      stroke: #063462 !important;
+    }
+  }
+}
+
+body .bvi-body[data-bvi-theme=brown] {
+  [data-faq-trigger] {
+    background: #f7f3d6 !important;
+    color: #4d3000 !important;
+    border-bottom: 1px solid #c3b17a !important;
+
+    svg path {
+      stroke: #4d3000 !important;
+    }
+  }
+}
+
+body .bvi-body[data-bvi-theme=green] {
+  [data-faq-trigger] {
+    background: #3b2a00 !important;
+    color: #a9e44d !important;
+    border-bottom: 1px solid #5a7a00 !important;
+
+    svg path {
+      stroke: #a9e44d !important;
+    }
+  }
+}
+
+// ── Кнопки соцсетей ──────────────────────────────────────────────────────────
+// Иконки защищены .bvi-no-styles — BVI не перебивает их фон.
+// Единый контурный стиль: box + монохромная иконка через currentColor.
+//
+// Специфичность BVI для fill/color: body .bvi-body[data-bvi-theme=white] :not(.bvi-no-styles) = (0,3,1)
+// Наши селекторы: body .bvi-body[data-bvi-theme] .social-links__icon svg = (0,3,2) ✓
+body .bvi-body[data-bvi-theme] {
+  .social-links__icon {
+    background: transparent !important;
+    color: inherit !important;
+    border: 2px solid currentColor !important;
+
+    &:hover {
+      background: transparent !important;
+    }
+
+    svg {
+      fill: currentColor !important;
+    }
+
+    svg path,
+    svg circle,
+    svg polygon {
+      fill: currentColor !important;
+      stroke: none !important;
+    }
+
+    // rect со fill="none" (VK) — декоративный spacer, не перекрашиваем
+    svg rect {
+      fill: none !important;
+    }
+  }
+}
+
+// ── Блоки с gradient-background ──────────────────────────────────────────────
+// BVI переопределяет только background-color, не затрагивая background-shorthand
+// с gradient. Сбрасываем вручную под каждую тему.
+body .bvi-body[data-bvi-theme=white] {
+  .course-registration__shell,
+  .course-tabs__surface {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+}
+
+body .bvi-body[data-bvi-theme=black] {
+  .course-registration__shell,
+  .course-tabs__surface {
+    background: #000 !important;
+    box-shadow: none !important;
+    border-color: #444 !important;
+  }
+}
+
+body .bvi-body[data-bvi-theme=blue] {
+  .course-registration__shell,
+  .course-tabs__surface {
+    background: #9dd1ff !important;
+    box-shadow: none !important;
+  }
+}
+
+body .bvi-body[data-bvi-theme=brown] {
+  .course-registration__shell,
+  .course-tabs__surface {
+    background: #f7f3d6 !important;
+    box-shadow: none !important;
+  }
+}
+
+body .bvi-body[data-bvi-theme=green] {
+  .course-registration__shell,
+  .course-tabs__surface {
+    background: #3b2a00 !important;
+    box-shadow: none !important;
+    border-color: #5a7a00 !important;
+  }
+}
+
+// ── Хедер в режиме слабовидящих ───────────────────────────────────────────────
+// BVI оборачивает body в .bvi-body и добавляет body.bvi-active
+body.bvi-active {
+  .site-header {
+    // Повышаем z-index, чтобы хедер не перекрывал BVI-панель
+    z-index: 1 !important;
+  }
+
+  // Кнопка «Версия для слабовидящих» — .bvi-no-styles защищает от BVI-переопределений,
+  // но оставляем её узнаваемой в любой теме
+  .site-header__btn-bvi {
+    background: rgba(0, 0, 0, 0.08) !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+
+    svg {
+      color: inherit !important;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.15) !important;
+    }
+  }
+}

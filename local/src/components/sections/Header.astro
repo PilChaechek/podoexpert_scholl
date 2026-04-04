@@ -1,14 +1,25 @@
 ---
 import LandingLogo from './LandingLogo.astro';
+
+const isHome = Astro.url.pathname === '/';
 ---
+<link rel="stylesheet" href="/scripts/bvi.min.css" />
+
 <header class="site-header">
     <div class="container">
         <div class="site-header__inner flex justify-between items-center py-4">
-            <LandingLogo class="site-header__logo" />
+            {isHome
+                ? <LandingLogo class="site-header__logo" />
+                : <a href="/" class="site-header__logo-link"><LandingLogo class="site-header__logo" /></a>
+            }
             <div class="site-header__right">
-                <a href="/info/" class="btn btn--info site-header__link-info">
+                <button class="btn btn--bvi site-header__btn-bvi bvi-no-styles" aria-label="Версия для слабовидящих" type="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3.5"/><circle cx="18" cy="12" r="3.5"/><path d="M2.5 12c1-4 3.5-6 6.5-6"/><path d="M21.5 12c-1-4-3.5-6-6.5-6"/><path d="M9.5 12h5"/></svg>
+                </button>
+                <a href="/info/" class="btn btn--info site-header__link-info bvi-no-styles">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect width="24" height="24" fill="none"/><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10c0-3.771 0-5.657 1.172-6.828S7.229 2 11 2h2c3.771 0 5.657 0 6.828 1.172S21 6.229 21 10v4c0 3.771 0 5.657-1.172 6.828S16.771 22 13 22h-2c-3.771 0-5.657 0-6.828-1.172S3 17.771 3 14z"/><path stroke-linecap="round" d="M8 10h8m-8 4h5"/></g></svg>
-                    <span class="btn--info__text">Сведения об образовательной организации</span></a>
+                    <span class="btn--info__text">Сведения об образовательной организации</span>
+                </a>
             </div>
         </div>
     </div>
@@ -21,4 +32,60 @@ import LandingLogo from './LandingLogo.astro';
     toggle();
     window.addEventListener('scroll', toggle, { passive: true });
   }
+</script>
+
+<script src="/scripts/bvi.min.js" is:inline></script>
+<script is:inline>
+  (function () {
+    var BVI_KEYS = [
+      'fontSize', 'theme', 'images', 'letterSpacing', 'lineHeight',
+      'speech', 'fontFamily', 'builtElements', 'panelFixed', 'panelHide',
+      'reload', 'lang', 'panelActive'
+    ];
+    var PAST = 'Thu, 01 Jan 1970 00:00:01 GMT';
+
+    function setBviCookie(key, val, expires) {
+      document.cookie = 'bvi_' + key + '=' + val + ';path=/;expires=' + expires;
+    }
+
+    function clearBviCookies() {
+      BVI_KEYS.forEach(function (k) {
+        document.cookie = 'bvi_' + k + '=;path=/;expires=' + PAST;
+      });
+    }
+
+    // Перехватываем закрытие панели в фазе захвата — раньше BVI.
+    // Без этого BVI не может записать bvi_panelActive=false (баг: domain=localhost:PORT),
+    // читает старый cookie=true и вместо закрытия создаёт ещё одну панель.
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-bvi="close"]')) {
+        clearBviCookies();
+      }
+    }, true);
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var bvi = new isvek.Bvi({ target: '.bvi-no-trigger', lang: 'ru-RU' });
+
+      var btn = document.querySelector('.site-header__btn-bvi');
+      if (!btn) return;
+
+      btn.addEventListener('click', function () {
+        // Если BVI уже открыт — повторный клик ничего не делает
+        if (document.body.classList.contains('bvi-active')) return;
+
+        var expires = new Date(Date.now() + 864e5).toUTCString();
+        var cfg = [
+          'fontSize=16', 'theme=white', 'images=grayscale',
+          'letterSpacing=normal', 'lineHeight=normal', 'speech=true',
+          'fontFamily=arial', 'builtElements=false', 'panelFixed=true',
+          'panelHide=false', 'reload=false', 'lang=ru-RU'
+        ];
+        cfg.forEach(function (c) {
+          setBviCookie(c.split('=')[0], c.split('=')[1], expires);
+        });
+        setBviCookie('panelActive', 'true', expires);
+        bvi._init();
+      });
+    });
+  })();
 </script>

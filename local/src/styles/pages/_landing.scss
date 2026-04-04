@@ -31,6 +31,12 @@
     transition: padding 0.25s ease;
   }
 
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   &.is-scrolled {
     background: rgba(255, 255, 255, .96);
     border-bottom-color: var(--line);
@@ -99,10 +105,19 @@
     height: 40px;
     transition: width 0.25s ease, height 0.25s ease;
   }
+  &__text {
+    display: none;
+    @include respond(xs){
+      display: block;
+    }
+  }
   &__title {
     font-weight: 700;
-    font-size: 1rem;
+
     transition: font-size 0.25s ease;
+    @include respond(xs){
+      font-size: 1rem;
+    }
   }
   &__sub-title {
     display: block;

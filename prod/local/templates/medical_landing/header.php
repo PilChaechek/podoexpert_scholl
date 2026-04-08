@@ -14,7 +14,9 @@ $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/header.js');
     <meta charset="<?= LANG_CHARSET ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?$APPLICATION->ShowHead()?>
+    <title><?$APPLICATION->ShowTitle()?></title>
 </head>
+<div id="panel"><?$APPLICATION->ShowPanel();?></div>
 <body>
 <div class="site-wrapper">
 

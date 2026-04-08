@@ -1,5 +1,17 @@
-<header class="page-footer">
+</main>
+<footer class="site-footer">
     <div class="container">
-        <h1>Footer</h1>
+        <div class="site-footer__inner flex flex-wrap items-center gap-y-2 py-4">
+            <?php $logoClass = 'site-footer__logo'; include __DIR__ . '/include/logo.php'; ?>
+            <nav class="site-footer__menu ml-auto flex flex-wrap gap-x-4 gap-y-1 justify-end text-sm">
+                <a href="/politika-konfidentsialnosti" class="link link--color">Политика обработки ПДн</a>
+                <a href="/cookies" class="link link--color">Использования Cookie-файлов</a>
+                <a href="/soglasie-na-obrabotku-pdn" class="link link--color">Согласие на обработку ПДн</a>
+            </nav>
+        </div>
+
     </div>
-</header>
+</footer>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="my_beget">
+  <component name="PublishConfigData" autoUpload="Always" serverName="reg_podoexpert">
     <serverData>
       <paths name="UV_beget">
         <serverdata>
@@ -13,6 +13,13 @@
         <serverdata>
           <mappings>
             <mapping deploy="/podoexpert.luniora.com/public_html" local="$PROJECT_DIR$/prod" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="reg_podoexpert">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/www/xn--80acfdvajic0acbbji5a9h.xn--p1ai" local="$PROJECT_DIR$/prod" web="/" />
           </mappings>
         </serverdata>
       </paths>

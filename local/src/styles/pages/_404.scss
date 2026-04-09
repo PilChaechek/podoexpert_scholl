@@ -1,0 +1,51 @@
+@use '../mixins/breakpoints' as *;
+
+.not-found {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem 1.5rem;
+    text-align: center;
+
+    &__icon {
+        margin-bottom: 1.5rem;
+        opacity: 0.85;
+
+        svg {
+            width: clamp(80px, 15vw, 120px);
+            height: clamp(80px, 15vw, 120px);
+        }
+    }
+
+    &__code {
+        font-size: clamp(3rem, 18vw, 10rem);
+        font-weight: 700;
+        line-height: 1;
+        background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
+    }
+
+    &__title {
+        font-size: clamp(1.15rem, 3vw, 1.75rem);
+        font-weight: 600;
+        color: var(--color-accent);
+        margin-bottom: 1rem;
+    }
+
+    &__desc {
+        max-width: 580px;
+        color: var(--main-color-text);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        opacity: 0.75;
+    }
+
+    &__btn {
+        min-width: 180px;
+    }
+}

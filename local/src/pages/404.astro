@@ -1,0 +1,26 @@
+---
+import Layout from '../layouts/Landing.astro';
+---
+<Layout title="404 — Страница не найдена">
+    <section class="not-found">
+        <div class="not-found__icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" aria-hidden="true">
+                <defs>
+                    <linearGradient id="sad-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#14b8ae" />
+                        <stop offset="100%" stop-color="#6b22d4" />
+                    </linearGradient>
+                </defs>
+                <g fill="none" stroke="url(#sad-gradient)" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M8 16a5 5 0 0 1 4-2c1.636 0 3.088.786 4 2m-.375-7.613v.53m-7.25-.53v.53m.375-.167c0-.414-.168-.75-.375-.75S8 8.336 8 8.75s.168.75.375.75s.375-.336.375-.75m7.25 0c0-.414-.168-.75-.375-.75s-.375.336-.375.75s.168.75.375.75s.375-.336.375-.75"/>
+                </g>
+            </svg>
+        </div>
+
+        <h1 class="not-found__code">404</h1>
+        <p class="not-found__title">Страница не найдена</p>
+        <p class="not-found__desc">Запрашиваемая страница не существует или была перемещена.<br />Вернитесь на главную и продолжите обучение.</p>
+        <a href="/" class="btn btn--v2 not-found__btn">На главную</a>
+    </section>
+</Layout>

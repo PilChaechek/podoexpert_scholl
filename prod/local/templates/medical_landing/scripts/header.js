@@ -1,19 +1,29 @@
 (function () {
-    var header = document.querySelector('.site-header');
-    if (header) {
-        var toggle = function () { header.classList.toggle('is-scrolled', window.scrollY > 0); };
+    function initHeaderScroll() {
+        const header = document.querySelector('.site-header');
+        if (!header) return;
+
+        const toggle = function () {
+            header.classList.toggle('is-scrolled', window.scrollY > 0);
+        };
         toggle();
         window.addEventListener('scroll', toggle, { passive: true });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initHeaderScroll);
+    } else {
+        initHeaderScroll();
     }
 })();
 
 (function () {
-    var BVI_KEYS = [
+    const BVI_KEYS = [
         'fontSize', 'theme', 'images', 'letterSpacing', 'lineHeight',
         'speech', 'fontFamily', 'builtElements', 'panelFixed', 'panelHide',
         'reload', 'lang', 'panelActive'
     ];
-    var PAST = 'Thu, 01 Jan 1970 00:00:01 GMT';
+    const PAST = 'Thu, 01 Jan 1970 00:00:01 GMT';
 
     function setBviCookie(key, val, expires) {
         document.cookie = 'bvi_' + key + '=' + val + ';path=/;expires=' + expires;
@@ -32,16 +42,17 @@
     }, true);
 
     document.addEventListener('DOMContentLoaded', function () {
-        var bvi = new isvek.Bvi({ target: '.bvi-no-trigger', lang: 'ru-RU' });
 
-        var btn = document.querySelector('.site-header__btn-bvi');
+        const bvi = new isvek.Bvi({ target: '.bvi-no-trigger', lang: 'ru-RU' });
+
+        const btn = document.querySelector('.site-header__btn-bvi');
         if (!btn) return;
 
         btn.addEventListener('click', function () {
             if (document.body.classList.contains('bvi-active')) return;
 
-            var expires = new Date(Date.now() + 864e5).toUTCString();
-            var cfg = [
+            const expires = new Date(Date.now() + 864e5).toUTCString();
+            const cfg = [
                 'fontSize=16', 'theme=white', 'images=grayscale',
                 'letterSpacing=normal', 'lineHeight=normal', 'speech=true',
                 'fontFamily=arial', 'builtElements=false', 'panelFixed=true',

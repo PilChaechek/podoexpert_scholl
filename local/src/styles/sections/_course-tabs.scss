@@ -118,6 +118,18 @@
   color: var(--teal-dark);
 }
 
+.course-panel {
+  &__desc {
+    &.content-editor {
+      font-size: 1.2rem;
+      color: var(--color-zinc-500);
+      p {
+        margin: .5rem 0 0 0;
+      }
+    }
+  }
+}
+
 // Адаптивный размер заголовка курса
 .course-panel__title {
   font-size: clamp(1.4rem, 2.6vw, 1.85rem);

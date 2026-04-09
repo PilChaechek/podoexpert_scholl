@@ -15,6 +15,11 @@ $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/header.js');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?$APPLICATION->ShowHead()?>
     <title><?$APPLICATION->ShowTitle()?></title>
+
+    <link rel="icon" href="/favicons/favicon.ico" sizes="any" />
+    <link rel="icon" href="/favicons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicons/manifest.webmanifest" />
 </head>
 <div id="panel"><?$APPLICATION->ShowPanel();?></div>
 <body>

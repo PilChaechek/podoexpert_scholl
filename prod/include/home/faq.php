@@ -99,22 +99,22 @@ $faqRes = CIBlockElement::GetList(
 
 <script>
 (function () {
-    var roots = document.querySelectorAll('[data-faq-root]');
+    const roots = document.querySelectorAll('[data-faq-root]');
     roots.forEach(function (root) {
-        var items = [].slice.call(root.querySelectorAll('article'));
+        const items = [].slice.call(root.querySelectorAll('article'));
         items.forEach(function (item) {
-            var trigger = item.querySelector('[data-faq-trigger]');
-            var content = item.querySelector('[data-faq-content]');
-            var icon = item.querySelector('[data-faq-icon]');
+            const trigger = item.querySelector('[data-faq-trigger]');
+            const content = item.querySelector('[data-faq-content]');
+            const icon = item.querySelector('[data-faq-icon]');
             if (!trigger || !content || !icon) return;
 
             trigger.addEventListener('click', function () {
-                var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+                const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 
                 items.forEach(function (currentItem) {
-                    var currentTrigger = currentItem.querySelector('[data-faq-trigger]');
-                    var currentContent = currentItem.querySelector('[data-faq-content]');
-                    var currentIcon = currentItem.querySelector('[data-faq-icon]');
+                    const currentTrigger = currentItem.querySelector('[data-faq-trigger]');
+                    const currentContent = currentItem.querySelector('[data-faq-content]');
+                    const currentIcon = currentItem.querySelector('[data-faq-icon]');
                     if (!currentTrigger || !currentContent || !currentIcon) return;
                     currentTrigger.setAttribute('aria-expanded', 'false');
                     currentContent.classList.add('hidden');

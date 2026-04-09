@@ -101,19 +101,19 @@
 
 <script>
 (function () {
-    var form = document.getElementById('lead-form');
+    const form = document.getElementById('lead-form');
     if (!form) return;
 
-    var submitBtn    = document.getElementById('lead-form-submit');
-    var sendingLabel = form.querySelector('.lead-form-sending');
-    var resultBox    = document.getElementById('lead-form-result');
-    var consentError = document.getElementById('lead-form-consent-error');
+    const submitBtn = document.getElementById('lead-form-submit');
+    const sendingLabel = form.querySelector('.lead-form-sending');
+    const resultBox = document.getElementById('lead-form-result');
+    const consentError = document.getElementById('lead-form-consent-error');
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        var phone   = form.querySelector('[name="phone"]').value.trim();
-        var consent = form.querySelector('[name="consent"]').checked;
+        const phone = form.querySelector('[name="phone"]').value.trim();
+        const consent = form.querySelector('[name="consent"]').checked;
 
         if (!phone) {
             form.querySelector('[name="phone"]').focus();
@@ -129,7 +129,7 @@
         sendingLabel.classList.remove('hidden');
         resultBox.classList.add('hidden');
 
-        var data = new FormData(form);
+        const data = new FormData(form);
 
         fetch('/ajax/lead-form.php', {
             method: 'POST',

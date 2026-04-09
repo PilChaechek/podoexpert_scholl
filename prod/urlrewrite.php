@@ -32,12 +32,12 @@ $arUrlRewrite=array (
     'PATH' => '/bitrix/services/rest/index.php',
     'SORT' => 100,
   ),
-  4 => 
+  5 => 
   array (
-    'CONDITION' => '#^/news/#',
-    'RULE' => '',
-    'ID' => 'bitrix:news',
-    'PATH' => '/news/index.php',
-    'SORT' => 100,
+    'CONDITION' => '#^/info/([^/]+)/#',
+    'RULE' => 'CODE=$1',
+    'ID' => '',
+    'PATH' => '/info/detail.php',
+    'SORT' => 50,
   ),
 );

@@ -5,8 +5,8 @@ $isHome = ($APPLICATION->GetCurPage() === '/');
 $logoSvg = file_get_contents(__DIR__ . '/images/logo.svg');
 
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/styles.css');
-$APPLICATION->SetAdditionalCSS('/scripts/bvi.min.css');
-$APPLICATION->AddHeadScript('/scripts/bvi.min.js');
+$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/scripts/bvi.min.css');
+$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/bvi.min.js');
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/header.js');
 ?><!DOCTYPE html>
 <html lang="ru">
@@ -25,7 +25,7 @@ $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/header.js');
         <div class="site-header__inner flex justify-between items-center py-4">
             <?php $logoClass = 'site-header__logo'; include __DIR__ . '/include/logo.php'; ?>
             <div class="site-header__right">
-                <button class="btn btn--bvi site-header__btn-bvi bvi-no-styles" aria-label="Версия для слабовидящих" type="button">
+                <button class="btn--bvi site-header__btn-bvi bvi-no-styles" aria-label="Версия для слабовидящих" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3.5"/><circle cx="18" cy="12" r="3.5"/><path d="M2.5 12c1-4 3.5-6 6.5-6"/><path d="M21.5 12c-1-4-3.5-6-6.5-6"/><path d="M9.5 12h5"/></svg>
                 </button>
                 <a href="/info/" class="btn btn--info site-header__link-info bvi-no-styles">

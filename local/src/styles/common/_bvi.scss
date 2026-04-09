@@ -174,9 +174,7 @@ body .bvi-body[data-bvi-theme=green] {
 
 // ── Табы курсов ───────────────────────────────────────────────────────────────
 body.bvi-active {
-  .course-tabs:has(#lc-0:checked) label[for='lc-0'],
-  .course-tabs:has(#lc-1:checked) label[for='lc-1'],
-  .course-tabs:has(#lc-2:checked) label[for='lc-2'] {
+  .course-tabs__input:checked + .course-tab {
     .course-tab__price-hint,
     .course-tab__name {
       background: none !important;

@@ -114,24 +114,21 @@ const courses = [
 
 <section id="course-tabs" class="section soft course-tabs-section">
     <div class="container course-tabs">
-        <div class="course-tabs__inputs" aria-hidden="true">
+        <div class="course-tabs__tablist flex flex-wrap gap-3 mb-3" role="tablist" aria-label="Курсы">
             {courses.map((c, i) => (
-                <input
-                    class="course-tabs__input"
-                    type="radio"
-                    name="landing-course-tab"
-                    id={c.id}
-                    checked={i === 0}
-                />
-            ))}
-        </div>
-
-        <div class="flex flex-wrap gap-3 mb-3" role="tablist" aria-label="Курсы">
-            {courses.map((c) => (
-                <label class="course-tab inline-flex flex-col items-center justify-center text-center font-semibold" for={c.id} role="tab">
-                    <span class="course-tab__name text-base md:text-lg leading-snug">{c.tabLabel}</span>
-                    <span class="course-tab__price-hint">{c.price} ₽</span>
-                </label>
+                <div class="course-tabs__tab-pair" role="presentation">
+                    <input
+                        class="course-tabs__input"
+                        type="radio"
+                        name="landing-course-tab"
+                        id={c.id}
+                        checked={i === 0}
+                    />
+                    <label class="course-tab inline-flex flex-col items-center justify-center text-center font-semibold" for={c.id} role="tab">
+                        <span class="course-tab__name text-base md:text-lg leading-snug">{c.tabLabel}</span>
+                        <span class="course-tab__price-hint">{c.price} ₽</span>
+                    </label>
+                </div>
             ))}
         </div>
 

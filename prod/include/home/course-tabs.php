@@ -4,31 +4,94 @@
  * Главная: вкладки курсов (IBLOCK_ID = 6).
  *
  * Свойства: SHORT_TITLE, PRICE, DURATION, PROFIT, TEACH, TOOLS.
- * Поля элемента: NAME, PREVIEW_TEXT / DETAIL_TEXT (HTML под заголовком), PREVIEW_PICTURE / DETAIL_PICTURE.
+ * Поля: NAME, PREVIEW_TEXT / DETAIL_TEXT, PREVIEW_PICTURE / DETAIL_PICTURE.
  */
 
 CModule::IncludeModule('iblock');
 
 $courseRows = (static function (): array {
-    $scalar = static function (?array $pr): string {
-        if ($pr === null || $pr === []) {
+    $asString = static function ($val): string {
+        if ($val === null || $val === false) {
             return '';
         }
-        $v = $pr['VALUE'] ?? '';
-        if (is_array($v)) {
-            $v = $v[0] ?? '';
+        if (is_string($val)) {
+            return $val;
+        }
+        if (is_array($val)) {
+            foreach (['~VALUE', 'VALUE', 'HTML', 'TEXT'] as $k) {
+                if (!array_key_exists($k, $val)) {
+                    continue;
+                }
+                $x = $val[$k];
+                if (is_array($x)) {
+                    if (array_key_exists('TEXT', $x)) {
+                        $t = (string) $x['TEXT'];
+                        if ($t !== '') {
+                            return $t;
+                        }
+                    }
+                    if (array_key_exists('HTML', $x)) {
+                        $h = (string) $x['HTML'];
+                        if ($h !== '') {
+                            return $h;
+                        }
+                    }
+                    $x = $x[0] ?? '';
+                }
+                $s = (string) $x;
+                if ($s !== '') {
+                    return $s;
+                }
+            }
+
+            return '';
         }
 
-        return trim((string) $v);
+        return (string) $val;
     };
 
-    $fieldStr = static function (array $f, string $code): string {
+    $propScalar = static function (array $f, array $p, string $code) use ($asString): string {
         $v = $f['PROPERTY_' . $code . '_VALUE'] ?? '';
         if (is_array($v)) {
             $v = $v[0] ?? '';
         }
+        $s = trim((string) $v);
+        if ($s !== '') {
+            return $s;
+        }
 
-        return trim((string) $v);
+        $pr = $p[$code] ?? $p[strtolower($code)] ?? null;
+        if ($pr === null || $pr === []) {
+            return '';
+        }
+
+        return trim($asString($pr));
+    };
+
+    $propRawHtml = static function (array $f, array $p, string $code) use ($asString): string {
+        foreach (['~PROPERTY_' . $code . '_VALUE', 'PROPERTY_' . $code . '_VALUE'] as $key) {
+            if (!array_key_exists($key, $f)) {
+                continue;
+            }
+            $s = $asString($f[$key]);
+            if ($s !== '') {
+                return $s;
+            }
+        }
+        $pr = $p[$code] ?? $p[strtolower($code)] ?? null;
+        if (is_array($pr) && $pr !== []) {
+            foreach (['~VALUE', 'VALUE'] as $k) {
+                if (!array_key_exists($k, $pr)) {
+                    continue;
+                }
+                $s = $asString($pr[$k]);
+                if ($s !== '') {
+                    return $s;
+                }
+            }
+        }
+
+        return '';
     };
 
     $fmtPrice = static function (string $raw): string {
@@ -44,87 +107,6 @@ $courseRows = (static function (): array {
         return number_format((int) $digits, 0, ',', ' ');
     };
 
-    $looksLikeMarkup = static function (string $s): bool {
-        return $s !== '' && (bool) preg_match('/<[a-z!][a-z0-9:-]*[\s>\/]/i', $s);
-    };
-
-    $normHtml = null;
-    $normHtml = static function ($val, array $meta = []) use (&$normHtml, $looksLikeMarkup): string {
-        if ($val === null || $val === '' || $val === false) {
-            return '';
-        }
-        if (is_array($val)) {
-            if (isset($val['HTML']) && trim((string) $val['HTML']) !== '') {
-                return (string) $val['HTML'];
-            }
-            if (isset($val['TEXT'])) {
-                $text = (string) ($val['TEXT'] ?? '');
-                if (trim($text) === '') {
-                    return '';
-                }
-                $type = strtoupper((string) ($val['TYPE'] ?? 'HTML'));
-                // В админке часто стоит «текст», хотя в поле лежит разметка списков — иначе htmlspecialcharsbx превращает теги в видимый текст.
-                if ($type === 'HTML' || $type === '' || $looksLikeMarkup($text)) {
-                    return $text;
-                }
-
-                return nl2br(htmlspecialcharsbx($text));
-            }
-            $out = '';
-            foreach ($val as $item) {
-                if (is_array($item) || (is_string($item) && trim($item) !== '')) {
-                    $out .= $normHtml($item, $meta);
-                }
-            }
-
-            return $out;
-        }
-        $s = trim((string) $val);
-        if ($s === '') {
-            return '';
-        }
-        if (($meta['USER_TYPE'] ?? '') === 'HTML' || $looksLikeMarkup($s)) {
-            return $s;
-        }
-        // Иногда в GetList приходит уже экранированное HTML (&lt;ul&gt;…).
-        if (strpos($s, '&lt;') !== false && strpos($s, '<') === false) {
-            $charset = defined('LANG_CHARSET') ? LANG_CHARSET : 'UTF-8';
-            $s = html_entity_decode($s, ENT_QUOTES | ENT_HTML5, $charset);
-            if ($looksLikeMarkup($s)) {
-                return $s;
-            }
-        }
-
-        return nl2br(htmlspecialcharsbx($s));
-    };
-
-    $htmlProp = static function (array $f, array $p, string $code) use ($normHtml): string {
-        $prop = $p[$code] ?? $p[strtolower($code)] ?? [];
-        // Сначала «~» — как в шаблонах Битрикс: неэкранированное значение.
-        foreach (['~PROPERTY_' . $code . '_VALUE', 'PROPERTY_' . $code . '_VALUE'] as $key) {
-            if (!array_key_exists($key, $f)) {
-                continue;
-            }
-            $frag = $normHtml($f[$key], is_array($prop) ? $prop : []);
-            if ($frag !== '') {
-                return $frag;
-            }
-        }
-        if (is_array($prop) && $prop !== []) {
-            foreach (['~VALUE', 'VALUE'] as $k) {
-                if (!array_key_exists($k, $prop)) {
-                    continue;
-                }
-                $frag = $normHtml($prop[$k], $prop);
-                if ($frag !== '') {
-                    return $frag;
-                }
-            }
-        }
-
-        return '';
-    };
-
     $rows = [];
     $coursesRes = CIBlockElement::GetList(
         ['SORT' => 'ASC', 'ID' => 'ASC'],
@@ -135,9 +117,7 @@ $courseRows = (static function (): array {
             'ID',
             'NAME',
             'PREVIEW_TEXT',
-            'PREVIEW_TEXT_TYPE',
             'DETAIL_TEXT',
-            'DETAIL_TEXT_TYPE',
             'PREVIEW_PICTURE',
             'DETAIL_PICTURE',
             'PROPERTY_SHORT_TITLE',
@@ -153,14 +133,7 @@ $courseRows = (static function (): array {
         $f = $ob->GetFields();
         $p = $ob->GetProperties();
 
-        $stVal = $f['PROPERTY_SHORT_TITLE_VALUE'] ?? '';
-        if (is_array($stVal)) {
-            $stVal = $stVal[0] ?? '';
-        }
-        $tabLabel = trim((string) $stVal);
-        if ($tabLabel === '') {
-            $tabLabel = $scalar($p['SHORT_TITLE'] ?? $p['short_title'] ?? null);
-        }
+        $tabLabel = trim($propScalar($f, $p, 'SHORT_TITLE'));
         if ($tabLabel === '') {
             $tabLabel = trim((string) $f['NAME']);
         }
@@ -178,28 +151,14 @@ $courseRows = (static function (): array {
             continue;
         }
 
-        $introRaw = trim((string) ($f['~PREVIEW_TEXT'] ?? $f['PREVIEW_TEXT'] ?? ''));
-        if ($introRaw === '') {
-            $introRaw = trim((string) ($f['~DETAIL_TEXT'] ?? $f['DETAIL_TEXT'] ?? ''));
+        $intro = $asString($f['~PREVIEW_TEXT'] ?? $f['PREVIEW_TEXT'] ?? null);
+        if ($intro === '') {
+            $intro = $asString($f['~DETAIL_TEXT'] ?? $f['DETAIL_TEXT'] ?? null);
         }
-        $introHtml = $introRaw === '' ? '' : $normHtml($introRaw, []);
 
-        $price = $fieldStr($f, 'PRICE');
-        if ($price === '') {
-            $price = $scalar($p['PRICE'] ?? null);
-        }
+        $price = $propScalar($f, $p, 'PRICE');
         if ($price !== '') {
             $price = $fmtPrice($price);
-        }
-
-        $duration = $fieldStr($f, 'DURATION');
-        if ($duration === '') {
-            $duration = $scalar($p['DURATION'] ?? null);
-        }
-
-        $promo = $fieldStr($f, 'PROFIT');
-        if ($promo === '') {
-            $promo = $scalar($p['PROFIT'] ?? null);
         }
 
         $rows[] = [
@@ -207,11 +166,11 @@ $courseRows = (static function (): array {
             'tab_label' => $tabLabel,
             'title' => $title,
             'price' => $price,
-            'duration' => $duration,
-            'promo' => $promo,
-            'intro_html' => $introHtml,
-            'teach_html' => $htmlProp($f, $p, 'TEACH'),
-            'tools_html' => $htmlProp($f, $p, 'TOOLS'),
+            'duration' => $propScalar($f, $p, 'DURATION'),
+            'promo' => $propScalar($f, $p, 'PROFIT'),
+            'intro_html' => $intro,
+            'teach_html' => $propRawHtml($f, $p, 'TEACH'),
+            'tools_html' => $propRawHtml($f, $p, 'TOOLS'),
             'img' => $imgSrc,
         ];
     }
@@ -219,62 +178,33 @@ $courseRows = (static function (): array {
     return $rows;
 })();
 
-if (!empty($courseRows)) {
-    ?>
-    <style>
-        <?php foreach ($courseRows as $row) {
-            $id = preg_replace('/[^a-zA-Z0-9_-]/', '', $row['input_id']);
-            if ($id === '') {
-                continue;
-            }
-            ?>
-        .course-tabs:has(#<?= $id ?>:checked) label[for="<?= htmlspecialcharsbx($id) ?>"] {
-            border-color: transparent;
-            color: #fff;
-            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
-            box-shadow: 0 12px 32px rgba(92, 70, 192, 0.22);
-        }
-        .course-tabs:has(#<?= $id ?>:checked) label[for="<?= htmlspecialcharsbx($id) ?>"] .course-tab__price-hint {
-            color: rgba(255, 255, 255, 0.8);
-            background: none;
-            -webkit-background-clip: unset;
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.8);
-            background-clip: unset;
-        }
-            <?php
-        } ?>
-    </style>
-    <?php
-}
+$hasCourses = !empty($courseRows);
 ?>
 
 <section id="course-tabs" class="section soft course-tabs-section" aria-label="Курсы">
     <div class="container course-tabs">
-        <?php if (!empty($courseRows)): ?>
-            <div class="course-tabs__inputs" aria-hidden="true">
+        <?php if ($hasCourses): ?>
+            <div class="course-tabs__tablist flex flex-wrap gap-3 mb-3" role="tablist" aria-label="Курсы">
                 <?php foreach ($courseRows as $i => $c): ?>
-                    <input
-                        class="course-tabs__input"
-                        type="radio"
-                        name="landing-course-tab"
-                        id="<?= htmlspecialcharsbx($c['input_id']) ?>"
-                        <?= $i === 0 ? ' checked' : '' ?>
-                    />
-                <?php endforeach; ?>
-            </div>
-
-            <div class="flex flex-wrap gap-3 mb-3" role="tablist" aria-label="Курсы">
-                <?php foreach ($courseRows as $c): ?>
-                    <label
-                        class="course-tab inline-flex flex-col items-center justify-center text-center font-semibold"
-                        for="<?= htmlspecialcharsbx($c['input_id']) ?>"
-                        role="tab"
-                    >
-                        <span class="course-tab__name text-base md:text-lg leading-snug"><?= htmlspecialcharsbx($c['tab_label']) ?></span>
-                        <?php if ($c['price'] !== ''): ?>
-                            <span class="course-tab__price-hint"><?= htmlspecialcharsbx($c['price']) ?> ₽</span>
-                        <?php endif; ?>
-                    </label>
+                    <div class="course-tabs__tab-pair" role="presentation">
+                        <input
+                            class="course-tabs__input"
+                            type="radio"
+                            name="landing-course-tab"
+                            id="<?= htmlspecialcharsbx($c['input_id']) ?>"
+                            <?= $i === 0 ? ' checked' : '' ?>
+                        />
+                        <label
+                            class="course-tab inline-flex flex-col items-center justify-center text-center font-semibold"
+                            for="<?= htmlspecialcharsbx($c['input_id']) ?>"
+                            role="tab"
+                        >
+                            <span class="course-tab__name text-base md:text-lg leading-snug"><?= htmlspecialcharsbx($c['tab_label']) ?></span>
+                            <?php if ($c['price'] !== ''): ?>
+                                <span class="course-tab__price-hint"><?= htmlspecialcharsbx($c['price']) ?> ₽</span>
+                            <?php endif; ?>
+                        </label>
+                    </div>
                 <?php endforeach; ?>
             </div>
 
@@ -357,32 +287,28 @@ if (!empty($courseRows)) {
     </div>
 </section>
 
-<?php if (!empty($courseRows)): ?>
+<?php if ($hasCourses): ?>
 <script>
 (function () {
     function initCourseTabs() {
-        var root = document.querySelector('.course-tabs');
+        const root = document.querySelector('.course-tabs');
         if (!root) return;
-        var inputs = root.querySelectorAll('.course-tabs__input');
-        var panels = root.querySelectorAll('.course-panel');
+        const inputs = root.querySelectorAll('.course-tabs__input');
+        const panels = root.querySelectorAll('.course-panel');
 
         function sync() {
-            var active = 0;
-            inputs.forEach(function (inp, i) {
-                if (inp.checked) active = i;
-            });
-            panels.forEach(function (panel, i) {
-                if (i !== active) {
-                    panel.setAttribute('hidden', '');
-                } else {
-                    panel.removeAttribute('hidden');
+            let active = 0;
+            inputs.forEach((inp, i) => {
+                if (inp instanceof HTMLInputElement && inp.checked) {
+                    active = i;
                 }
+            });
+            panels.forEach((panel, i) => {
+                panel.toggleAttribute('hidden', i !== active);
             });
         }
 
-        inputs.forEach(function (inp) {
-            inp.addEventListener('change', sync);
-        });
+        inputs.forEach((inp) => inp.addEventListener('change', sync));
         sync();
     }
 

@@ -1,5 +1,12 @@
-// Скрываем radio-инпуты — управление состоянием через :has()
-.course-tabs__inputs {
+// Пара «radio + label» в ряду вкладок (prod и Astro)
+.course-tabs__tab-pair {
+  position: relative;
+  display: inline-flex;
+  vertical-align: top;
+}
+
+// Скрытый radio — активная вкладка через соседний селектор (без :has и без id в CSS)
+.course-tabs__input {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -11,10 +18,13 @@
   border: 0;
 }
 
+.course-tabs__input:focus-visible + .course-tab {
+  outline: 2px solid var(--purple);
+  outline-offset: 2px;
+}
+
 // Активный таб
-.course-tabs:has(#lc-0:checked) label[for='lc-0'],
-.course-tabs:has(#lc-1:checked) label[for='lc-1'],
-.course-tabs:has(#lc-2:checked) label[for='lc-2'] {
+.course-tabs__input:checked + .course-tab {
   border-color: transparent;
   color: #fff;
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
@@ -53,11 +63,6 @@
     border-color: var(--line-strong);
     transform: translateY(-1px);
     box-shadow: 0 6px 20px rgba(24, 24, 27, 0.08);
-  }
-
-  &:focus-within {
-    outline: 2px solid var(--purple);
-    outline-offset: 2px;
   }
 
   @media (max-width: 767px) {

@@ -40,4 +40,12 @@ $arUrlRewrite=array (
     'PATH' => '/info/detail.php',
     'SORT' => 50,
   ),
+  6 => 
+  array (
+    'CONDITION' => '#^/docs/([^/]+)/#',
+    'RULE' => 'CODE=$1',
+    'ID' => '',
+    'PATH' => '/docs/index.php',
+    'SORT' => 50,
+  ),
 );

@@ -1,0 +1,39 @@
+---
+description: Bitrix URL routing conventions for dynamic pages
+globs: prod/**/*.php,prod/urlrewrite.php
+alwaysApply: false
+---
+
+# Bitrix URL Routing
+
+## Паттерн для динамических разделов
+
+Для каждого раздела с динамическими страницами из инфоблока:
+
+1. Создать папку раздела: `/prod/<section>/`
+2. Создать `/prod/<section>/detail.php` — читает элемент из инфоблока по `CODE` из `$_GET`
+3. Добавить правило в `urlrewrite.php`:
+
+```php
+array(
+    'CONDITION' => '#^/<section>/([^/]+)/#',
+    'RULE'      => 'CODE=$1',
+    'ID'        => '',
+    'PATH'      => '/<section>/detail.php',
+    'SORT'      => 50,
+),
+```
+
+**Не создавать** `page.php` в корне сайта. Не создавать отдельные `index.php` под каждый элемент.
+
+## Почему detail.php + rewrite, а не index.php
+
+- `index.php` на каждый документ = ручное создание файлов для каждой страницы
+- `detail.php` + rewrite = новый элемент в инфоблоке → страница работает автоматически
+
+## Примеры в проекте
+
+| Раздел | Инфоблок | Rewrite |
+|--------|----------|---------|
+| `/info/` | IBLOCK_ID=1 | `#^/info/([^/]+)/#` → `/info/detail.php` |
+| `/docs/` | IBLOCK_ID=3 | `#^/docs/([^/]+)/#` → `/docs/index.php` |

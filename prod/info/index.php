@@ -3,26 +3,31 @@ require($_SERVER["DOCUMENT_ROOT"] . "/bitrix/header.php");
 $APPLICATION->SetTitle("Основные сведения");
 $APPLICATION->AddChainItem("Сведения об образовательной организации", "/info/");
 
-ob_start();
-
 CModule::IncludeModule("iblock");
 
-$elements = CIBlockElement::GetList(
-    ['SORT' => 'ASC'],
-    ['IBLOCK_ID' => 1, 'ACTIVE' => 'Y'],
+$element = CIBlockElement::GetList(
+    [],
+    ['IBLOCK_ID' => 1, 'CODE' => 'main', 'ACTIVE' => 'Y'],
     false,
-    false,
-    ['ID', 'NAME', 'CODE']
-);
-?>
+    ['nTopCount' => 1],
+    ['ID', 'NAME', 'DETAIL_TEXT', 'DETAIL_TEXT_TYPE']
+)->GetNextElement();
 
-<ul>
-    <?php while ($el = $elements->Fetch()): ?>
-        <li><?= htmlspecialchars($el['NAME']) ?></li>
-    <?php endwhile; ?>
-</ul>
+ob_start();
 
-<?php
+if ($element) {
+    $fields = $element->GetFields();
+    if (!empty($fields['DETAIL_TEXT'])) {
+        echo $fields['DETAIL_TEXT_TYPE'] === 'html'
+            ? $fields['DETAIL_TEXT']
+            : nl2br(htmlspecialchars($fields['DETAIL_TEXT']));
+    } else {
+        echo '<p>Контент не заполнен.</p>';
+    }
+} else {
+    echo '<p>Страница не найдена. Создайте элемент с кодом <code>main</code> в инфоблоке.</p>';
+}
+
 $infoPageContent = ob_get_clean();
 include $_SERVER["DOCUMENT_ROOT"] . "/info/include/layout.php";
 ?>

@@ -5,10 +5,13 @@ CModule::IncludeModule("iblock");
 
 $currentPath = rtrim($APPLICATION->GetCurPage(), '/') . '/';
 
-$infoMenu = [];
+$infoMenu = [
+    ['href' => '/info/', 'title' => 'Основные сведения'],
+];
+
 $menuRes = CIBlockElement::GetList(
     ['SORT' => 'ASC'],
-    ['IBLOCK_ID' => 1, 'ACTIVE' => 'Y'],
+    ['IBLOCK_ID' => 1, 'ACTIVE' => 'Y', '!CODE' => 'main'],
     false,
     false,
     ['ID', 'NAME', 'CODE']
@@ -20,37 +23,31 @@ while ($el = $menuRes->Fetch()) {
     ];
 }
 
-$navChain = $APPLICATION->GetNavChain();
 ?>
 
-<section class="info-section">
+<section class="bg-zinc-50/60 py-8 md:py-10">
     <div class="container">
 
-        <?php if (!empty($navChain)): ?>
-        <nav class="info-breadcrumbs" aria-label="Хлебные крошки">
-            <?php foreach ($navChain as $i => $crumb): ?>
-                <?php if ($i > 0): ?><span class="info-breadcrumbs__sep">/</span><?php endif; ?>
-                <?php if (!empty($crumb['LINK'])): ?>
-                    <a href="<?= htmlspecialchars($crumb['LINK']) ?>" class="info-breadcrumbs__link"><?= htmlspecialchars($crumb['TITLE']) ?></a>
-                <?php else: ?>
-                    <span class="info-breadcrumbs__current"><?= htmlspecialchars($crumb['TITLE']) ?></span>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </nav>
-        <?php endif; ?>
+        <?php $APPLICATION->IncludeComponent('bitrix:breadcrumb', 'info', [
+            'PATH'       => false,
+            'START_FROM' => 0,
+        ], false); ?>
 
-        <h1 class="info-section__title"><?= $APPLICATION->ShowTitle(false) ?></h1>
+        <h1 class="mb-6 text-3xl font-semibold tracking-tight text-zinc-900 md:text-4xl"><?= $APPLICATION->ShowTitle(false) ?></h1>
 
-        <div class="info-layout">
-            <aside class="info-layout__sidebar">
+        <div class="grid grid-cols-1 gap-5 md:grid-cols-[300px_1fr] md:gap-6">
+
+            <aside class="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
                 <nav aria-label="Навигация по разделам сведений">
-                    <ul class="info-nav">
+                    <ul>
                         <?php foreach ($infoMenu as $item):
                             $isActive = (rtrim($item['href'], '/') . '/') === $currentPath;
+                            $linkClass = $isActive
+                                ? 'block px-4 py-3 text-sm leading-5 transition-colors border-l-2 border-violet-500 bg-violet-50 font-semibold text-zinc-900'
+                                : 'block px-4 py-3 text-sm leading-5 transition-colors text-zinc-700 hover:bg-zinc-50 hover:text-zinc-900';
                         ?>
-                        <li class="info-nav__item">
-                            <a href="<?= htmlspecialchars($item['href']) ?>"
-                               class="info-nav__link<?= $isActive ? ' info-nav__link--active' : '' ?>">
+                        <li class="border-b border-zinc-200 last:border-b-0">
+                            <a href="<?= htmlspecialchars($item['href']) ?>" class="<?= $linkClass ?>">
                                 <?= htmlspecialchars($item['title']) ?>
                             </a>
                         </li>
@@ -59,9 +56,12 @@ $navChain = $APPLICATION->GetNavChain();
                 </nav>
             </aside>
 
-            <article class="info-layout__content">
-                <?= $infoPageContent ?? '' ?>
+            <article class="min-h-[380px] rounded-2xl border border-zinc-200 bg-white px-4 py-6 shadow-sm md:px-8">
+                <div class="content-editor">
+                    <?= $infoPageContent ?? '' ?>
+                </div>
             </article>
+
         </div>
 
     </div>

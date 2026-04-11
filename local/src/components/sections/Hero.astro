@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import heroImage from '../../assets/images/landing/hero.png';
+import heroImage from '../../assets/images/landing/hero.jpg';
 import cubeImage from '../../assets/images/landing/courses/3.png';
 import braceImage from '../../assets/images/landing/courses/2.png';
 import acrylicImage from '../../assets/images/landing/courses/1.png';
@@ -28,7 +28,7 @@ const directions = [
         image: acrylicImage,
         imageAlt: 'Акриловые вкладки',
         title: 'Акриловые вкладки',
-        description: 'Профилактика <br> и восстановление ногтя.',
+        description: 'Профилактика и восстановление ногтя.',
         price: '7 500 ₽',
         gradient: 'from-slate-500/80 to-violet-700/80',
         tabId: 'lc-1',
@@ -58,21 +58,30 @@ const heroBenefits = [
     },
 ];
 ---
-<section class="section hero-grid relative">
+<section class="section section--p0 hero-grid relative">
     <div class="hero-blur"></div>
     <div class="container">
-        <div class="flex flex-col items-center text-center">
-            <h1 class="m-0 pt-4 text-3xl md:text-5xl font-bold leading-[1.1] tracking-[-0.02em] text-zinc-900">
-                Обучение экспертом-подологом <br> методике коррекции сложных ногтей ARKADA
-            </h1>
 
-            <p class="mt-3.5 mb-6 leading-relaxed text-zinc-500">
-                Увеличьте доход после освоения авторской методики коррекции сложных ногтей ARKADA.
-            </p>
+        <div class="hero-main">
+            <div class="hero-photo">
+                <Image
+                    src={heroImage}
+                    alt="Юлия Бурова — эксперт-подолог ARKADA"
+                    class="hero-photo__img"
+                    loading="eager"
+                    widths={[480, 720, 960]}
+                    sizes="(max-width: 768px) 100vw, 480px"
+                />
+            </div>
 
-            <div class="mt-6 w-full">
-
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-6xl mx-auto w-full">
+            <div class="hero-content">
+                <h1 class="m-0 pb-3 text-3xl md:text-5xl font-bold leading-[1.1] tracking-[-0.02em] text-zinc-900">
+                    Обучение экспертом-подологом методике коррекции сложных ногтей ARKADA
+                </h1>
+                <p class="mt-0 mb-5 leading-relaxed text-zinc-500">
+                    Увеличьте доход после освоения авторской методики коррекции сложных ногтей ARKADA.
+                </p>
+                <div class="flex flex-col gap-3">
                     {directions.map((dir) => (
                         <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer" data-tab-id={dir.tabId}>
                             <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
@@ -93,23 +102,23 @@ const heroBenefits = [
                         </div>
                     ))}
                 </div>
+
+                <a href="#lead-form" class="btn btn--big btn--v2 hero-cta-btn mt-5 w-full">Записаться на обучение</a>
             </div>
-
-            <ul class="mt-10 list-none p-0 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 text-left w-full">
-                {heroBenefits.map((benefit) => (
-                    <li class="flex items-start gap-2">
-                        <span class="shrink-0 pt-0.5 text-[11px] font-bold tracking-[0.07em] text-zinc-400">{benefit.number}</span>
-                        <span class="flex flex-col gap-0.5">
-                            <span class="text-md font-bold leading-snug text-zinc-900">{benefit.title}</span>
-                            <span class="text-sm leading-snug text-zinc-500" set:html={benefit.description}></span>
-                        </span>
-                    </li>
-                ))}
-            </ul>
-
-            <a href="#" class="btn btn--v2 mt-7 inline-flex px-8">Записаться на обучение</a>
-
         </div>
+
+        <ul class="hero-benefits mt-10 list-none p-0 grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-4 text-left">
+            {heroBenefits.map((benefit) => (
+                <li class="flex items-start gap-2">
+                    <span class="shrink-0 pt-0.5 text-[11px] font-bold tracking-[0.07em] text-zinc-400">{benefit.number}</span>
+                    <span class="flex flex-col gap-0.5">
+                        <span class="text-md font-bold leading-snug text-zinc-900">{benefit.title}</span>
+                        <span class="text-sm leading-snug text-zinc-500" set:html={benefit.description}></span>
+                    </span>
+                </li>
+            ))}
+        </ul>
+
     </div>
 </section>
 

@@ -1,3 +1,5 @@
+@use '../mixins/breakpoints' as *;
+
 .hero-blur {
   position: absolute;
   inset: 0 0 auto 0;
@@ -31,6 +33,46 @@
 }
 
 .hero-grid {
-  position: relative;
-  padding-top: 40px;
+  @include respond(xl){
+    padding-top: 12px;
+  }
+}
+
+.hero-main {
+  display: grid;
+  gap: 12px;
+  align-items: start;
+
+  @include respond(md){
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+.hero-photo {
+  border-radius: 20px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+
+  &__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  padding-top: 16px;
+  padding-bottom: 16px;
 }

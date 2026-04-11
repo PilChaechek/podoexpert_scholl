@@ -131,7 +131,7 @@
 
         const data = new FormData(form);
 
-        fetch('/ajax/lead-form.php', {
+        fetch('<?= SITE_TEMPLATE_PATH ?>/include/bitrix24/lead-form.php', {
             method: 'POST',
             body: data,
         })

@@ -1,28 +1,28 @@
 <?php if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die(); ?>
 
-<section class="section lead-form-section" id="zapis">
+<section class="section lead-form" id="zapis">
     <div class="container">
-        <div class="lead-form-shell rounded-[24px] border border-zinc-200 bg-white p-5 md:p-8">
-            <div class="lead-form-grid grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.2fr] md:gap-8">
+        <div class="lead-form__shell rounded-[24px] border border-zinc-200 bg-white p-5 md:p-8">
+            <div class="lead-form__grid grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.2fr] md:gap-8">
 
-                <div class="flex items-end">
+                <div class="lead-form__media flex items-end">
                     <img
                         src="<?= SITE_TEMPLATE_PATH ?>/images/director.webp"
                         alt="Юлия Бурова"
-                        class="h-[240px] w-full rounded-xl object-cover object-top lead-form-grid__img shadow-lg md:h-[320px] md:shadow-none"
+                        class="lead-form__image h-[240px] w-full rounded-xl object-cover object-top shadow-lg md:h-[320px] md:shadow-none"
                         loading="lazy"
                         width="220"
                         height="320"
                     />
                 </div>
 
-                <div class="lead-form-copy">
-                    <p class="lead-form-eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Форма записи</p>
-                    <h2 class="h2 text-slate-900 md:text-6xl">Поможем <br> подобрать курс</h2>
-                    <p class="lead-form-text my-4 max-w-md text-lg leading-relaxed text-zinc-600">
+                <div class="lead-form__intro">
+                    <p class="lead-form__eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Форма записи</p>
+                    <h2 class="lead-form__title h2 text-slate-900 md:text-6xl">Поможем <br> подобрать курс</h2>
+                    <p class="lead-form__lead my-4 max-w-md text-lg leading-relaxed text-zinc-600">
                         Оставьте контакты — подскажем, какой формат обучения подойдёт именно вам, и ответим на вопросы по программе.
                     </p>
-                    <p class="mb-2">или напишите нам</p>
+                    <p class="lead-form__social-caption mb-2">или напишите нам</p>
                     <div class="social-links">
                         <div class="social-links__items">
                             <a class="social-links__item" href="https://max.ru/u/f9LHodD0cOJ5StNOKRUYS3zdDTboBcV62ZouzHtIhD-8GcK2a8lprlFPsAY" target="_blank" rel="noopener noreferrer" title="Написать в MAX">
@@ -44,117 +44,196 @@
                     </div>
                 </div>
 
-                <form class="lead-form-fields space-y-3" id="lead-form" novalidate>
+                <div class="lead-form__form-panel">
+                <form class="lead-form__form flex flex-col gap-3" id="lead-form" novalidate>
                     <?= bitrix_sessid_post() ?>
-                    <input
-                        class="lead-input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600"
-                        type="text"
-                        name="name"
-                        placeholder="Ваше Имя"
-                        autocomplete="name"
-                    />
-                    <input
-                        class="lead-input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600"
-                        type="tel"
-                        name="phone"
-                        placeholder="Номер телефона"
-                        required
-                        autocomplete="tel"
-                    />
-                    <select
-                        class="lead-select h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-500 outline-none transition focus:border-violet-600"
-                        name="course"
-                    >
-                        <option value="">Какой курс интересует</option>
-                        <option>Arkada's Cube</option>
-                        <option>Arkada's Brace</option>
-                        <option>Акриловые вкладки</option>
-                        <option>Хочу узнать про все</option>
-                    </select>
+                    <div class="lead-form__field">
+                        <input
+                            id="lead-form-name"
+                            class="lead-form__control lead-form__input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600"
+                            type="text"
+                            name="name"
+                            placeholder="Ваше Имя"
+                            autocomplete="name"
+                        />
+                        <div id="lead-form-name-error" class="lead-form__msg" aria-live="polite"></div>
+                    </div>
+                    <div class="lead-form__field">
+                        <input
+                            id="lead-form-phone"
+                            class="lead-form__control lead-form__input h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-900 outline-none transition focus:border-violet-600"
+                            type="tel"
+                            name="phone"
+                            placeholder="Номер телефона"
+                            autocomplete="tel"
+                        />
+                        <div id="lead-form-phone-error" class="lead-form__msg" aria-live="polite"></div>
+                    </div>
+                    <div class="lead-form__field">
+                        <select
+                            id="lead-form-course"
+                            class="lead-form__control lead-form__select h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-500 outline-none transition focus:border-violet-600"
+                            name="course"
+                        >
+                            <option value="">Какой курс интересует</option>
+                            <option value="Arkada's Cube">Arkada's Cube</option>
+                            <option value="Arkada's Brace">Arkada's Brace</option>
+                            <option value="Акриловые вкладки">Акриловые вкладки</option>
+                            <option value="Хочу узнать про все">Хочу узнать про все</option>
+                        </select>
+                        <div id="lead-form-course-error" class="lead-form__msg" aria-live="polite"></div>
+                    </div>
 
-                    <div class="lead-submit-row flex flex-wrap items-center gap-4 pt-10 mb-4">
+                    <div class="lead-form__actions flex flex-wrap items-center gap-4 pt-4 mb-4">
                         <button class="btn btn--v2 w-140" type="submit" id="lead-form-submit">
                             Подобрать курс
                         </button>
-                        <span class="lead-form-sending hidden text-sm text-zinc-500">Отправляем...</span>
+                        <span class="lead-form__sending hidden text-sm text-zinc-500">Отправляем...</span>
                     </div>
 
-                    <div class="basket-order__item basket-order__agreement">
-                        <label class="form__checkbox">
-                            <input type="checkbox" name="consent" class="form__checkbox-input" id="lead-order-agreement" required>
+                    <div class="lead-form__consent">
+                        <label class="form__checkbox lead-form__checkbox">
+                            <input type="checkbox" name="consent" class="form__checkbox-input" id="lead-order-agreement" value="1">
                             <span class="form__checkbox-box"></span>
                             <span class="form__checkbox-text text-sm">
                                 Я даю <a href="/soglasie-na-obrabotku-pdn" class="link link--color">согласие</a> на обработку персональных данных и принимаю
                                 <a class="link link--color" href="/politika-konfidentsialnosti" target="_blank">политику конфиденциальности</a>
                             </span>
                         </label>
-                        <span class="form__error lead-form-error" id="lead-form-consent-error"></span>
+                        <div id="lead-form-consent-error" class="lead-form__msg lead-form__msg--consent mt-1 min-h-[1.25em]" aria-live="polite"></div>
                     </div>
 
-                    <div class="lead-form-result hidden" id="lead-form-result"></div>
+                    <div class="lead-form__result hidden text-sm" id="lead-form-result"></div>
                 </form>
+
+                <div
+                    class="lead-form__success hidden flex flex-col items-center justify-center gap-6 py-10 text-center text-emerald-700 md:min-h-[280px]"
+                    id="lead-form-success"
+                    role="status"
+                    aria-live="polite"
+                >
+                    <div class="relative flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center" aria-hidden="true">
+                        <span class="absolute inset-0 scale-[1.4] rounded-full bg-emerald-500/20"></span>
+                        <span
+                            class="relative box-border flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-4 border-emerald-400 bg-emerald-600 shadow-md"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                class="h-7 w-7 shrink-0"
+                                aria-hidden="true"
+                                focusable="false"
+                            >
+                                <path fill="#ffffff" d="M21 7L9 19l-5.5-5.5l1.41-1.41L9 16.17L19.59 5.59z"></path>
+                            </svg>
+                        </span>
+                    </div>
+                    <p class="lead-form__success-text max-w-md text-lg font-semibold leading-snug text-emerald-700 md:text-xl">
+                        Ваша заявка успешно отправлена, мы свяжемся с вами в ближайшее время
+                    </p>
+                </div>
+                </div>
 
             </div>
         </div>
     </div>
 </section>
 
+<script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js"></script>
 <script>
 (function () {
     const form = document.getElementById('lead-form');
-    if (!form) return;
+    const JustValidate = window.JustValidate;
+    if (!form || typeof JustValidate !== 'function') return;
 
     const submitBtn = document.getElementById('lead-form-submit');
-    const sendingLabel = form.querySelector('.lead-form-sending');
+    const sendingLabel = form.querySelector('.lead-form__sending');
     const resultBox = document.getElementById('lead-form-result');
-    const consentError = document.getElementById('lead-form-consent-error');
+    const successPanel = document.getElementById('lead-form-success');
+    const actionUrl = '<?= htmlspecialchars(SITE_TEMPLATE_PATH, ENT_QUOTES, 'UTF-8') ?>/include/bitrix24/lead-form.php';
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const phone = form.querySelector('[name="phone"]').value.trim();
-        const consent = form.querySelector('[name="consent"]').checked;
-
-        if (!phone) {
-            form.querySelector('[name="phone"]').focus();
-            return;
-        }
-        if (!consent) {
-            consentError.textContent = 'Необходимо дать согласие на обработку данных';
-            return;
-        }
-        consentError.textContent = '';
-
-        submitBtn.disabled = true;
-        sendingLabel.classList.remove('hidden');
-        resultBox.classList.add('hidden');
-
-        const data = new FormData(form);
-
-        fetch('<?= SITE_TEMPLATE_PATH ?>/include/bitrix24/lead-form.php', {
-            method: 'POST',
-            body: data,
-        })
-            .then(function (r) { return r.json(); })
-            .then(function (json) {
-                if (json.success) {
-                    form.reset();
-                    resultBox.textContent = 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.';
-                    resultBox.className = 'lead-form-result mt-3 text-sm text-green-600';
-                } else {
-                    resultBox.textContent = json.error || 'Произошла ошибка. Попробуйте ещё раз.';
-                    resultBox.className = 'lead-form-result mt-3 text-sm text-red-600';
-                    submitBtn.disabled = false;
-                }
-            })
-            .catch(function () {
-                resultBox.textContent = 'Произошла ошибка. Попробуйте ещё раз.';
-                resultBox.className = 'lead-form-result mt-3 text-sm text-red-600';
-                submitBtn.disabled = false;
-            })
-            .finally(function () {
-                sendingLabel.classList.add('hidden');
-            });
+    const validator = new JustValidate(form, {
+        validateBeforeSubmitting: true,
+        errorFieldCssClass: 'lead-form--invalid',
+        errorLabelCssClass: 'lead-form-jv-error',
+        focusInvalidField: true,
     });
+
+    validator
+        .addField(
+            '#lead-form-name',
+            [
+                {
+                    validator: (value) => {
+                        const t = String(value || '').trim();
+                        return t === '' || t.length >= 2;
+                    },
+                    errorMessage: 'Не меньше 2 символов',
+                },
+            ],
+            { errorsContainer: '#lead-form-name-error' }
+        )
+        .addField(
+            '#lead-form-phone',
+            [
+                { rule: 'required', errorMessage: 'Укажите номер телефона' },
+                {
+                    validator: (value) => String(value || '').replace(/\D/g, '').length >= 10,
+                    errorMessage: 'Номер: не меньше 10 цифр',
+                },
+            ],
+            { errorsContainer: '#lead-form-phone-error' }
+        )
+        .addField(
+            '#lead-form-course',
+            [{ rule: 'required', errorMessage: 'Выберите курс' }],
+            { errorsContainer: '#lead-form-course-error' }
+        )
+        .addField(
+            '#lead-order-agreement',
+            [{ rule: 'required', errorMessage: 'Нужно согласие на обработку персональных данных' }],
+            { errorsContainer: '#lead-form-consent-error' }
+        )
+        .onSuccess((event) => {
+            event.preventDefault();
+
+            submitBtn.disabled = true;
+            sendingLabel.classList.remove('hidden');
+            resultBox.classList.add('hidden');
+
+            fetch(actionUrl, {
+                method: 'POST',
+                body: new FormData(form),
+            })
+                .then((r) => r.json())
+                .then((json) => {
+                    if (json.success) {
+                        form.reset();
+                        if (typeof validator.refresh === 'function') {
+                            validator.refresh();
+                        }
+                        resultBox.classList.add('hidden');
+                        resultBox.textContent = '';
+                        form.classList.add('hidden');
+                        successPanel.classList.remove('hidden');
+                    } else {
+                        resultBox.classList.remove('hidden');
+                        resultBox.textContent = json.error || 'Произошла ошибка. Попробуйте ещё раз.';
+                        resultBox.className = 'lead-form__result mt-3 text-sm text-red-600';
+                        submitBtn.disabled = false;
+                    }
+                })
+                .catch(() => {
+                    resultBox.classList.remove('hidden');
+                    resultBox.textContent = 'Произошла ошибка. Попробуйте ещё раз.';
+                    resultBox.className = 'lead-form__result mt-3 text-sm text-red-600';
+                    submitBtn.disabled = false;
+                })
+                .finally(() => {
+                    sendingLabel.classList.add('hidden');
+                });
+        });
 }());
 </script>

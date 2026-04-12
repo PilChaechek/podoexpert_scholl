@@ -41,7 +41,7 @@
 .hero-main {
   display: grid;
   gap: 12px;
-  align-items: start;
+  align-items: center;
 
   @include respond(md){
     grid-template-columns: 1fr 1fr;
@@ -69,10 +69,6 @@
 }
 
 .hero-cta-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.05rem;
   padding-top: 16px;
   padding-bottom: 16px;
 }

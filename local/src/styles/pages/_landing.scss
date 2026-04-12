@@ -142,17 +142,7 @@
   line-height: 1;
 }
 
-.btn--v2 {
-  background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
-  box-shadow: 0 12px 28px rgba(92, 70, 192, .20);
-  border-color: transparent;
-  height: 48px;
-  border-radius: 12px;
-  &:hover {
-    transform: translateY(-2px);
-    color: #ffffff;
-  }
-}
+
 
 
 .landing-reviews {

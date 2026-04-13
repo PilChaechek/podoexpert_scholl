@@ -1,6 +1,5 @@
 ---
 import { Image } from 'astro:assets';
-import reviewImage1 from '../../assets/images/landing/reviews/1.webp';
 import courseImage1 from '../../assets/images/landing/courses/11.webp';
 import courseImage2 from '../../assets/images/landing/courses/22.webp';
 import courseImage3 from '../../assets/images/landing/courses/33.webp';
@@ -102,14 +101,7 @@ const courses = [
             'Arkadas Cube https://podoexpert.ru/arkadascube'
         ],
     },
-];const quoteBlocks = [
-    {
-        image: reviewImage1,
-        title: 'Теперь я могу всё!',
-        subtitle: 'Отзыв мастера Александры Андреевой, г. Санкт-Петербург',
-        text: '«И вновь повышение, новые знания, новая для меня, но очень желанная информация и именно по этой методике. Еще одна корректирующая система освоена, я влюблена! UniBrace — ВАН ЛАВ! Очень изящна, деликатно работает, справляется с любым, даже очень сложным случаем деформации ногтевых пластин. Да! Теперь я могу все! И даже с самыми сложными случаями я справлюсь, еще быстрее и конечно все так же БЕЗБОЛЕЗНЕННО.»',
-    },
-];
+]
 ---
 
 <section id="course-tabs" class="section soft course-tabs-section">
@@ -213,38 +205,6 @@ const courses = [
                     </div>
                 </div>
             ))}
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container">
-        <div class="rounded-2xl border border-zinc-300 bg-white p-5 md:p-8">
-            <div class="space-y-6">
-                <div class="mt-0 space-y-6">
-                    {quoteBlocks.map((quote, index) => (
-                        <>
-                    <div class="grid grid-cols-1 gap-8 md:grid-cols-[320px_1fr] items-center mt-0">
-                        <Image
-                            class="h-86 w-full rounded-xl object-cover"
-                            src={quote.image}
-                            alt={quote.subtitle}
-                            loading="lazy"
-                        />
-                        <div class="space-y-3">
-                            <h3 class="text-2xl font-bold leading-tight text-zinc-900 mb-1">
-                                {quote.title}
-                            </h3>
-                            <p class="text-sm text-zinc-500 md:text-base">{quote.subtitle}</p>
-                            <p class="text-base leading-relaxed text-zinc-700 md:text-lg">{quote.text}</p>
-                        </div>
-                    </div>
-
-                        
-                    </>
-                ))}
-                 </div>
-            </div>
         </div>
     </div>
 </section>

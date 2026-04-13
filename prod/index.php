@@ -8,6 +8,7 @@ $APPLICATION->SetTitle("Школа «AEK-School»");
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/hero.php'; ?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/from-author.php'; ?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/course-tabs.php'; ?>
+<?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/course-quote.php'; ?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/reviews.php'; ?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/faq.php'; ?>
 <?php require $_SERVER['DOCUMENT_ROOT'] . '/include/home/lead-form.php'; ?>

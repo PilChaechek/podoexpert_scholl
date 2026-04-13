@@ -48,13 +48,17 @@ $reviewsRes = CIBlockElement::GetList(
     ['IBLOCK_ID' => 5, 'ACTIVE' => 'Y'],
     false,
     false,
-    ['ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'DETAIL_TEXT_TYPE', 'PREVIEW_TEXT_TYPE', 'PREVIEW_PICTURE']
+    ['ID', 'NAME', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'DETAIL_TEXT_TYPE', 'PREVIEW_TEXT_TYPE', 'PREVIEW_PICTURE', 'PROPERTY_FAVORITE']
 );
 
 $reviewRows = [];
 while ($ob = $reviewsRes->GetNextElement()) {
     $f = $ob->GetFields();
     $p = $ob->GetProperties();
+
+    if (($f['PROPERTY_FAVORITE_VALUE'] ?? '') === 'да') {
+        continue;
+    }
 
     $name = trim((string) $f['NAME']);
     if ($name === '') {

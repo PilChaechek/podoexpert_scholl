@@ -6,7 +6,7 @@ const authorStats = [
     { title: 'Почетный член жюри', value: 'международных конкурсов и чемпионатов,<br> 2012-2025 гг.' },
 ];
 
-import img1 from '../../assets/images/landing/hero.png';
+import img1 from '../../assets/images/landing/hero2.jpg';
 import { Image } from "astro:assets";
 ---
 
@@ -21,15 +21,7 @@ import { Image } from "astro:assets";
 
 <section class="section from-author">
     <div class="container">
-        <div class="from-author__layout grid grid-cols-1 gap-5 items-stretch md:grid-cols-[38%_1fr] md:gap-6">
-            <div class="from-author__image-wrap min-h-[280px] md:min-h-[520px]">
-                <Image
-                    class="from-author__img"
-                    src={img1}
-                    alt="Юлия Бурова"
-                />
-            </div>
-
+        <div class="from-author__layout grid grid-cols-1 gap-5 items-stretch md:grid-cols-[1fr_38%] md:gap-6">
             <div class="from-author__card">
                 <h2 class="from-author__title text-[clamp(26px,3vw,36px)]">
                     Ваш инструктор — «бриллиант подологии» Юлия Бурова
@@ -39,9 +31,9 @@ import { Image } from "astro:assets";
                     За 23 года помогла 30 000+ клиентам со сложными случаями вросших и деформированных ногтей
                 </p>
 
-                <div class="from-author__text">
-                    <p class="text-[15px]">Юлия Владимировна обучалась лично у Адриана Аркада и каждый год подтверждает у него право преподавания — поэтому знания всегда актуальны.</p>
-                    <p class="text-[15px]">Первой привезла в Россию методику коррекции и косметику Arkada — и до сих пор ежедневно применяет их на практике при приёме пациентов.</p>
+                <div class="from-author__text content-editor">
+                    <p>Юлия Владимировна обучалась лично у Адриана Аркада и каждый год подтверждает у него право преподавания — поэтому знания всегда актуальны.</p>
+                    <p>Первой привезла в Россию методику коррекции и косметику Arkada — и до сих пор ежедневно применяет их на практике при приёме пациентов.</p>
                 </div>
 
                 <ul class="from-author__stats grid grid-cols-1 gap-2.5 sm:grid-cols-2">
@@ -58,9 +50,17 @@ import { Image } from "astro:assets";
                     ))}
                 </ul>
 
-                <a class="from-author__cta btn btn--v2" href="#">
+                <a class="from-author__cta btn btn--v2 btn--big" href="#">
                     Хочу обучаться у Юлии Буровой
                 </a>
+            </div>
+
+            <div class="from-author__image-wrap min-h-[280px] md:min-h-[520px]">
+                <Image
+                    class="from-author__img"
+                    src={img1}
+                    alt="Юлия Бурова"
+                />
             </div>
         </div>
     </div>

@@ -481,13 +481,6 @@
   }
 }
 
-/* Курсы: табы + карточка программы */
-.section.soft {
-  padding-top: clamp(40px, 6vw, 72px);
-  padding-bottom: clamp(40px, 6vw, 72px);
-}
-
-
 /* Регистрация на курс: модули + бонусы */
 .course-registration__shell {
   border-radius: var(--radius-xl);

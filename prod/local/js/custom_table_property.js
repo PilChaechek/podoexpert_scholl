@@ -1,18 +1,25 @@
 /**
  * custom_table_property.js
  * Логика кнопки "Добавить строку" для кастомного типа свойства "Таблица".
+ *
+ * Счётчик строк window._ctpCounters[propId] инициализируется inline-скриптом
+ * из PHP (точное значение count($rows)), поэтому не зависит от DOM-запросов
+ * и не сбрасывается при повторном выполнении этого файла.
  */
 
-const ctpRowCounters = {};
+if (typeof window._ctpCounters === 'undefined') {
+    window._ctpCounters = {};
+}
 
 function ctpAddRow(propId, cols, controlName) {
     const tbody = document.getElementById('ctp-body-' + propId);
     if (!tbody) return;
 
-    if (ctpRowCounters[propId] === undefined) {
-        ctpRowCounters[propId] = tbody.querySelectorAll('tr.ctp-row').length;
+    if (typeof window._ctpCounters[propId] === 'undefined') {
+        window._ctpCounters[propId] = tbody.querySelectorAll('tr.ctp-row').length;
     }
-    const rIdx = ctpRowCounters[propId]++;
+
+    const rIdx = window._ctpCounters[propId]++;
 
     const tr = document.createElement('tr');
     tr.className = 'ctp-row';

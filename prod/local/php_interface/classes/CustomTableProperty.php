@@ -158,7 +158,8 @@ class CustomTableProperty
     {
         $rows = [];
         if (!empty($value['VALUE']) && is_array($value['VALUE'])) {
-            $rows = $value['VALUE'];
+            // array_values() — сбрасываем индексы в 0,1,2... после возможных удалений
+            $rows = array_values($value['VALUE']);
         }
         return ['VALUE' => json_encode($rows, JSON_UNESCAPED_UNICODE)];
     }
@@ -239,6 +240,11 @@ class CustomTableProperty
             />
         </div>
         <script src="/local/js/custom_table_property.js"></script>
+        <script>
+        // Инициализируем счётчик строк из PHP — точное значение, не из DOM
+        if (typeof window._ctpCounters === 'undefined') window._ctpCounters = {};
+        window._ctpCounters[<?= $propId ?>] = <?= count($rows) ?>;
+        </script>
         <?php
         return ob_get_clean();
     }

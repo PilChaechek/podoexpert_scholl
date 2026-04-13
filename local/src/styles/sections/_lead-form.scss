@@ -26,10 +26,13 @@
     }
 
     .lead-form-jv-error {
-        display: block;
         margin-top: 0.35rem;
         font-size: 0.875rem;
         line-height: 1.35;
-        color: rgb(220 38 38);
+        display: inline-block;
+        background: #ff6464;
+        color: #fff;
+        padding: 2px 6px;
+        border-radius: 6px;
     }
 }

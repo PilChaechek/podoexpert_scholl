@@ -158,6 +158,7 @@
         validateBeforeSubmitting: true,
         errorFieldCssClass: 'lead-form--invalid',
         errorLabelCssClass: 'lead-form-jv-error',
+        errorLabelStyle: {},
         focusInvalidField: true,
     });
 

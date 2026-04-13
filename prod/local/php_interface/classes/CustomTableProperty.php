@@ -14,10 +14,17 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
  *   - В карточке элемента — таблица с кнопками «Добавить строку» / «Удалить»
  *   - В списке элементов — счётчик строк
  *   - Данные хранятся как JSON в одном свойстве
+ *
+ * Файловые колонки:
+ *   - В основном массиве VALUE[rIdx][cIdx] хранится ID файла (hidden input)
+ *   - Загрузка: $_FILES['ctp_file'][propId][rIdx][cIdx]
+ *   - Удаление: $_POST['ctp_del'][propId][rIdx][cIdx] = 'Y'
+ *   - Обработка в ConvertToDB через CFile::SaveFile()
  */
 class CustomTableProperty
 {
-    const USER_TYPE = 'custom_table';
+    const USER_TYPE    = 'custom_table';
+    const FILE_SUBDIR  = 'custom_table';
 
     // -------------------------------------------------------------------------
     // Регистрация типа
@@ -62,13 +69,11 @@ class CustomTableProperty
         $arPropertyFields = ['HIDE' => ['ROW_COUNT', 'COL_COUNT', 'MULTIPLE', 'WITH_DESCRIPTION', 'SEARCHABLE', 'FILTRABLE', 'IS_REQUIRED']];
 
         $cols = $arProperty['USER_TYPE_SETTINGS']['COLUMNS'] ?? [];
-
-        // Гарантируем минимум 1 пустую строку для добавления
         if (empty($cols)) {
             $cols = [['NAME' => '', 'TYPE' => 'string']];
         }
 
-        $baseName = htmlspecialchars($strHTMLControlName['NAME']);
+        $baseName    = htmlspecialchars($strHTMLControlName['NAME']);
         $typeOptions = ['string' => 'Строка', 'textarea' => 'Текст (textarea)', 'file' => 'Файл'];
 
         ob_start(); ?>
@@ -158,9 +163,50 @@ class CustomTableProperty
     {
         $rows = [];
         if (!empty($value['VALUE']) && is_array($value['VALUE'])) {
-            // array_values() — сбрасываем индексы в 0,1,2... после возможных удалений
             $rows = array_values($value['VALUE']);
         }
+
+        $propId = (int)$arProperty['ID'];
+        $cols   = $arProperty['USER_TYPE_SETTINGS']['COLUMNS'] ?? [];
+
+        // Обрабатываем файловые колонки
+        foreach ($rows as $rIdx => $row) {
+            foreach ($cols as $cIdx => $col) {
+                if (($col['TYPE'] ?? '') !== 'file') {
+                    continue;
+                }
+
+                $currentFileId = (int)($row[$cIdx] ?? 0);
+
+                // Удаление файла по чекбоксу
+                $deleteFlag = $_POST['ctp_del'][$propId][$rIdx][$cIdx] ?? '';
+                if ($deleteFlag === 'Y') {
+                    if ($currentFileId > 0) {
+                        CFile::Delete($currentFileId);
+                    }
+                    $rows[$rIdx][$cIdx] = 0;
+                    continue;
+                }
+
+                // Загрузка нового файла
+                $fileError = $_FILES['ctp_file']['error'][$propId][$rIdx][$cIdx] ?? UPLOAD_ERR_NO_FILE;
+                if ($fileError === UPLOAD_ERR_OK) {
+                    $fileArray = [
+                        'name'     => $_FILES['ctp_file']['name'][$propId][$rIdx][$cIdx],
+                        'type'     => $_FILES['ctp_file']['type'][$propId][$rIdx][$cIdx],
+                        'tmp_name' => $_FILES['ctp_file']['tmp_name'][$propId][$rIdx][$cIdx],
+                        'error'    => UPLOAD_ERR_OK,
+                        'size'     => $_FILES['ctp_file']['size'][$propId][$rIdx][$cIdx],
+                    ];
+                    if ($currentFileId > 0) {
+                        CFile::Delete($currentFileId);
+                    }
+                    $newFileId = CFile::SaveFile($fileArray, self::FILE_SUBDIR);
+                    $rows[$rIdx][$cIdx] = $newFileId ?: 0;
+                }
+            }
+        }
+
         return ['VALUE' => json_encode($rows, JSON_UNESCAPED_UNICODE)];
     }
 
@@ -206,7 +252,6 @@ class CustomTableProperty
         if (!is_array($rows)) {
             $rows = [];
         }
-        // Минимум 1 пустая строка
         if (empty($rows)) {
             $rows[] = array_fill_keys(array_keys($cols), '');
         }
@@ -220,6 +265,7 @@ class CustomTableProperty
             <table class="ctp-table" style="border-collapse:collapse;width:100%;">
                 <thead>
                     <tr>
+                        <th style="padding:4px 8px;border:1px solid #ccc;background:#f5f5f5;width:20px;"></th>
                         <?php foreach ($cols as $col): ?>
                         <th style="padding:4px 8px;text-align:left;border:1px solid #ccc;background:#f5f5f5;white-space:nowrap;">
                             <?= htmlspecialchars($col['NAME']) ?>
@@ -239,11 +285,22 @@ class CustomTableProperty
                 onclick="ctpAddRow(<?= $propId ?>, <?= htmlspecialchars(json_encode($cols, JSON_UNESCAPED_UNICODE)) ?>, '<?= $controlName ?>')"
             />
         </div>
+        <script src="/local/js/sortable.min.js"></script>
         <script src="/local/js/custom_table_property.js"></script>
         <script>
-        // Инициализируем счётчик строк из PHP — точное значение, не из DOM
         if (typeof window._ctpCounters === 'undefined') window._ctpCounters = {};
         window._ctpCounters[<?= $propId ?>] = <?= count($rows) ?>;
+
+        (function () {
+            const tbody = document.getElementById('ctp-body-<?= $propId ?>');
+            if (tbody && typeof Sortable !== 'undefined') {
+                Sortable.create(tbody, {
+                    handle:    '.ctp-handle',
+                    animation: 150,
+                    onEnd: function () { ctpReindex(<?= $propId ?>); },
+                });
+            }
+        })();
         </script>
         <?php
         return ob_get_clean();
@@ -257,25 +314,55 @@ class CustomTableProperty
     {
         ob_start();
         ?>
-        <tr class="ctp-row">
+        <tr class="ctp-row" data-ridx="<?= $rIdx ?>">
+            <td style="padding:4px;border:1px solid #ccc;text-align:center;vertical-align:middle;cursor:grab;color:#aaa;width:20px;"
+                class="ctp-handle" title="Перетащить">⠿</td>
             <?php foreach ($cols as $cIdx => $col):
                 $fieldName = "{$controlName}[{$rIdx}][{$cIdx}]";
-                $val       = htmlspecialchars((string)($row[$cIdx] ?? ''));
                 $type      = $col['TYPE'] ?? 'string';
             ?>
             <td style="padding:4px;border:1px solid #ccc;vertical-align:top;">
-                <?php if ($type === 'textarea'): ?>
+                <?php if ($type === 'textarea'):
+                    $val = htmlspecialchars((string)($row[$cIdx] ?? ''));
+                ?>
                     <textarea name="<?= $fieldName ?>" rows="3" style="width:100%;box-sizing:border-box;"><?= $val ?></textarea>
-                <?php elseif ($type === 'file'): ?>
-                    <?php if ($val !== ''): ?>
-                        <div style="margin-bottom:4px;">
-                            <img src="<?= $val ?>" alt="" style="max-height:60px;max-width:120px;display:block;margin-bottom:4px;" />
-                            <label><input type="checkbox" name="<?= $fieldName ?>[delete]" value="Y"> удалить</label>
+
+                <?php elseif ($type === 'file'):
+                    $fileId = (int)($row[$cIdx] ?? 0);
+                ?>
+                    <?php if ($fileId > 0):
+                        $fileInfo = CFile::GetFileArray($fileId);
+                        if ($fileInfo):
+                            $src     = CFile::GetFileSRC($fileInfo);
+                            $isImage = CFile::IsImage($fileInfo['FILE_NAME'] ?? '');
+                    ?>
+                        <div style="margin-bottom:6px;">
+                            <?php if ($isImage): ?>
+                                <img src="<?= htmlspecialchars($src) ?>"
+                                     style="max-height:80px;max-width:140px;display:block;margin-bottom:4px;border:1px solid #ddd;" />
+                            <?php else: ?>
+                                <a href="<?= htmlspecialchars($src) ?>" target="_blank">
+                                    <?= htmlspecialchars($fileInfo['ORIGINAL_NAME'] ?? $fileInfo['FILE_NAME']) ?>
+                                </a>
+                            <?php endif; ?>
+                            <label style="display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#666;">
+                                <input type="checkbox"
+                                       name="ctp_del[<?= $propId ?>][<?= $rIdx ?>][<?= $cIdx ?>]"
+                                       value="Y"
+                                /> удалить
+                            </label>
                         </div>
-                    <?php endif; ?>
-                    <input type="file" name="<?= $fieldName ?>[file]" style="width:100%;" />
-                    <input type="hidden" name="<?= $fieldName ?>[current]" value="<?= $val ?>" />
-                <?php else: ?>
+                    <?php endif; endif; ?>
+                    <input type="file"
+                           name="ctp_file[<?= $propId ?>][<?= $rIdx ?>][<?= $cIdx ?>]"
+                           style="width:100%;" />
+                    <input type="hidden"
+                           name="<?= $fieldName ?>"
+                           value="<?= $fileId ?>" />
+
+                <?php else:
+                    $val = htmlspecialchars((string)($row[$cIdx] ?? ''));
+                ?>
                     <input type="text" name="<?= $fieldName ?>" value="<?= $val ?>" style="width:100%;box-sizing:border-box;" />
                 <?php endif; ?>
             </td>
@@ -290,7 +377,7 @@ class CustomTableProperty
 
     private static function pluralRows(int $n): string
     {
-        $n = abs($n) % 100;
+        $n  = abs($n) % 100;
         $n1 = $n % 10;
         if ($n > 10 && $n < 20) return 'строк';
         if ($n1 > 1 && $n1 < 5) return 'строки';

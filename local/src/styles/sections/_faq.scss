@@ -1,0 +1,7 @@
+@use '../mixins/breakpoints' as *;
+
+.faq {
+  &__item-image {
+    //max-width: 100px;
+  }
+}

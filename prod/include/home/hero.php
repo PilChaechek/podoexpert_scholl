@@ -115,9 +115,9 @@ if (empty($heroData)) {
                 </p>
 
                 <?php if (!empty($heroServices)): ?>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-2 cources-list">
                     <?php foreach ($heroServices as $service): ?>
-                    <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+                    <div class="cources-list__item relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
                          data-tab-id="<?= htmlspecialchars($service['tab_id']) ?>">
                         <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
                             <p class="m-0 text-lg font-semibold text-zinc-900 leading-snug"><?= htmlspecialchars($service['title']) ?></p>
@@ -131,7 +131,7 @@ if (empty($heroData)) {
                             <img
                                 src="<?= htmlspecialchars($service['img']) ?>"
                                 alt="<?= htmlspecialchars($service['title']) ?>"
-                                class="block w-full h-full object-contain"
+                                class="cources-list__image img"
                                 loading="lazy"
                             >
                         </div>

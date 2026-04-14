@@ -2,7 +2,7 @@
 
 <section class="section lead-form" id="zapis">
     <div class="container">
-        <div class="lead-form__shell rounded-[24px] border border-zinc-200 bg-white p-5 md:p-8">
+        <div class="lead-form__shell rounded-[24px] border border-zinc-200 bg-white p-4 md:p-8">
             <div class="lead-form__grid grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr_1.2fr] md:gap-8">
 
                 <div class="lead-form__media flex items-end">
@@ -19,7 +19,7 @@
                 <div class="lead-form__intro">
                     <p class="lead-form__eyebrow mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Форма записи</p>
                     <h2 class="lead-form__title h2 text-slate-900 md:text-6xl">Поможем <br> подобрать курс</h2>
-                    <p class="lead-form__lead my-4 max-w-md text-lg leading-relaxed text-zinc-600">
+                    <p class="lead-form__lead my-4">
                         Оставьте контакты — подскажем, какой формат обучения подойдёт именно вам, и ответим на вопросы по программе.
                     </p>
                     <p class="lead-form__social-caption mb-2">или напишите нам</p>
@@ -84,7 +84,7 @@
                         <div id="lead-form-course-error" class="lead-form__msg" aria-live="polite"></div>
                     </div>
 
-                    <div class="lead-form__actions flex flex-wrap items-center gap-4 pt-4 mb-4">
+                    <div class="lead-form__actions flex flex-wrap items-center gap-4 mb-4">
                         <button class="btn btn--v2 w-140" type="submit" id="lead-form-submit">
                             Подобрать курс
                         </button>

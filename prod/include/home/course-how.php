@@ -90,7 +90,7 @@ if (empty($courseHowData)) {
 
 <section class="section course-registration">
     <div class="container">
-        <div class="course-registration__shell rounded-[18px] border border-t-0 border-zinc-200 p-[clamp(22px,3.5vw,40px)] relative overflow-hidden">
+        <div class="course-registration__shell rounded-[18px] border border-t-0 border-zinc-200 p-4 md:p-8 relative overflow-hidden">
             <div class="absolute inset-x-0 top-0 h-[4px] bg-gradient-to-r from-teal-500 to-purple-700"></div>
 
             <?php if ($courseHowData['title'] !== ''): ?>
@@ -100,7 +100,7 @@ if (empty($courseHowData)) {
             <?php endif; ?>
 
             <?php if (!empty($courseHowData['items'])): ?>
-            <div class="grid gap-4 md:grid-cols-3 md:gap-[18px] md:items-stretch">
+            <div class="grid gap-2 md:grid-cols-3 md:gap-6 md:items-stretch">
                 <?php foreach ($courseHowData['items'] as $item): ?>
                 <article class="course-registration__module-card flex flex-col gap-3 min-h-full p-[clamp(18px,2.2vw,22px)] rounded-[14px] border border-zinc-200 bg-white shadow-[0_4px_18px_rgba(24,24,27,0.04)]">
                     <h3 class="course-registration__module-title"><?= htmlspecialcharsbx($item['title']) ?></h3>
@@ -118,7 +118,7 @@ if (empty($courseHowData)) {
                 <p class="course-registration__eyebrow basis-full"><?= htmlspecialcharsbx($courseHowData['bonuses_subtitle']) ?></p>
                 <?php endif; ?>
                 <?php if ($courseHowData['bonuses_title'] !== ''): ?>
-                <h2 class="course-registration__bonus-title basis-full md:flex-1"><?= htmlspecialcharsbx($courseHowData['bonuses_title']) ?></h2>
+                <h2 class="course-registration__bonus-title mb-2 basis-full md:flex-1"><?= htmlspecialcharsbx($courseHowData['bonuses_title']) ?></h2>
                 <?php endif; ?>
                 <?php if ($courseHowData['bonuses_btn'] !== ''): ?>
                 <a href="#zapis" class="btn btn--v2 w-full md:w-auto"><?= htmlspecialcharsbx($courseHowData['bonuses_btn']) ?></a>

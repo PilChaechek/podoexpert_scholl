@@ -11,12 +11,12 @@ $faqRes = CIBlockElement::GetList(
 );
 ?>
 
-<section class="section">
+<section class="section faq">
     <div class="container">
         <div class="mx-auto max-w-5xl">
-            <h2 class="mb-8 text-center text-3xl font-bold text-zinc-900 md:text-5xl">Ответы на частые вопросы</h2>
+            <h2 class="mb-6 text-center text-3xl font-bold text-zinc-900 md:text-5xl">Ответы на частые вопросы</h2>
 
-            <div class="space-y-3" data-faq-root>
+            <div class="space-y-3 grid gap-2" data-faq-root>
                 <?php
                 $faqCount = 0;
                 while ($row = $faqRes->Fetch()):
@@ -42,7 +42,7 @@ $faqRes = CIBlockElement::GetList(
                     }
                     $faqCount++;
                 ?>
-                    <article class="overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50">
+                    <article class="faq__item overflow-hidden rounded-xl border border-zinc-200 bg-zinc-50 m-0">
                         <button
                             type="button"
                             class="flex w-full items-center justify-between gap-4 px-5 py-5 text-left md:px-7 bvi-no-styles"
@@ -71,17 +71,17 @@ $faqRes = CIBlockElement::GetList(
                         </button>
 
                         <div class="hidden px-5 pb-6 md:px-7 md:pb-7" data-faq-content>
-                            <div class="grid grid-cols-1 gap-5 pt-1 md:grid-cols-[180px_1fr] md:gap-7">
+                            <div class="grid grid-cols-[60px_1fr] gap-5 pt-1 md:grid-cols-[140px_1fr] md:gap-7">
                                 <img
                                     src="<?= SITE_TEMPLATE_PATH ?>/images/director.webp"
                                     alt="Иллюстрация к ответу"
-                                    class="h-auto w-auto rounded-lg object-cover md:h-52"
+                                    class="faq__item-image img"
                                     loading="lazy"
                                     width="180"
                                     height="208"
                                 />
 
-                                <div class="faq-answer space-y-4 text-lg leading-relaxed text-zinc-700 content-editor">
+                                <div class="faq__item-answer space-y-4 content-editor">
                                     <?= $bodyHtml ?>
                                 </div>
                             </div>

@@ -81,9 +81,9 @@ const heroBenefits = [
                 <p class="mt-0 mb-5 leading-relaxed text-zinc-500">
                     Увеличьте доход после освоения авторской методики коррекции сложных ногтей ARKADA.
                 </p>
-                <div class="flex flex-col gap-3">
+                <div class="flex flex-col gap-2 cources-list">
                     {directions.map((dir) => (
-                        <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer" data-tab-id={dir.tabId}>
+                        <div class="cources-list__item relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer" data-tab-id={dir.tabId}>
                             <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
                                 <p class="m-0 text-lg font-semibold text-zinc-900 leading-snug">{dir.title}</p>
                                 <p class="my-2 text-sm text-zinc-500 leading-snug" set:html={dir.description}></p>
@@ -93,7 +93,7 @@ const heroBenefits = [
                                 <Image
                                     src={dir.image}
                                     alt={dir.imageAlt}
-                                    class="block w-full h-full object-contain"
+                                    class="cources-list__image img"
                                     loading="lazy"
                                     widths={[96, 192]}
                                     sizes="96px"

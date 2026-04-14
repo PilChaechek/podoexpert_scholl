@@ -79,7 +79,7 @@ if (!$favoriteReview) {
                     height="480"
                 />
                 <div class="space-y-3 p-5 md:p-8">
-                    <h3 class="text-4xl font-bold leading-tight text-zinc-900 mb-1">
+                    <h3 class="text-2xl font-bold leading-tight text-zinc-900 mb-1 md:text-4xl">
                         <?= htmlspecialcharsbx($favoriteReview['name']) ?>
                     </h3>
                     <?php if ($favoriteReview['city'] !== ''): ?>

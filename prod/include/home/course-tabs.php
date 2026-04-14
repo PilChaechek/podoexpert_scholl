@@ -184,7 +184,7 @@ $hasCourses = !empty($courseRows);
 <section id="course-tabs" class="section soft course-tabs-section" aria-label="Курсы">
     <div class="container course-tabs">
         <?php if ($hasCourses): ?>
-            <div class="course-tabs__tablist flex flex-wrap gap-3 mb-3" role="tablist" aria-label="Курсы">
+            <div class="course-tabs__tablist flex flex-wrap gap-1 mb-3 md:gap-2" role="tablist" aria-label="Курсы">
                 <?php foreach ($courseRows as $i => $c): ?>
                     <div class="course-tabs__tab-pair" role="presentation">
                         <input
@@ -214,12 +214,12 @@ $hasCourses = !empty($courseRows);
 
                         <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-x-8">
                             <div class="min-w-0">
-                                <h2 class="title course-panel__title m-0 font-bold text-zinc-900 leading-tight"><?= htmlspecialcharsbx($c['title']) ?></h2>
+                                <h2 class="title course-panel__title mb-4 font-bold text-zinc-900 leading-tight"><?= htmlspecialcharsbx($c['title']) ?></h2>
                                 <?php if ($c['intro_html'] !== ''): ?>
                                     <div class="content-editor course-panel__desc"><?= $c['intro_html'] ?></div>
                                 <?php endif; ?>
                             </div>
-                            <div class="flex flex-row flex-wrap items-baseline gap-x-2 gap-y-0.5 shrink-0 pt-1 md:flex-col md:items-end md:gap-1.5 md:pt-0">
+                            <div class="flex flex-row flex-wrap items-baseline gap-2 shrink-0 pt-1 md:flex-col md:items-end md:gap-1.5 md:pt-0">
                                 <?php if ($c['price'] !== ''): ?>
                                     <span class="inline-flex items-baseline gap-1.5 shrink-0">
                                         <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]"><?= htmlspecialcharsbx($c['price']) ?></span>

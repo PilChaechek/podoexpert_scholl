@@ -93,7 +93,7 @@
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 20px 50px rgba(24, 24, 27, 0.07);
-  padding: clamp(20px, 3.2vw, 38px);
+  padding: clamp(16px, 3.2vw, 38px);
 
   // Градиентная полоска-акцент сверху
   &::before {
@@ -126,11 +126,11 @@
 .course-panel {
   &__desc {
     &.content-editor {
-      font-size: 1.2rem;
-      color: var(--color-zinc-500);
-      p {
-        margin: .5rem 0 0 0;
-      }
+      //font-size: 1.2rem;
+      //color: var(--color-zinc-500);
+      //p {
+      //  margin: .5rem 0 0 0;
+      //}
     }
   }
 }
@@ -138,7 +138,6 @@
 // Адаптивный размер заголовка курса
 .course-panel__title {
   font-size: clamp(1.4rem, 2.6vw, 1.85rem);
-  margin-top: 8px !important;
 }
 
 // Чип длительности курса
@@ -162,7 +161,7 @@
 
 // Адаптивный размер цены + градиентный цвет
 .course-panel__price-value {
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-size: clamp(2rem, 2.6vw, 3rem);
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -1,0 +1,10 @@
+// Обёртка изображения в карточке урока
+.course-lesson__img-wrap {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.course-lesson__img-wrap--bottom {
+  align-items: flex-end;
+}

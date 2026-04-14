@@ -79,4 +79,13 @@ return array (
     ),
     'readonly' => true,
   ),
+    'smtp' =>
+        array (
+            'value' =>
+                array(
+                    'enabled' => true,
+                    'debug' => true, //optional
+                    'log_file' => '/var/mailer.log', //optional
+                ),
+        ),
 );

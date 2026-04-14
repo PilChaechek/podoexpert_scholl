@@ -22,7 +22,8 @@ const firstLessons = [
         description:
             'Первый и второй уровни учебной программы: крепление скобы на композиты и крепление на композиты + крючок.',
         gradient: 'justify-center from-violet-600/80 to-purple-800/80',
-        imageClass: 'max-w-40',
+        imageClass: '',
+        imageAlign: 'bottom',
         tabId: 'lc-0',
     },
     {
@@ -33,6 +34,7 @@ const firstLessons = [
             'Создание акриловых вкладок и применение при сложных случаях врастания и деформации ногтевой пластины.',
         gradient: 'justify-end from-slate-500/80 to-violet-700/80',
         imageClass: '',
+        imageAlign: 'center',
         tabId: 'lc-1',
     },
     {
@@ -42,7 +44,8 @@ const firstLessons = [
         description:
             'Акриловые вкладки, освоение Arkadas Cube и подготовка ногтевой пластины для метода ARKADA.',
         gradient: 'justify-center from-teal-600/80 to-sky-700/80',
-        imageClass: 'translate-x-5',
+        imageClass: '',
+        imageAlign: 'bottom',
         tabId: 'lc-2',
     },
 ];
@@ -60,7 +63,7 @@ const quoteBlocks = [
 
 <section class="section">
     <div class="container">
-        <div class="rounded-2xl border border-zinc-300 bg-white p-5 md:p-8">
+        <div class="rounded-2xl border border-zinc-300 bg-white p-4 md:p-8">
             <div class="space-y-2">
                 <h2 class="font-bold leading-tight text-[clamp(26px,3vw,36px)] mb-4">
                     Методика ARKADA разделена на 3 прикладных функциональных курса
@@ -72,24 +75,24 @@ const quoteBlocks = [
                 <p>{firstModule.description}</p>
             </div>
 
-            <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+            <div class="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3 md:gap-4">
                 {firstLessons.map((lesson) => (
                     <article
                         class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
                         data-tab-id={lesson.tabId}
                     >
-                        <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
-                            <p class="m-0 text-base font-semibold leading-snug text-zinc-900">{lesson.title}</p>
-                            <p class="my-2 text-sm leading-snug text-zinc-500">{lesson.description}</p>
+                        <div class="text-left flex-1 p-4 py-3.5 flex flex-col justify-between">
+                            <p class="mb-2 text-base font-semibold leading-snug text-zinc-900">{lesson.title}</p>
+                            <p class="text-sm leading-snug text-zinc-500">{lesson.description}</p>
                         </div>
-                        <div class={`pt-2 pl-2 shrink-0 aspect-square w-[112px] flex items-center justify-center overflow-hidden bg-gradient-to-br ${lesson.gradient}`}>
+                        <div class={`course-lesson__img-wrap${lesson.imageAlign === 'bottom' ? ' course-lesson__img-wrap--bottom' : ''} pt-2 pl-2 shrink-0 aspect-square w-[80px] sm:w-[100px] justify-center overflow-hidden bg-gradient-to-br ${lesson.gradient}`}>
                             <Image
                                 src={lesson.image}
                                 alt={lesson.imageAlt}
-                                class={`block w-full h-full object-contain ${lesson.imageClass}`}
+                                class={`block w-[80%] h-[70%] object-contain ${lesson.imageClass}`}
                                 loading="lazy"
                                 widths={[112, 224]}
-                                sizes="112px"
+                                sizes="(max-width: 640px) 80px, 112px"
                             />
                         </div>
                     </article>
@@ -99,7 +102,7 @@ const quoteBlocks = [
             <div class="mt-8 space-y-8">
                 {quoteBlocks.map((quote, index) => (
                     <>
-                        <div class="grid grid-cols-1 gap-6 md:grid-cols-[320px_1fr] items-center mt-12">
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-[320px_1fr] items-center">
                             <Image
                                 class="h-72 w-full rounded-xl object-cover"
                                 src={quote.image}
@@ -114,8 +117,6 @@ const quoteBlocks = [
                                 <p class="text-base leading-relaxed text-zinc-700 md:text-lg">{quote.text}</p>
                             </div>
                         </div>
-
-                        
                     </>
                 ))}
             </div>

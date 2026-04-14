@@ -85,7 +85,7 @@ if (empty($courseProgramData)) {
 
 <section class="section">
     <div class="container">
-        <div class="rounded-2xl border border-zinc-300 bg-white p-5 md:p-8">
+        <div class="rounded-2xl border border-zinc-300 bg-white p-4 md:p-8">
 
             <h2 class="font-bold leading-tight text-[clamp(26px,3vw,36px)] mb-4">
                 <?= htmlspecialchars($courseProgramData['title']) ?>
@@ -98,31 +98,33 @@ if (empty($courseProgramData)) {
             <?php endif; ?>
 
             <?php if (!empty($courseProgramServices)): ?>
-            <div class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <?php foreach ($courseProgramServices as $service): ?>
-                <div class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
-                     data-tab-id="<?= htmlspecialchars($service['tab_id']) ?>">
-                    <div class="text-left flex-1 px-4 py-3.5 flex flex-col justify-between">
-                        <p class="m-0 text-base font-semibold text-zinc-900 leading-snug"><?= htmlspecialchars($service['title']) ?></p>
-                        <p class="my-2 text-sm text-zinc-500 leading-snug"><?= htmlspecialchars($service['description']) ?></p>
+            <div class="mt-8 grid grid-cols-1 gap-2 sm:grid-cols-3 md:gap-4">
+                <?php foreach ($courseProgramServices as $idx => $service):
+                    $imgAlignClass = ($idx === 0 || $idx === 2) ? ' course-lesson__img-wrap--bottom' : '';
+                ?>
+                <article class="relative flex overflow-hidden rounded-[16px] border border-zinc-200 bg-white/80 backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+                         data-tab-id="<?= htmlspecialchars($service['tab_id']) ?>">
+                    <div class="text-left flex-1 p-4 py-3.5 flex flex-col justify-between">
+                        <p class="mb-2 text-base font-semibold text-zinc-900 leading-snug"><?= htmlspecialchars($service['title']) ?></p>
+                        <p class="text-sm text-zinc-500 leading-snug"><?= htmlspecialchars($service['description']) ?></p>
                     </div>
                     <?php if ($service['img'] !== ''): ?>
-                    <div class="pt-2 pl-2 shrink-0 aspect-square w-[112px] flex items-center justify-center overflow-hidden bg-gradient-to-br <?= htmlspecialchars($service['gradient']) ?>">
+                    <div class="course-lesson__img-wrap<?= $imgAlignClass ?> pt-2 pl-2 shrink-0 aspect-square w-[80px] sm:w-[100px] justify-center overflow-hidden bg-gradient-to-br <?= htmlspecialchars($service['gradient']) ?>">
                         <img
                             src="<?= htmlspecialchars($service['img']) ?>"
                             alt="<?= htmlspecialchars($service['title']) ?>"
-                            class="block w-full h-full object-contain"
+                            class="block w-[80%] h-[70%] object-contain"
                             loading="lazy"
                         >
                     </div>
                     <?php endif; ?>
-                </div>
+                </article>
                 <?php endforeach; ?>
             </div>
             <?php endif; ?>
 
             <?php if ($courseProgramData['photo'] !== '' || $courseProgramData['banner_title'] !== '' || $courseProgramData['banner_subtitle'] !== '' || $courseProgramData['banner_text'] !== ''): ?>
-            <div class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-[320px_1fr] items-center">
+            <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-[320px_1fr] items-center">
                 <?php if ($courseProgramData['photo'] !== ''): ?>
                 <img
                     class="h-72 w-full rounded-xl object-cover"

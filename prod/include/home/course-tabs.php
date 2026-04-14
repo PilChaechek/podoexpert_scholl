@@ -274,7 +274,7 @@ $hasCourses = !empty($courseRows);
 
                                 <a
                                     href="#"
-                                    class="btn btn--v2 course-tabs__cta mt-2 w-full font-semibold"
+                                    class="btn btn--v2 course-tabs__cta w-full font-semibold"
                                 >Мне это подходит, записываюсь</a>
                             </div>
                         </div>

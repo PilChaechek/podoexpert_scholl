@@ -1,3 +1,5 @@
+@use '../mixins/breakpoints' as *;
+
 // Пара «radio + label» в ряду вкладок (prod и Astro)
 .course-tabs__tab-pair {
   position: relative;
@@ -275,16 +277,38 @@
   }
 }
 
-// Заглушка под изображение в блоке «В стоимость входит»
+// Изображение и заглушка в блоке «В стоимость входит»
+.course-included__img {
+  border-radius: 12px;
+}
+
 .course-included__img-placeholder {
   border-radius: 12px;
   background: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 100%);
   border: 1px solid var(--line);
 }
 
-// CTA кнопка — растягивается на всю ширину блока
+// Строка цена + CTA: на мобильном — колонка, на десктопе — строка
+.course-panel__price-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @include respond(md) {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+// CTA кнопка
 .course-tabs__cta {
-  align-self: stretch;
+  width: 100%;
+
+  @include respond(md) {
+    width: auto;
+    flex-shrink: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

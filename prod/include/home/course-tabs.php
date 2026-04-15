@@ -3,7 +3,7 @@
 /**
  * Главная: вкладки курсов (IBLOCK_ID = 6).
  *
- * Свойства: SHORT_TITLE, PRICE, DURATION, PROFIT, TEACH, TOOLS.
+ * Свойства: SHORT_TITLE, PRICE, DURATION, TEACH, TOOLS, INCLUDED (таблица: файл | название).
  * Поля: NAME, PREVIEW_TEXT / DETAIL_TEXT, PREVIEW_PICTURE / DETAIL_PICTURE.
  */
 
@@ -123,9 +123,9 @@ $courseRows = (static function (): array {
             'PROPERTY_SHORT_TITLE',
             'PROPERTY_PRICE',
             'PROPERTY_DURATION',
-            'PROPERTY_PROFIT',
             'PROPERTY_TEACH',
             'PROPERTY_TOOLS',
+            'PROPERTY_INCLUDED',
         ]
     );
 
@@ -161,17 +161,41 @@ $courseRows = (static function (): array {
             $price = $fmtPrice($price);
         }
 
+        // INCLUDED — таблица: колонка 0 = файл (ID), колонка 1 = название
+        $includedRaw = $f['PROPERTY_INCLUDED_VALUE'] ?? [];
+        $included    = is_array($includedRaw) ? $includedRaw : [];
+
+        $includedItems = [];
+        foreach ($included as $row) {
+            if (!is_array($row)) {
+                continue;
+            }
+            $fileId = (int) ($row[0] ?? 0);
+            $name   = trim((string) ($row[1] ?? ''));
+            if ($name === '') {
+                continue;
+            }
+            $imgUrl = '';
+            if ($fileId > 0) {
+                $fileInfo = CFile::GetFileArray($fileId);
+                if ($fileInfo) {
+                    $imgUrl = (string) CFile::GetFileSRC($fileInfo);
+                }
+            }
+            $includedItems[] = ['img' => $imgUrl, 'name' => $name];
+        }
+
         $rows[] = [
-            'input_id' => 'course-tab-' . (int) $f['ID'],
-            'tab_label' => $tabLabel,
-            'title' => $title,
-            'price' => $price,
-            'duration' => $propScalar($f, $p, 'DURATION'),
-            'promo' => $propScalar($f, $p, 'PROFIT'),
-            'intro_html' => $intro,
-            'teach_html' => $propRawHtml($f, $p, 'TEACH'),
-            'tools_html' => $propRawHtml($f, $p, 'TOOLS'),
-            'img' => $imgSrc,
+            'input_id'      => 'course-tab-' . (int) $f['ID'],
+            'tab_label'     => $tabLabel,
+            'title'         => $title,
+            'price'         => $price,
+            'duration'      => $propScalar($f, $p, 'DURATION'),
+            'intro_html'    => $intro,
+            'teach_html'    => $propRawHtml($f, $p, 'TEACH'),
+            'tools_html'    => $propRawHtml($f, $p, 'TOOLS'),
+            'included'      => $includedItems,
+            'img'           => $imgSrc,
         ];
     }
 
@@ -210,74 +234,88 @@ $hasCourses = !empty($courseRows);
 
             <div class="course-tabs__surface">
                 <?php foreach ($courseRows as $i => $c): ?>
-                    <div class="course-panel flex flex-col" data-panel="<?= (int) $i ?>"<?= $i !== 0 ? ' hidden' : '' ?>>
+                    <div class="course-panel flex flex-col gap-5" data-panel="<?= (int) $i ?>"<?= $i !== 0 ? ' hidden' : '' ?>>
 
-                        <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-x-8">
-                            <div class="min-w-0">
-                                <h2 class="title course-panel__title mb-4 font-bold text-zinc-900 leading-tight"><?= htmlspecialcharsbx($c['title']) ?></h2>
-                                <?php if ($c['intro_html'] !== ''): ?>
-                                    <div class="content-editor course-panel__desc"><?= $c['intro_html'] ?></div>
-                                <?php endif; ?>
-                            </div>
-                            <div class="flex flex-row flex-wrap items-baseline gap-2 shrink-0 pt-1 md:flex-col md:items-end md:gap-1.5 md:pt-0">
-                                <?php if ($c['price'] !== ''): ?>
-                                    <span class="inline-flex items-baseline gap-1.5 shrink-0">
-                                        <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]"><?= htmlspecialcharsbx($c['price']) ?></span>
-                                        <span class="price-gradient text-sm font-semibold leading-none">рублей</span>
-                                    </span>
-                                <?php endif; ?>
-                                <?php if ($c['duration'] !== ''): ?>
-                                    <div class="course-duration-chip"><?= htmlspecialcharsbx($c['duration']) ?></div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-
-                        <div class="grid gap-5 mt-5 md:grid-cols-[1fr_minmax(300px,0.92fr)] md:items-stretch md:gap-6">
-                            <div class="flex flex-col min-w-0">
-                                <div class="course-image-card">
-                                    <div class="course-image-card__media">
-                                        <img
-                                            class="block w-full h-full object-cover"
-                                            src="<?= htmlspecialcharsbx($c['img']) ?>"
-                                            alt="<?= htmlspecialcharsbx($c['title']) ?>"
-                                            loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
-                                            width="800"
-                                            height="600"
-                                            decoding="async"
-                                        />
-                                    </div>
+                        <!-- Строка 1: картинка слева, заголовок + описание + цена + кнопка справа -->
+                        <div class="grid gap-5 md:grid-cols-[minmax(280px,2fr)_3fr] md:items-start md:gap-10">
+                            <div class="course-image-card">
+                                <div class="course-image-card__media">
+                                    <img
+                                        class="block w-full h-full object-cover"
+                                        src="<?= htmlspecialcharsbx($c['img']) ?>"
+                                        alt="<?= htmlspecialcharsbx($c['title']) ?>"
+                                        loading="<?= $i === 0 ? 'eager' : 'lazy' ?>"
+                                        width="800"
+                                        height="600"
+                                        decoding="async"
+                                    />
                                 </div>
-                                <?php if ($c['promo'] !== ''): ?>
-                                    <div class="course-promo-card">
-                                        <div class="flex items-start gap-3.5">
-                                            <div class="promo-icon shrink-0 w-11 h-11 rounded-full flex items-center justify-center font-extrabold text-base text-white" aria-hidden="true">%</div>
-                                            <p class="m-0 text-[15px] leading-[1.5] font-bold text-zinc-900"><?= htmlspecialcharsbx($c['promo']) ?></p>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
                             </div>
 
-                            <div class="course-inventory flex flex-col gap-3 min-h-full">
-                                <?php if ($c['teach_html'] !== ''): ?>
-                                    <div class="course-inventory-card flex-1">
-                                        <p class="course-inventory-card__title">Вы научитесь</p>
-                                        <div class="content-editor mt-4"><?= $c['teach_html'] ?></div>
-                                    </div>
+                            <div class="flex flex-col gap-4">
+                                <h2 class="title course-panel__title font-bold text-zinc-900 leading-tight"><?= htmlspecialcharsbx($c['title']) ?></h2>
+                                <?php if ($c['duration'] !== ''): ?>
+                                    <div class="course-duration-chip w-fit"><?= htmlspecialcharsbx($c['duration']) ?></div>
                                 <?php endif; ?>
-
-                                <?php if ($c['tools_html'] !== ''): ?>
-                                    <div class="course-inventory-card">
-                                        <p class="course-inventory-card__title">Инструменты</p>
-                                        <div class="content-editor mt-4"><?= $c['tools_html'] ?></div>
-                                    </div>
+                                <?php if ($c['intro_html'] !== ''): ?>
+                                    <div class="content-editor course-panel__desc my-4"><?= $c['intro_html'] ?></div>
                                 <?php endif; ?>
-
-                                <a
-                                    href="#zapis"
-                                    class="btn btn--v2 course-tabs__cta w-full font-semibold smooth-link"
-                                >Мне это подходит, записываюсь</a>
+                                <div class="course-panel__price-cta">
+                                    <?php if ($c['price'] !== ''): ?>
+                                        <span class="inline-flex items-baseline gap-1.5 shrink-0">
+                                            <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]"><?= htmlspecialcharsbx($c['price']) ?></span>
+                                            <span class="price-gradient text-sm font-semibold leading-none">рублей</span>
+                                        </span>
+                                    <?php endif; ?>
+                                    <a href="#zapis" class="btn btn--v2 course-tabs__cta font-semibold smooth-link">Мне это подходит, записываюсь</a>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Строка 2: Вы научитесь + В стоимость обучения входит -->
+                        <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 md:items-stretch">
+                            <?php if ($c['teach_html'] !== ''): ?>
+                                <div class="course-inventory-card h-full">
+                                    <p class="course-inventory-card__title">Вы научитесь</p>
+                                    <div class="content-editor mt-4"><?= $c['teach_html'] ?></div>
+                                </div>
+                            <?php endif; ?>
+
+                            <?php if (!empty($c['included'])): ?>
+                                <div class="course-inventory-card h-full">
+                                    <p class="course-inventory-card__title">В стоимость обучения входит</p>
+                                    <ul class="course-included__list list-none m-0 p-0 mt-4 flex flex-col gap-3">
+                                        <?php foreach ($c['included'] as $item): ?>
+                                            <li class="course-included__item flex items-center gap-3">
+                                                <?php if ($item['img'] !== ''): ?>
+                                                    <img
+                                                        class="course-included__img shrink-0 w-[60px] h-[60px] object-contain"
+                                                        src="<?= htmlspecialcharsbx($item['img']) ?>"
+                                                        alt="<?= htmlspecialcharsbx($item['name']) ?>"
+                                                        loading="lazy"
+                                                        aria-hidden="true"
+                                                    />
+                                                <?php else: ?>
+                                                    <div class="course-included__img-placeholder shrink-0 w-[60px] h-[60px]" aria-hidden="true"></div>
+                                                <?php endif; ?>
+                                                <span class="text-[15px] leading-[1.45] text-zinc-800"><?= htmlspecialcharsbx($item['name']) ?></span>
+                                            </li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Строка 3: Инструменты -->
+                        <?php if ($c['tools_html'] !== ''): ?>
+                            <div class="flex flex-col gap-3">
+                                <div class="course-inventory-card">
+                                    <p class="course-inventory-card__title">Инструменты</p>
+                                    <div class="content-editor mt-4"><?= $c['tools_html'] ?></div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 <?php endforeach; ?>
             </div>

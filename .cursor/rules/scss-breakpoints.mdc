@@ -1,0 +1,51 @@
+---
+description: Адаптив и брейкпоинты в SCSS
+globs: **/*.scss
+alwaysApply: false
+---
+
+# Адаптив и брейкпоинты в SCSS
+
+Миксин живёт в `local/src/styles/mixins/_breakpoints.scss`.
+
+## Подключение
+
+Каждый SCSS-файл, который использует `respond`, должен начинаться с:
+
+```scss
+@use '../mixins/breakpoints' as *;
+```
+
+(путь относительный — скорректируй при вложенности)
+
+## Брейкпоинты
+
+| Алиас | min-width |
+|-------|-----------|
+| `xxs` | 360px |
+| `xs`  | 480px |
+| `sm`  | 576px |
+| `md`  | 768px |
+| `lg`  | 992px |
+| `xl`  | 1200px |
+| `xxl` | 1400px |
+
+## Использование
+
+```scss
+// ✅ правильно
+.block {
+  flex-direction: column;
+
+  @include respond(md) {
+    flex-direction: row;
+  }
+}
+
+// ❌ неправильно — не писать сырые @media
+.block {
+  @media (min-width: 768px) { ... }
+}
+```
+
+Mobile-first: базовые стили — для мобильных, `@include respond(...)` — для расширения вверх.

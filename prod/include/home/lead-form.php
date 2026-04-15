@@ -66,6 +66,7 @@
                             name="phone"
                             placeholder="Номер телефона"
                             autocomplete="tel"
+                            data-phone-filter
                         />
                         <div id="lead-form-phone-error" class="lead-form__msg" aria-live="polite"></div>
                     </div>

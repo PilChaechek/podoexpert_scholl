@@ -24,5 +24,6 @@
     </div>
 </footer>
 </div>
+<script src="<?= SITE_TEMPLATE_PATH ?>/scripts/main.js" defer></script>
 </body>
 </html>

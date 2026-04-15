@@ -105,7 +105,7 @@ if (empty($fromAuthorData)) {
                 </ul>
                 <?php endif; ?>
 
-                <a class="from-author__cta btn btn--v2 btn--big" href="#lead-form">
+                <a class="from-author__cta btn btn--v2 btn--big smooth-link" href="#zapis">
                     Хочу обучаться у Юлии Буровой
                 </a>
             </div>

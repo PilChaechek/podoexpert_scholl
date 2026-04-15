@@ -141,7 +141,7 @@ if (empty($heroData)) {
                 </div>
                 <?php endif; ?>
 
-                <a href="#lead-form" class="btn btn--big btn--v2 hero-cta-btn mt-5 w-full">Записаться на обучение</a>
+                <a href="#lead-form" class="btn btn--big btn--v2 hero-cta-btn mt-5 w-full smooth-link">Записаться на обучение</a>
             </div>
         </div>
 

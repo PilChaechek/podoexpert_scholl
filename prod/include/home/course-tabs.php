@@ -273,8 +273,8 @@ $hasCourses = !empty($courseRows);
                                 <?php endif; ?>
 
                                 <a
-                                    href="#"
-                                    class="btn btn--v2 course-tabs__cta w-full font-semibold"
+                                    href="#zapis"
+                                    class="btn btn--v2 course-tabs__cta w-full font-semibold smooth-link"
                                 >Мне это подходит, записываюсь</a>
                             </div>
                         </div>

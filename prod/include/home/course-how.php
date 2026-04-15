@@ -121,7 +121,7 @@ if (empty($courseHowData)) {
                 <h2 class="course-registration__bonus-title mb-2 basis-full md:flex-1"><?= htmlspecialcharsbx($courseHowData['bonuses_title']) ?></h2>
                 <?php endif; ?>
                 <?php if ($courseHowData['bonuses_btn'] !== ''): ?>
-                <a href="#zapis" class="btn btn--v2 w-full md:w-auto"><?= htmlspecialcharsbx($courseHowData['bonuses_btn']) ?></a>
+                <a href="#zapis" class="btn btn--v2 w-full md:w-auto smooth-link"><?= htmlspecialcharsbx($courseHowData['bonuses_btn']) ?></a>
                 <?php endif; ?>
             </header>
 

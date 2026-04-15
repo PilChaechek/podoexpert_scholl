@@ -32,14 +32,26 @@ function lead_form_bitrix24_create_lead(string $name, string $phone, string $cou
 
     $url = $base . 'crm.lead.add.json';
 
+    $course = html_entity_decode($course, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+    $isAll = $course === '__all__' || $course === 'Хочу узнать про все';
+    $courseLabel = $isAll ? 'Консультация по всем курсам' : $course;
+
+    if ($isAll) {
+        $title = 'Заявка на консультацию "По всем курсам"';
+    } elseif ($course !== '') {
+        $title = "Заявка с сайта на курс \"{$course}\"";
+    } else {
+        $title = 'Заявка с сайта';
+    }
+
     $comments = [];
-    if ($course !== '') {
-        $comments[] = 'Курс: ' . $course;
+    if ($courseLabel !== '') {
+        $comments[] = 'Курс: ' . $courseLabel;
     }
     $comments[] = 'Источник: форма записи на сайте';
 
     $fields = [
-        'TITLE' => 'Форма записи на курс',
+        'TITLE' => $title,
         'NAME' => $name !== '' ? $name : 'Без имени',
         'OPENED' => 'Y',
         'SOURCE_ID' => 'WEB',

@@ -5,8 +5,8 @@ $isHome = ($APPLICATION->GetCurPage() === '/');
 $logoSvg = file_get_contents(__DIR__ . '/images/logo.svg');
 
 $APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/styles.css');
-$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/scripts/bvi.min.css');
-$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/bvi.min.js');
+$APPLICATION->SetAdditionalCSS(SITE_TEMPLATE_PATH . '/scripts/bvi/bvi.min.css');
+$APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/bvi/bvi.min.js');
 $APPLICATION->AddHeadScript(SITE_TEMPLATE_PATH . '/scripts/header.js');
 ?><!DOCTYPE html>
 <html lang="ru">

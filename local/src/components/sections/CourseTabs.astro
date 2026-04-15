@@ -4,6 +4,15 @@ import courseImage1 from '../../assets/images/landing/courses/11.webp';
 import courseImage2 from '../../assets/images/landing/courses/22.webp';
 import courseImage3 from '../../assets/images/landing/courses/33.webp';
 
+const includedItems = [
+    'Оригинальный сертификат с индивидуально присвоенным номером компании AARKADA',
+    'Сертификат компании «АЭК-МЕД» за подписью сертифицированного преподавателя',
+    'Расходные материалы',
+    'Рабочая тетрадь «Метод ARKADA»',
+    'Теоретические и практические знания по владению кубом ARKADA и применению его в методе коррекции ногтевой пластины',
+    'Изготовление акриловых вкладок и работа с ними при моделировании сложных ногтей',
+];
+
 const courses = [
     {
         id: 'lc-0',
@@ -32,6 +41,8 @@ const courses = [
             'Работать специальными инструментами для проведения манипуляций с ногтевой пластиной',
             'Применять на практике по рекомендациям в домашнюю терапию средства торговой марки ARKADA',
         ],
+        includedTitle: 'В стоимость обучения входит',
+        included: includedItems,
         inventoryTitle2: 'Инструменты',
         inventoryNote2: null,
         inventory2: [
@@ -64,6 +75,8 @@ const courses = [
             'Принципу работа с Акриловыми вкладками, способствующему восстановлению и укреплению ногтевой пластины',
             'Применять полуяченные знания на практике',
         ],
+        includedTitle: 'В стоимость обучения входит',
+        included: includedItems,
         inventoryTitle2: 'Инструменты',
         inventoryNote2: null,
         inventory2: [
@@ -95,6 +108,8 @@ const courses = [
             'Работать универсальными манипуляторами для безопасного проведения процедуры',
             'Применять на практике и рекомендовать в домашнюю терапию средства торговой марки ARKADA',
         ],
+        includedTitle: 'В стоимость обучения входит',
+        included: includedItems,
         inventoryTitle2: 'Инструменты',
         inventoryNote2: null,
         inventory2: [
@@ -126,83 +141,94 @@ const courses = [
 
         <div class="course-tabs__surface">
             {courses.map((c, i) => (
-                <div class="course-panel flex flex-col" data-panel={String(i)} hidden={i !== 0}>
+                <div class="course-panel flex flex-col gap-5" data-panel={String(i)} hidden={i !== 0}>
 
-                    <div class="flex flex-col gap-2 md:flex-row md:items-start md:justify-between md:gap-x-8">
-                        <div class="min-w-0">
-                            
-                            <h2 class="title course-panel__title mb-4 font-bold text-zinc-900 leading-tight">{c.title}</h2>
-                            <div class="content-editor course-panel__desc">
-                                <p class="">{c.subtitle}</p>
+                    <!-- Строка 1: картинка + УТП слева, заголовок + описание + цена + кнопка справа -->
+                    <div class="grid gap-5 md:grid-cols-[minmax(280px,2fr)_3fr] md:items-start md:gap-10">
+                        <div class="course-image-card">
+                            <div class="course-image-card__media">
+                                <Image
+                                    class="block w-full h-full object-cover"
+                                    src={c.image}
+                                    alt={c.imageAlt}
+                                    loading={i === 0 ? 'eager' : 'lazy'}
+                                    widths={[400, 640, 800]}
+                                    sizes="(max-width: 768px) 100vw, 38vw"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-4">
+                            <h2 class="title course-panel__title font-bold text-zinc-900 leading-tight">{c.title}</h2>
+                            <div class="course-duration-chip w-fit">{c.duration}</div>
+                            <div class="content-editor course-panel__desc my-4">
+                                <p>{c.subtitle}</p>
                                 {c.paragraphs.map((p) => (
                                     <p>{p}</p>
                                 ))}
                             </div>
-                        </div>
-                        <div class="flex flex-row flex-wrap items-baseline gap-2 shrink-0 pt-1 md:flex-col md:items-end md:gap-1.5 md:pt-0">
-                            <span class="inline-flex items-baseline gap-1.5 shrink-0">
-                                <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]">{c.price}</span>
-                                <span class="price-gradient text-sm font-semibold leading-none">рублей</span>
-                            </span>
-                            <div class="course-duration-chip">{c.duration}</div>
+                            <div class="flex justify-between flex-row items-center gap-4">
+                                <span class="inline-flex items-baseline gap-1.5 shrink-0">
+                                    <span class="course-panel__price-value font-extrabold leading-none tracking-[-0.03em]">{c.price}</span>
+                                    <span class="price-gradient text-sm font-semibold leading-none">рублей</span>
+                                </span>
+                                <a href="#" class="btn btn--v2 course-tabs__cta shrink-0 font-semibold">Мне это подходит, записываюсь</a>
+                            </div>
+
                         </div>
                     </div>
 
-                    <div class="grid gap-5 mt-5 md:grid-cols-[1fr_minmax(300px,0.92fr)] md:items-stretch md:gap-6">
-                        <div class="flex flex-col min-w-0">
-                            <div class="course-image-card">
-                                <div class="course-image-card__media">
-                                    <Image
-                                        class="block w-full h-full object-cover"
-                                        src={c.image}
-                                        alt={c.imageAlt}
-                                        loading={i === 0 ? 'eager' : 'lazy'}
-                                        widths={[400, 640, 800]}
-                                        sizes="(max-width: 768px) 100vw, 42vw"
-                                    />
-                                </div>
-                            </div>
-                            <div class="course-promo-card">
-                                <div class="flex items-start gap-3.5">
-                                    <div class="promo-icon shrink-0 w-11 h-11 rounded-full flex items-center justify-center font-extrabold text-base text-white" aria-hidden="true">%</div>
-                                    <p class="m-0 text-[15px] leading-[1.5] font-bold text-zinc-900">{c.promo}</p>
-                                </div>
+                    <!-- Строка 2: Вы научитесь + В стоимость входит -->
+                    <div class="grid grid-cols-1 gap-4 md:gap-6 md:grid-cols-2 md:items-stretch">
+                        <div class="course-inventory-card h-full">
+                            <p class="course-inventory-card__title">{c.inventoryTitle}</p>
+                            <div class="content-editor">
+                                <ul>
+                                    {c.inventory.map((item) => (
+                                        <li>{item}</li>
+                                    ))}
+                                </ul>
+                                {c.inventoryNote && (
+                                    <p>{c.inventoryNote}</p>
+                                )}
                             </div>
                         </div>
 
-                        <div class="course-inventory flex flex-col gap-3 min-h-full">
-                            <div class="course-inventory-card flex-1">
-                                <p class="course-inventory-card__title">{c.inventoryTitle}</p>
-                                <div class="content-editor">
-                                    <ul>
-                                        {c.inventory.map((item) => (
-                                                <li>{item}</li>
-                                        ))}
-                                    </ul>
-                                    {c.inventoryNote && (
-                                            <p>{c.inventoryNote}</p>
-                                    )}
-                                </div>
-
+                        {c.includedTitle && c.included && (
+                            <div class="course-inventory-card h-full">
+                                <p class="course-inventory-card__title">{c.includedTitle}</p>
+                                <ul class="course-included__list list-none m-0 p-0 mt-4 flex flex-col gap-3">
+                                    {c.included.map((item) => (
+                                        <li class="course-included__item flex items-center gap-3">
+                                            <div class="course-included__img-placeholder shrink-0 w-[60px] h-[60px]" aria-hidden="true"></div>
+                                            <span class="text-[15px] leading-[1.45] text-zinc-800">{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-
-                            {c.inventoryTitle2 && (
-                                <div class="course-inventory-card">
-                                    <p class="course-inventory-card__title">{c.inventoryTitle2}</p>
-                                    <ul class="course-inventory__list list-none m-0 p-0 mt-4 flex flex-col gap-2">
-                                        {c.inventory2?.map((item) => (
-                                            <li class="course-inventory__item">{item}</li>
-                                        ))}
-                                    </ul>
-                                    {c.inventoryNote2 && (
-                                        <p class="mt-3 text-sm leading-[1.45] text-zinc-500">{c.inventoryNote2}</p>
-                                    )}
-                                </div>
-                            )}
-
-                            <a href="#" class="btn btn--v2 course-tabs__cta mt-2 w-full font-semibold">Мне это подходит, записываюсь</a>
-                        </div>
+                        )}
                     </div>
+
+                    <!-- Инструменты + CTA -->
+                    <div class="flex flex-col gap-3">
+                        {c.inventoryTitle2 && (
+                            <div class="course-inventory-card">
+                                <p class="course-inventory-card__title">{c.inventoryTitle2}</p>
+                                <ul class="course-inventory__list list-none m-0 p-0 mt-4 flex flex-col gap-2">
+                                    {c.inventory2?.map((item) => (
+                                        <li class="course-inventory__item">{item}</li>
+                                    ))}
+                                </ul>
+                                {c.inventoryNote2 && (
+                                    <p class="mt-3 text-sm leading-[1.45] text-zinc-500">{c.inventoryNote2}</p>
+                                )}
+                            </div>
+                        )}
+
+                    </div>
+
+
+
                 </div>
             ))}
         </div>

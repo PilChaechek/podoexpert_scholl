@@ -29,6 +29,7 @@
   color: #fff;
   background: linear-gradient(135deg, var(--teal-dark) 0%, var(--purple) 100%);
   box-shadow: 0 12px 32px rgba(92, 70, 192, 0.22);
+  border: none;
 
   .course-tab__price-hint {
     color: rgba(255, 255, 255, 0.8);
@@ -220,7 +221,13 @@
 
 // Карточка-обёртка для блока инвентаря
 .course-inventory-card {
-
+  padding: clamp(16px, 2.4vw, 28px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: #ffffff;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 4px 16px rgba(24, 24, 27, 0.05);
 }
 
 .course-inventory-card__title {
@@ -266,6 +273,13 @@
     background: linear-gradient(135deg, var(--teal-dark), var(--purple));
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
   }
+}
+
+// Заглушка под изображение в блоке «В стоимость входит»
+.course-included__img-placeholder {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f4f4f5 0%, #e4e4e7 100%);
+  border: 1px solid var(--line);
 }
 
 // CTA кнопка — растягивается на всю ширину блока

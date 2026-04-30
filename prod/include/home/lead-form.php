@@ -1,4 +1,23 @@
-<?php if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die(); ?>
+<?php
+if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
+
+CModule::IncludeModule('iblock');
+
+$leadCourseOptions = [];
+$leadCoursesRes = CIBlockElement::GetList(
+    ['SORT' => 'ASC', 'ID' => 'ASC'],
+    ['IBLOCK_ID' => 6, 'ACTIVE' => 'Y'],
+    false,
+    false,
+    ['ID', 'NAME']
+);
+while ($row = $leadCoursesRes->Fetch()) {
+    $name = trim((string) $row['NAME']);
+    if ($name !== '') {
+        $leadCourseOptions[] = $name;
+    }
+}
+?>
 
 <section class="section lead-form" id="zapis">
     <div class="container">
@@ -76,11 +95,11 @@
                             class="lead-form__control lead-form__select h-14 w-full rounded-2xl border border-zinc-300 bg-white px-4 text-base text-zinc-500 outline-none transition focus:border-violet-600"
                             name="course"
                         >
-                            <option value="">Какой курс интересует</option>
-                            <option value="Arkada's Cube">Arkada's Cube</option>
-                            <option value="Arkada's Brace">Arkada's Brace</option>
-                            <option value="Акриловые вкладки">Акриловые вкладки</option>
                             <option value="Хочу узнать про все">Хочу узнать про все</option>
+                            <?php foreach ($leadCourseOptions as $__opt): ?>
+                                <option value="<?= htmlspecialcharsbx($__opt) ?>"><?= htmlspecialcharsbx($__opt) ?></option>
+                            <?php endforeach; ?>
+
                         </select>
                         <div id="lead-form-course-error" class="lead-form__msg" aria-live="polite"></div>
                     </div>
